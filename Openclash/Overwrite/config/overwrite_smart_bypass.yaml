@@ -21,7 +21,7 @@ proxy-providers:
       udp: true
   69云:
     type: http
-    url: "url2"
+    url: "url"
     path: ./proxy_provider/69.yaml
     proxy: DIRECT
     header:
@@ -36,7 +36,7 @@ proxy-providers:
       udp: true
   Oracle:
     type: http
-    url: "url3"
+    url: "url"
     path: ./proxy_provider/oracle.yaml
     proxy: DIRECT
     header:
@@ -51,7 +51,7 @@ proxy-providers:
       udp: true
   GLaDOS:
     type: http
-    url: "url4"
+    url: "url"
     path: ./proxy_provider/glados.yaml
     proxy: DIRECT
     header:
@@ -66,7 +66,7 @@ proxy-providers:
       udp: true
   CFnew:
     type: http
-    url: "url5"
+    url: "url"
     path: ./proxy_provider/cfnew.yaml
     proxy: DIRECT
     header:
