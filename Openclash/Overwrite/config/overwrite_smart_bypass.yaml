@@ -147,7 +147,11 @@ proxy-groups:
     type: select
     filter: "^((?!(直连|拒绝)).)*$"
     use:
-      - provider
+      - 糖果云
+      - 69云
+      - Oracle
+      - GLaDOS
+      - CFnew
       
   - name: 自动选择
     type: url-test
