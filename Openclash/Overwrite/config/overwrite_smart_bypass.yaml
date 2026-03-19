@@ -7,7 +7,7 @@ proxy-providers:
   糖果云:
     type: http
     url: "url"
-    path: ./proxy_provider/provider.yaml
+    path: ./proxy_provider/tanguo.yaml
     proxy: DIRECT
     header:
       User-Agent:
@@ -21,8 +21,8 @@ proxy-providers:
       udp: true
   69云:
     type: http
-    url: "url"
-    path: ./proxy_provider/provider.yaml
+    url: "url2"
+    path: ./proxy_provider/69.yaml
     proxy: DIRECT
     header:
       User-Agent:
@@ -36,8 +36,8 @@ proxy-providers:
       udp: true
   Oracle:
     type: http
-    url: "url"
-    path: ./proxy_provider/provider.yaml
+    url: "url3"
+    path: ./proxy_provider/oracle.yaml
     proxy: DIRECT
     header:
       User-Agent:
@@ -51,8 +51,8 @@ proxy-providers:
       udp: true
   GLaDOS:
     type: http
-    url: "url"
-    path: ./proxy_provider/provider.yaml
+    url: "url4"
+    path: ./proxy_provider/gladOS.yaml
     proxy: DIRECT
     header:
       User-Agent:
@@ -66,8 +66,8 @@ proxy-providers:
       udp: true
   CFnew:
     type: http
-    url: "url"
-    path: ./proxy_provider/provider.yaml
+    url: "url5"
+    path: ./proxy_provider/CFnew.yaml
     proxy: DIRECT
     header:
       User-Agent:
