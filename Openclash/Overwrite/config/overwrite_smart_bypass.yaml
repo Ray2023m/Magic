@@ -4,70 +4,10 @@ dns:
    - 221.5.88.88
 
 proxy-providers:
-  糖果云:
+  provider:
     type: http
     url: "url"
-    path: ./proxy_provider/tanguo.yaml
-    proxy: DIRECT
-    header:
-      User-Agent:
-      - clash.meta
-    health-check:
-      enable: true
-      interval: 600
-      url: https://cp.cloudflare.com/generate_204
-    override:
-      skip-cert-verify: true
-      udp: true
-  69云:
-    type: http
-    url: "url"
-    path: ./proxy_provider/69.yaml
-    proxy: DIRECT
-    header:
-      User-Agent:
-      - clash.meta
-    health-check:
-      enable: true
-      interval: 600
-      url: https://cp.cloudflare.com/generate_204
-    override:
-      skip-cert-verify: true
-      udp: true
-  Oracle:
-    type: http
-    url: "url"
-    path: ./proxy_provider/oracle.yaml
-    proxy: DIRECT
-    header:
-      User-Agent:
-      - clash.meta
-    health-check:
-      enable: true
-      interval: 600
-      url: https://cp.cloudflare.com/generate_204
-    override:
-      skip-cert-verify: true
-      udp: true
-  GLaDOS:
-    type: http
-    url: "url"
-    path: ./proxy_provider/glados.yaml
-    proxy: DIRECT
-    header:
-      User-Agent:
-      - clash.meta
-    health-check:
-      enable: true
-      interval: 600
-      url: https://cp.cloudflare.com/generate_204
-    override:
-      skip-cert-verify: true
-      udp: true
-  CFnew:
-    type: http
-    url: "url"
-    path: ./proxy_provider/cfnew.yaml
+    path: ./proxy_provider/provider.yaml
     proxy: DIRECT
     header:
       User-Agent:
@@ -147,11 +87,7 @@ proxy-groups:
     type: select
     filter: "^((?!(直连|拒绝)).)*$"
     use:
-      - 糖果云
-      - 69云
-      - Oracle
-      - GLaDOS
-      - CFnew
+      - provider
       
   - name: 自动选择
     type: url-test
@@ -160,11 +96,7 @@ proxy-groups:
     url: "https://cp.cloudflare.com/generate_204"
     interval: 300
     use:
-      - 糖果云
-      - 69云
-      - Oracle
-      - GLaDOS
-      - CFnew
+      - provider
 
   # 香港组
   - name: 香港节点
@@ -174,11 +106,7 @@ proxy-groups:
     url: "https://cp.cloudflare.com/generate_204"
     interval: 300
     use:
-      - 糖果云
-      - 69云
-      - Oracle
-      - GLaDOS
-      - CFnew
+      - provider
   # 台湾组
   - name: 台湾节点
     type: url-test
@@ -187,11 +115,7 @@ proxy-groups:
     url: "https://cp.cloudflare.com/generate_204"
     interval: 300
     use:
-      - 糖果云
-      - 69云
-      - Oracle
-      - GLaDOS
-      - CFnew
+      - provider
   # 日本组
   - name: 日本节点
     type: url-test
@@ -200,11 +124,7 @@ proxy-groups:
     url: "https://cp.cloudflare.com/generate_204"
     interval: 300
     use:
-      - 糖果云
-      - 69云
-      - Oracle
-      - GLaDOS
-      - CFnew
+      - provider
   # 新加坡组
   - name: 狮城节点
     type: url-test
@@ -213,11 +133,7 @@ proxy-groups:
     url: "https://cp.cloudflare.com/generate_204"
     interval: 300
     use:
-      - 糖果云
-      - 69云
-      - Oracle
-      - GLaDOS
-      - CFnew
+      - provider
   # 韩国组
   - name: 韩国节点
     type: url-test
@@ -226,11 +142,7 @@ proxy-groups:
     url: "https://cp.cloudflare.com/generate_204"
     interval: 300
     use:
-      - 糖果云
-      - 69云
-      - Oracle
-      - GLaDOS
-      - CFnew 
+      - provider
   # 美国组
   - name: 美国节点
     type: url-test
@@ -239,11 +151,7 @@ proxy-groups:
     url: "https://cp.cloudflare.com/generate_204"
     interval: 300
     use:
-      - 糖果云
-      - 69云
-      - Oracle
-      - GLaDOS
-      - CFnew
+      - provider
   # 英国组
   - name: 英国节点
     type: url-test
@@ -252,11 +160,7 @@ proxy-groups:
     url: "https://cp.cloudflare.com/generate_204"
     interval: 300
     use:
-      - 糖果云
-      - 69云
-      - Oracle
-      - GLaDOS
-      - CFnew
+      - provider
   # 其他组
   - name: 其他节点
     type: url-test
@@ -265,11 +169,7 @@ proxy-groups:
     url: "https://cp.cloudflare.com/generate_204"
     interval: 300
     use:
-      - 糖果云
-      - 69云
-      - Oracle
-      - GLaDOS
-      - CFnew
+      - provider
 # ========================
 # 规则引擎（rules）
 # ========================
