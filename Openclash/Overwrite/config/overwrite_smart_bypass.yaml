@@ -52,7 +52,7 @@ proxy-providers:
   GLaDOS:
     type: http
     url: "url4"
-    path: ./proxy_provider/gladOS.yaml
+    path: ./proxy_provider/glados.yaml
     proxy: DIRECT
     header:
       User-Agent:
@@ -67,7 +67,7 @@ proxy-providers:
   CFnew:
     type: http
     url: "url5"
-    path: ./proxy_provider/CFnew.yaml
+    path: ./proxy_provider/cfnew.yaml
     proxy: DIRECT
     header:
       User-Agent:
