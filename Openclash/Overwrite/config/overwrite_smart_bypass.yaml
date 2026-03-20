@@ -142,7 +142,7 @@ proxy-groups:
     url: "https://cp.cloudflare.com/generate_204"
     interval: 300
     use:
-      - provider
+      - provider   
   # 美国组
   - name: 美国节点
     type: url-test
@@ -174,6 +174,7 @@ proxy-groups:
 # 规则引擎（rules）
 # ========================
 rules:
+  - RULE-SET,My_Domain,国内直连
   - RULE-SET,TEST_Domain,测速工具
   - RULE-SET,BLOCK_Domain,网站拦截
   - RULE-SET,ChatGPT_Domain,ChatGPT
@@ -221,6 +222,7 @@ rule-anchor:
   class: &class {type: http, interval: 86400, behavior: classical, format: text}
 
 rule-providers:
+  My_Domain: {<<: *class, url: "https://raw.githubusercontent.com/Ray2023m/Magic/refs/heads/main/Openclash/Rules/Private.list"}
   TEST_Domain: {<<: *class, url: "https://raw.githubusercontent.com/liandu2024/clash/refs/heads/main/list/Check.list"}
   ChatGPT_Domain: {<<: *domain, url: "https://github.com/metacubex/meta-rules-dat/raw/refs/heads/meta/geo/geosite/openai.mrs"}
   Claude_Domain: {<<: *class, url: "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/refs/heads/master/rule/Clash/Claude/Claude.list"}
