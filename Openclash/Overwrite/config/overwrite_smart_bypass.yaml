@@ -44,12 +44,15 @@ default2: &default2
   type: select
   proxies:
     - 直连
-    - 拒绝
 default3: &default3
   type: select
   proxies:
-    - 香港节点
+    - 拒绝
+default4: &default4
+  type: select
+  proxies:
     - 美国节点
+    - 香港节点
     - 台湾节点
     - 日本节点
     - 狮城节点
@@ -58,27 +61,39 @@ default3: &default3
     - 其他节点
     - 自动选择
     - 直连
-
+default5: &default5
+  type: select
+  proxies:
+    - 直连
+    - 美国节点
+    - 香港节点
+    - 台湾节点
+    - 日本节点
+    - 狮城节点
+    - 韩国节点
+    - 英国节点
+    - 其他节点
+    - 自动选择
 proxy-groups:
 
   # 业务分流组
-  - {name: ChatGPT, <<: *default}
-  - {name: Claude, <<: *default}
-  - {name: Meta AI, <<: *default}
+  - {name: ChatGPT, <<: *default4}
+  - {name: Claude, <<: *default4}
+  - {name: Meta AI, <<: *default4}
   - {name: GitHub, <<: *default}
-  - {name: 电报消息, <<: *default}
+  - {name: 电报消息, <<: *default4}
   - {name: 即时通讯, <<: *default}
   - {name: 油管视频, <<: *default}
   - {name: Disney, <<: *default}
   - {name: Netflix, <<: *default}
   - {name: HBO影视, <<: *default}
   - {name: Spotify, <<: *default}
-  - {name: 苹果服务, <<: *default3}
-  - {name: 微软服务, <<: *default3}
+  - {name: 苹果服务, <<: *default5}
+  - {name: 微软服务, <<: *default5}
   - {name: 谷歌服务, <<: *default}
-  - {name: 游戏平台, <<: *default3}
-  - {name: 测速工具, <<: *default3}
-  - {name: 网站拦截, <<: *default2}
+  - {name: 游戏平台, <<: *default5}
+  - {name: 测速工具, <<: *default}
+  - {name: 网站拦截, <<: *default3}
   - {name: 国外媒体, <<: *default}
   - {name: 国内直连, <<: *default2}
   - {name: 漏网之鱼, <<: *default}
