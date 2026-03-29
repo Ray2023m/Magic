@@ -113,7 +113,7 @@ proxy-groups:
   - {name: Block, <<: *default5}
   - {name: 国外, <<: *default}
   - {name: 国内, <<: *default2}
-  - {name: 其他, <<: *default}
+  - {name: 其他, <<: *default3}
 
   # 所有组
 
