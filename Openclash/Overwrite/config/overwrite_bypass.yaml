@@ -30,9 +30,6 @@ proxies:
 default: &default
   type: select
   proxies:
-    - 所有-智选
-    - 所有-手选
-    - 香港-智选
     - 香港-故转
     - 台湾-故转
     - 日本-故转
@@ -41,6 +38,44 @@ default: &default
     - 美国-故转
     - 英国-故转
     - 其他-故转
+    - 所有-智选
+    - 所有-手选
+
+default2: &default2
+  type: select
+  proxies:
+    - 直连
+    - 拒绝
+
+default3: &default3
+  type: select
+  proxies:
+    - 美国-故转
+    - 香港-故转
+    - 台湾-故转
+    - 日本-故转
+    - 狮城-故转
+    - 韩国-故转
+    - 英国-故转
+    - 所有-智选
+    - 所有-手选
+default4: &default4
+  type: select
+  proxies:
+    - 直连
+    - 美国-故转
+    - 香港-故转
+    - 台湾-故转
+    - 日本-故转
+    - 狮城-故转
+    - 韩国-故转
+    - 英国-故转
+    - 所有-智选
+    - 所有-手选
+    - 拒绝
+default5: &default5
+  type: select
+  proxies:
     - 直连
     - 拒绝
 
@@ -48,13 +83,13 @@ proxy-groups:
 
   # 业务分流组
 
-  - {name: ChatGPT, <<: *default}
-  - {name: Gemini, <<: *default}
-  - {name: Copilot, <<: *default}
-  - {name: Perplexity, <<: *default}
-  - {name: Claude, <<: *default}
-  - {name: Meta AI, <<: *default}
-  - {name: GitHub, <<: *default}
+  - {name: ChatGPT, <<: *default3}
+  - {name: Gemini, <<: *default3}
+  - {name: Copilot, <<: *default3}
+  - {name: Perplexity, <<: *default3}
+  - {name: Claude, <<: *default3}
+  - {name: Meta AI, <<: *default3}
+  - {name: GitHub, <<: *default3}
   - {name: Reddit, <<: *default}
   - {name: Telegram, <<: *default}
   - {name: WhatsApp, <<: *default}
@@ -67,17 +102,17 @@ proxy-groups:
   - {name: Amazon, <<: *default}
   - {name: Crunchyroll, <<: *default}
   - {name: Spotify, <<: *default}
-  - {name: Nvidia, <<: *default}
-  - {name: Steam, <<: *default}
-  - {name: Games, <<: *default}
+  - {name: Nvidia, <<: *default3}
+  - {name: Steam, <<: *default4}
+  - {name: Games, <<: *default4}
   - {name: Crypto, <<: *default}
-  - {name: Apple, <<: *default}
+  - {name: Apple, <<: *default4}
   - {name: Google, <<: *default}
-  - {name: Microsoft, <<: *default}
+  - {name: Microsoft, <<: *default4}
   - {name: Test, <<: *default}
-  - {name: Block, <<: *default}
+  - {name: Block, <<: *default5}
   - {name: 国外, <<: *default}
-  - {name: 国内, <<: *default}
+  - {name: 国内, <<: *default2}
   - {name: 其他, <<: *default}
 
   # 所有组
