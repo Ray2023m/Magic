@@ -37,11 +37,11 @@ RJ: &RJ {type: select, proxies: [REJECT]}
 # ==================== 代理提供商 ====================
 proxy-providers:
   # 优质订阅源 - 优质节点集合，使用时请修改
-  maomaoyun: {<<: *BaseProvider, url: 'maomamoyun', override: {additional-prefix: '[优] '}}
+  maomaoyun: {<<: *BaseProvider, url: 'maomamoyunaddr', override: {additional-prefix: '[优] '}}
   # 备用订阅源 - 次优节点集合，使用时请修改
-  candytally: {<<: *BaseProvider, url: 'candytally', override: {additional-prefix: '[备] '}}
+  candytally: {<<: *BaseProvider, url: 'candytallyaddr', override: {additional-prefix: '[备] '}}
   # 自建订阅源 - 自建节点集合，使用时请修改
-  oracle: {<<: *BaseProvider, url: 'oracle', override: {additional-prefix: '[自] '}}
+  oracle: {<<: *BaseProvider, url: 'oracleaddr', override: {additional-prefix: '[自] '}}
 
 # ==================== 代理策略组 ====================
 proxy-groups:
