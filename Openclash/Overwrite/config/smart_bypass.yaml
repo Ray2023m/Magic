@@ -100,6 +100,54 @@ proxy-groups:
   - {name: 其他手选,  <<: *Url-test, filter: *FilterOT, include-all: true, policy-priority: '优:2;中:1;自:0.5', icon: https://github.com/Koolson/Qure/raw/master/IconSet/Color/Round_Robin_1.png}
 
 # ==================== 规则路由 ====================
+rules:
+  - RULE-SET,My_Domain,国内直连
+  - RULE-SET,TEST_Domain,Test
+  - RULE-SET,Block_Domain,Block  
+  - RULE-SET,ChatGPT_Domain,ChatGPT
+  - RULE-SET,Claude_Domain,Claude
+  - RULE-SET,Meta AI_Domain,Meta AI
+  - RULE-SET,Perplexity_Domain,Perplexity
+  - RULE-SET,Copilot_Domain,Copilot
+  - RULE-SET,Gemini_Domain,Gemini
+  - RULE-SET,Reddit_Domain,Reddit 
+  - RULE-SET,GitHub_Domain,GitHub
+  - RULE-SET,Telegram_Domain,Telegram
+  - RULE-SET,Telegram_IP,Telegram
+  - RULE-SET,WhatsApp_Domain,WhatsApp
+  - RULE-SET,Facebook_Domain,Facebook
+  - RULE-SET,Apple_Domain,Apple
+  - RULE-SET,Apple-CN_Domain,Apple  
+  - RULE-SET,Microsoft_Domain,Microsoft
+  - RULE-SET,Youtube_Domain,YouTube
+  - RULE-SET,TikTok_Domain,TikTok
+  - RULE-SET,Netflix_Domain,Netflix
+  - RULE-SET,Netflix_IP,Netflix,no-resolve
+  - RULE-SET,Disney_Domain,Disney
+  - RULE-SET,Amazon_Domain,Amazon
+  - RULE-SET,Crunchyroll_Domain,Crunchyroll
+  - RULE-SET,HBO_Domain,HBO
+  - RULE-SET,Spotify_Domain,Spotify
+  - RULE-SET,Steam_Domain,Steam
+  - RULE-SET,Epic_Domain,Games
+  - RULE-SET,EA_Domain,Games
+  - RULE-SET,Blizzard_Domain,Games
+  - RULE-SET,UBI_Domain,Games
+  - RULE-SET,PlayStation_Domain,Games
+  - RULE-SET,Nintendo_Domain,Games
+  - RULE-SET,Google_Domain,Google
+  - RULE-SET,Google_IP,Google,no-resolve
+  - RULE-SET,Nvidia_Domain,Nvidia 
+  - RULE-SET,Telegram_IP,国外流量
+  - RULE-SET,Telegram_Domain,国外流量
+  - RULE-SET,Proxy_Domain,国外流量
+  - RULE-SET,Globe_Domain,国外流量  
+  - RULE-SET,Direct_Domain,国内直连
+  - RULE-SET,China_Domain,国内直连
+  - RULE-SET,China_IP,国内直连,no-resolve
+  - RULE-SET,Private_Domain,国内直连
+  - MATCH,漏网之鱼
+
 rule-anchor:
   ip: &ip {type: http, interval: 86400, behavior: ipcidr, format: mrs}
   domain: &domain {type: http, interval: 86400, behavior: domain, format: mrs}
