@@ -4,9 +4,14 @@
 # 作者: Ray2023m
 # 更新: 2026 年 4 月 8 日
 
+dns:
+  nameserver:
+   - 116.116.116.116
+   - 221.5.88.88
+
 # ==================== 锚点配置 ====================
 # 订阅源基础配置
-Provider: &Provider {type: http, interval: 86400, proxy: DIRECT, health-check: {enable: true, url: 'https://cp.cloudflare.com/generate_204', interval: 300}, filter: '^(?!.*(剩余|套餐|官网|群组|订阅|到期|永久|基础|国内|过滤|测试))'}
+BaseProvider: &BaseProvider {type: http, interval: 86400, proxy: DIRECT, health-check: {enable: true, url: 'https://cp.cloudflare.com/generate_204', interval: 300}, filter: '^(?!.*(剩余|套餐|官网|群组|订阅|到期|永久|基础|国内|过滤|测试))'}
 # 策略组类型模板 - 定义不同的策略组基础配置
 Url-test: &Url-test {type: url-test, interval: 200, lazy: true, url: 'https://cp.cloudflare.com/generate_204', hidden: true}
 Fallback: &Fallback {type: fallback, interval: 200, lazy: true, url: 'https://cp.cloudflare.com/generate_204', hidden: true}
@@ -32,11 +37,11 @@ RJ: &RJ {type: select, proxies: [REJECT]}
 # ==================== 代理提供商 ====================
 proxy-providers:
   # 优质订阅源 - 优质节点集合，使用时请修改
-  优质服务商: {<<: *Provider, url: '优质订阅源地址', override: {additional-prefix: '[优] '}}
+  优质服务商: {<<: *BaseProvider, url: '优质订阅源地址', override: {additional-prefix: '[优] '}}
   # 备用订阅源 - 次优节点集合，使用时请修改
-  备用服务商: {<<: *Provider, url: '备用订阅源地址', override: {additional-prefix: '[备] '}}
+  备用服务商: {<<: *BaseProvider, url: '备用订阅源地址', override: {additional-prefix: '[备] '}}
   # 自建订阅源 - 自建节点集合，使用时请修改
-  自建服务商: {<<: *Provider, url: '自建订阅源地址', override: {additional-prefix: '[自] '}}
+  自建服务商: {<<: *BaseProvider, url: '自建订阅源地址', override: {additional-prefix: '[自] '}}
 
 # ==================== 代理策略组 ====================
 proxy-groups:
