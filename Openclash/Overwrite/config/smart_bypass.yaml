@@ -24,8 +24,8 @@ FilterOT: &FilterOT '^(?!.*(DIRECT|直接连接|美|港|坡|台|新|日|韩|奥|
 FilterAL: &FilterAL '^(?!.*(DIRECT|直接连接|群|邀请|返利|循环|官网|客服|网站|网址|获取|订阅|流量|到期|机场|下次|版本|官址|备用|过期|已用|联系|邮箱|工单|贩卖|通知|倒卖|防止|国内|地址|频道|无法|说明|使用|提示|特别|访问|支持|教程|关注|更新|作者|加入|USE|USED|TOTAL|EXPIRE|EMAIL|Panel|Channel|Author))'
 
 # 策略组代理列表模板 - 预定义的代理节点优先级排序
-HK: &HK {type: select, proxies: [香港-故转, 台湾-故转, 日本-故转, 狮城-故转, 美国-故转, 欧洲-故转, 其他-故转]}
-US: &US {type: select, proxies: [美国-故转, 香港-故转, 台湾-故转, 日本-故转, 狮城-故转, 欧洲-故转, 其他-故转]}
+HK: &HK {type: select, proxies: [香港-故转, 台湾-故转, 日本-故转, 狮城-故转, 美国-故转, 欧洲-故转, 其他-故转,全球智能,全球手选]}
+US: &US {type: select, proxies: [美国-故转, 香港-故转, 台湾-故转, 日本-故转, 狮城-故转, 欧洲-故转, 其他-故转,全球智能,全球手选]}
 DC: &DC {type: select, proxies: [DIRECT]}
 RJ: &RJ {type: select, proxies: [REJECT]}
 
@@ -91,6 +91,7 @@ proxy-groups:
   - {name: 美国智能,  <<: *Smart, filter: *FilterUS, include-all: true, policy-priority: '优:2;中:1;自:0.5', icon: https://github.com/Koolson/Qure/raw/master/IconSet/Color/United_States.png}
   - {name: 欧洲智能,  <<: *Smart, filter: *FilterEU, include-all: true, policy-priority: '优:2;中:1;自:0.5', icon: https://github.com/Koolson/Qure/raw/master/IconSet/Color/European_Union.png}
   - {name: 其他智能,  <<: *Smart, filter: *FilterOT, include-all: true, policy-priority: '优:2;中:1;自:0.5', icon: https://github.com/Koolson/Qure/raw/master/IconSet/Color/Round_Robin_1.png}
+  - {name: 全球智能,  <<: *Smart, filter: *FilterAL, include-all: true, policy-priority: '优:2;中:1;自:0.5'}
   - {name: 香港手选,  <<: *Url-test, filter: *FilterHK, include-all: true, policy-priority: '优:2;中:1;自:0.5', icon: https://github.com/Koolson/Qure/raw/master/IconSet/Color/Hong_Kong.png}
   - {name: 台湾手选,  <<: *Url-test, filter: *FilterTW, include-all: true, policy-priority: '优:2;中:1;自:0.5', icon: https://github.com/Koolson/Qure/raw/master/IconSet/Color/Taiwan.png}
   - {name: 日本手选,  <<: *Url-test, filter: *FilterJP, include-all: true, policy-priority: '优:2;中:1;自:0.5', icon: https://github.com/Koolson/Qure/raw/master/IconSet/Color/Japan.png}
@@ -99,7 +100,7 @@ proxy-groups:
   - {name: 美国手选,  <<: *Url-test, filter: *FilterUS, include-all: true, policy-priority: '优:2;中:1;自:0.5', icon: https://github.com/Koolson/Qure/raw/master/IconSet/Color/United_States.png}
   - {name: 欧洲手选,  <<: *Url-test, filter: *FilterEU, include-all: true, policy-priority: '优:2;中:1;自:0.5', icon: https://github.com/Koolson/Qure/raw/master/IconSet/Color/European_Union.png}
   - {name: 其他手选,  <<: *Url-test, filter: *FilterOT, include-all: true, policy-priority: '优:2;中:1;自:0.5', icon: https://github.com/Koolson/Qure/raw/master/IconSet/Color/Round_Robin_1.png}
-
+  - {name: 全球手选,  <<: *Url-test, filter: *FilterAL, include-all: true, policy-priority: '优:2;中:1;自:0.5'}
 # ==================== 规则路由 ====================
 rules:
   - RULE-SET,My_Domain,国内直连
@@ -149,11 +150,13 @@ rules:
   - RULE-SET,Private_Domain,国内直连
   - MATCH,漏网之鱼
 
+# ==================== 规则集 ====================
+# 规则集行为模板
 rule-anchor:
   ip: &ip {type: http, interval: 86400, behavior: ipcidr, format: mrs}
   domain: &domain {type: http, interval: 86400, behavior: domain, format: mrs}
   class: &class {type: http, interval: 86400, behavior: classical, format: text}
-
+# 规则提供者
 rule-providers:
   My_Domain: {<<: *class, url: "https://raw.githubusercontent.com/Ray2023m/Magic/refs/heads/main/Openclash/Rules/Private.list"}
   TEST_Domain: {<<: *class, url: "https://raw.githubusercontent.com/liandu2024/clash/refs/heads/main/list/Check.list"}
@@ -202,3 +205,4 @@ rule-providers:
   Youtube_Domain: {<<: *domain, url: "https://github.com/metacubex/meta-rules-dat/raw/refs/heads/meta/geo/geosite/youtube.mrs"}  
   Google_Domain: {<<: *domain, url: "https://github.com/metacubex/meta-rules-dat/raw/refs/heads/meta/geo/geosite/google.mrs"}  
   Google_IP: {<<: *ip, url: "https://github.com/metacubex/meta-rules-dat/raw/refs/heads/meta/geo/geoip/google.mrs"}
+# ==================== EOF ====================
