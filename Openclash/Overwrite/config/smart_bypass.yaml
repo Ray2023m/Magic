@@ -48,7 +48,7 @@ proxy-groups:
   - {name: GitHub,  <<: *US, icon: https://cdn.jsdelivr.net/gh/homarr-labs/dashboard-icons/png/github.png} 
   - {name: Claude,  <<: *US, icon: https://cdn.jsdelivr.net/gh/homarr-labs/dashboard-icons/svg/claude-ai.svg}
   - {name: Meta AI,  <<: *US, icon: https://cdn.jsdelivr.net/gh/homarr-labs/dashboard-icons/png/meta.png}
-  - {name: Emby服,   <<: *HK, icon: https://cdn.jsdelivr.net/gh/homarr-labs/dashboard-icons/png/emby.png}
+#  - {name: Emby服,   <<: *HK, icon: https://cdn.jsdelivr.net/gh/homarr-labs/dashboard-icons/png/emby.png}
   - {name: Reddit,  <<: *US, icon: https://cdn.jsdelivr.net/gh/homarr-labs/dashboard-icons/png/reddit.png}
   - {name: Telegram,  <<: *US, icon: https://cdn.jsdelivr.net/gh/homarr-labs/dashboard-icons/png/telegram.png}
   - {name: WhatsApp,  <<: *US, icon: https://cdn.jsdelivr.net/gh/homarr-labs/dashboard-icons/png/whatsapp.png}
@@ -65,6 +65,7 @@ proxy-groups:
   - {name: Steam, <<: *HK, icon: https://cdn.jsdelivr.net/gh/homarr-labs/dashboard-icons/png/steam.png}
   - {name: Games, <<: *HK, icon: https://raw.githubusercontent.com/Ray2023m/Icon-for-Yaml/refs/heads/master/IconSet/Color/Game.png}
   - {name: Apple, <<: *DC, icon: https://cdn.jsdelivr.net/gh/homarr-labs/dashboard-icons/png/apple.png}
+  - {name: Google, <<: *US, icon: https://cdn.jsdelivr.net/gh/homarr-labs/dashboard-icons/png/google.png}
   - {name: Microsoft, <<: *DC,icon: https://cdn.jsdelivr.net/gh/homarr-labs/dashboard-icons/png/microsoft.png}
   - {name: Test, <<: *HK,icon: https://cdn.jsdelivr.net/gh/homarr-labs/dashboard-icons/png/speedtest.png}
   - {name: Block, <<: *RJ, icon: https://cdn.jsdelivr.net/gh/homarr-labs/dashboard-icons/png/sponsorblock.png}
