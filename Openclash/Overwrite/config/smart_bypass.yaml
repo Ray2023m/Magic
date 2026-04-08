@@ -25,7 +25,7 @@ FilterAL: &FilterAL '^(?!.*(DIRECT|直接连接|群|邀请|返利|循环|官网|
 
 # 策略组代理列表模板 - 预定义的代理节点优先级排序
 HK: &HK {type: select, proxies: [香港-故转, 台湾-故转, 日本-故转, 狮城-故转, 美国-故转, 欧洲-故转, 其他-故转, 所有-智选]}
-US: &US {type: select, proxies: [美国-故转, 香港-故转, 台湾-故转, 日本-故转, 狮城-故转, 英国-故转, 其他-故转, 所有-智选]}
+US: &US {type: select, proxies: [美国-故转, 香港-故转, 台湾-故转, 日本-故转, 狮城-故转, 欧洲-故转, 其他-故转, 所有-智选]}
 DC: &DC {type: select, proxies: [DIRECT]}
 RJ: &RJ {type: select, proxies: [REJECT]}
 
