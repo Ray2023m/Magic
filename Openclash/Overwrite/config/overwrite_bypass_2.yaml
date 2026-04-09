@@ -16,9 +16,9 @@ dns:
 # 订阅源基础配置
 BaseProvider: &BaseProvider {type: http, interval: 86400, proxy: DIRECT, health-check: {enable: true, url: 'https://cp.cloudflare.com/generate_204', interval: 300}, filter: '^(?!.*(剩余|套餐|官网|群组|订阅|到期|永久|基础|国内|过滤|测试))'}
 # 策略组类型模板 - 定义不同的策略组基础配置
-Url-test: &Url-test {type: url-test, interval: 200, lazy: true, url: 'https://cp.cloudflare.com/generate_204'}
-Fallback: &Fallback {type: fallback, interval: 200, lazy: true, url: 'https://cp.cloudflare.com/generate_204'}
-Smart: &Smart {type: smart, interval: 200, lazy: true, url: 'https://cp.cloudflare.com/generate_204', uselightgbm: true}
+Url-test: &Url-test {type: url-test, interval: 200, lazy: true, url: 'https://cp.cloudflare.com/generate_204', hidden: true}
+Fallback: &Fallback {type: fallback, interval: 200, lazy: true, url: 'https://cp.cloudflare.com/generate_204', hidden: true}
+Smart: &Smart {type: smart, interval: 200, lazy: true, url: 'https://cp.cloudflare.com/generate_204', hidden: true, uselightgbm: true}
 
 # 节点筛选正则表达式 - 基于地理位置和关键词过滤
 FilterHK: &FilterHK '(?i)^(?=.*(港|🇭🇰|HK|Hong|HKG)).*$'
