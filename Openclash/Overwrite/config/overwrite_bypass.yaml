@@ -395,7 +395,7 @@ rule-anchor:
   class: &class {type: http, interval: 86400, behavior: classical, format: text}
 
 rule-providers:
-  My_Domain: {<<: *class, url: "https://raw.githubusercontent.com/Ray2023m/Magic/refs/heads/main/Openclash/Rules/Private.list"}
+  My_Domain: {<<: *class, url: "https://raw.githubusercontent.com/Ray2023m/Magic/refs/heads/main/Rules/Private.list"}
   TEST_Domain: {<<: *class, url: "https://gh-proxy.com/raw.githubusercontent.com/liandu2024/clash/refs/heads/main/list/Check.list"}
   ChatGPT_Domain: {<<: *domain, url: "https://gh-proxy.com/github.com/metacubex/meta-rules-dat/raw/refs/heads/meta/geo/geosite/openai.mrs"}
   Claude_Domain: {<<: *class, url: "https://gh-proxy.com/raw.githubusercontent.com/blackmatrix7/ios_rule_script/refs/heads/master/rule/Clash/Claude/Claude.list"}

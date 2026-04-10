@@ -167,7 +167,7 @@ rule-anchor:
   class: &class {type: http, interval: 86400, behavior: classical, format: text}
 # 规则提供者
 rule-providers:
-  My / Domain: {<<: *class, url: "https://raw.githubusercontent.com/Ray2023m/Magic/refs/heads/main/Openclash/Rules/Private.list"}
+  My / Domain: {<<: *class, url: "https://raw.githubusercontent.com/Ray2023m/Magic/refs/heads/main/Rules/Private.list"}
   TEST / Domain: {<<: *class, url: "https://raw.githubusercontent.com/liandu2024/clash/refs/heads/main/list/Check.list"}
   ChatGPT / Domain: {<<: *domain, url: "https://github.com/metacubex/meta-rules-dat/raw/refs/heads/meta/geo/geosite/openai.mrs"}
   Claude / Domain: {<<: *class, url: "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/refs/heads/master/rule/Clash/Claude/Claude.list"}
