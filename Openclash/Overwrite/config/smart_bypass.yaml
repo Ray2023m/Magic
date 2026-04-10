@@ -100,7 +100,8 @@ proxy-groups:
   - {name: 欧洲智能,  <<: *BaseSmart, filter: *FilterEU, include-all: true, policy-priority: '优:2;备:1;自:0.5', icon: https://raw.githubusercontent.com/Ray2023m/Magic/refs/heads/main/icon/flag/European_Union.png}
   - {name: 其他智能,  <<: *BaseSmart, filter: *FilterOT, include-all: true, policy-priority: '优:2;备:1;自:0.5', icon: https://raw.githubusercontent.com/Ray2023m/Magic/refs/heads/main/icon/flag/Round_Robin_1.png}
   - {name: 全球智能,  <<: *BaseSmart, filter: *FilterAL, include-all: true, policy-priority: '优:2;备:1;自:0.5', icon: https://raw.githubusercontent.com/Ray2023m/Magic/refs/heads/main/icon/flag/United_Nations.png}
-  - {name: 香港手选,  <<: *BaseSL, filter: *FilterTW, include-all: true, icon: https://raw.githubusercontent.com/Ray2023m/Magic/refs/heads/main/icon/flag/Taiwan.png}
+  - {name: 香港手选,  <<: *BaseSL, filter: *FilterHK, include-all: true, icon: https://raw.githubusercontent.com/Ray2023m/Magic/refs/heads/main/icon/flag/Hong_Kong.png}
+  - {name: 台湾手选,  <<: *BaseSL, filter: *FilterTW, include-all: true, icon: https://raw.githubusercontent.com/Ray2023m/Magic/refs/heads/main/icon/flag/Taiwan.png}
   - {name: 日本手选,  <<: *BaseSL, filter: *FilterJP, include-all: true, icon: https://raw.githubusercontent.com/Ray2023m/Magic/refs/heads/main/icon/flag/Japan.png}
   - {name: 狮城手选,  <<: *BaseSL, filter: *FilterSG, include-all: true, icon: https://raw.githubusercontent.com/Ray2023m/Magic/refs/heads/main/icon/flag/Singapore.png}
   - {name: 韩国手选,  <<: *BaseSL, filter: *FilterKR, include-all: true, icon: https://raw.githubusercontent.com/Ray2023m/Magic/refs/heads/main/icon/flag/Korea.png}
