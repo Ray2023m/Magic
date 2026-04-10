@@ -29,8 +29,8 @@ FilterOT: &FilterOT '(?i)^(?!.*(DIRECT|直接连接|美|港|坡|台|新|日|韩|
 FilterAL: &FilterAL '(?i)^(?!.*(DIRECT|直接连接|群|邀请|返利|循环|官网|客服|网站|网址|获取|订阅|流量|到期|机场|下次|版本|官址|备用|过期|已用|联系|邮箱|工单|贩卖|通知|倒卖|防止|国内|地址|频道|无法|说明|使用|提示|特别|访问|支持|教程|关注|更新|作者|加入|USE|USED|TOTAL|EXPIRE|EMAIL|RESET|REMAIN|Panel|Channel|Author|GB|TB)).*$'
 
 # 策略组代理列表模板 - 预定义的代理节点优先级排序
-SelectHK: &SelectHK {type: select, proxies: [香港故转, 台湾故转, 日本故转, 狮城故转, 美国故转, 韩国故转,欧洲故转, 其他故转,global smart,global manual,]}
-SelectUS: &SelectUS {type: select, proxies: [美国故转, 香港故转, 台湾故转, 日本故转, 狮城故转, 韩国故转,欧洲故转, 其他故转,global smart,global manual,]}
+SelectHK: &SelectHK {type: select, proxies: [香港故转, 台湾故转, 日本故转, 狮城故转, 美国故转, 韩国故转,欧洲故转, 其他故转, 全球智能, 全球手选,]}
+SelectUS: &SelectUS {type: select, proxies: [美国故转, 香港故转, 台湾故转, 日本故转, 狮城故转, 韩国故转,欧洲故转, 其他故转, 全球智能, 全球手选,]}
 SelectDC: &SelectDC {type: select, proxies: [DIRECT,香港故转, 台湾故转, 日本故转, 狮城故转]}
 SelectRJ: &SelectRJ {type: select, proxies: [REJECT,香港故转, 台湾故转, 日本故转, 狮城故转]}
 
