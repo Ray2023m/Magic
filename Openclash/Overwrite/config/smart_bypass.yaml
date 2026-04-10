@@ -123,7 +123,7 @@ rules:
   - RULE-SET,Reddit / Domain,Reddit 
   - RULE-SET,GitHub / Domain,GitHub
   - RULE-SET,Telegram / Domain,Telegram
-  - RULE-SET,Telegram_IP,Telegram,no-resolve
+  - RULE-SET,Telegram / IP,Telegram,no-resolve
   - RULE-SET,WhatsApp / Domain,WhatsApp
   - RULE-SET,Facebook / Domain,Facebook
   - RULE-SET,Apple / Domain,Apple
