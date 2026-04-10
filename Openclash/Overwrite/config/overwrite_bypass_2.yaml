@@ -40,14 +40,14 @@ SelectRJ: &SelectRJ {type: select, proxies: [REJECT,香港故转, 台湾故转, 
 # ==================== 代理提供商 ====================
 proxy-providers:
   # 优质订阅源 - 优质节点集合，使用时请修改
-  AirPort1-猫猫云: {<<: *BaseProvider, url: 'maomamoyunaddr', override: {additional-prefix: '[优] '}}
-  AirPort2-Candytally: {<<: *BaseProvider, url: 'candytallyaddr', override: {additional-prefix: '[优] '}}
+  AirPort1-猫猫云: {<<: *BaseProvider, url: '订阅地址', override: {additional-prefix: '[优] '}}
+  AirPort2-Candytally: {<<: *BaseProvider, url: '订阅地址', override: {additional-prefix: '[优] '}}
   # 备用订阅源 - 次优节点集合，使用时请修改
-  AirPort3-69云: {<<: *BaseProvider, url: 'cloudflareaddr', override: {additional-prefix: '[备] '}}
-  AirPort4-魔戒: {<<: *BaseProvider, url: '69yunaddr', override: {additional-prefix: '[备] '}}
+  AirPort3-69云: {<<: *BaseProvider, url: '订阅地址', override: {additional-prefix: '[备] '}}
+  AirPort4-魔戒: {<<: *BaseProvider, url: '订阅地址', override: {additional-prefix: '[备] '}}
   # 自建订阅源 - 自建节点集合，使用时请修改
-  AirPort5-REshare: {<<: *BaseProvider, url: 'selfaddr', override: {additional-prefix: '[自] '}}
-  AirPort6-Oracle: {<<: *BaseProvider, url: 'oracleaddr', override: {additional-prefix: '[自] '}}
+  AirPort5-REshare: {<<: *BaseProvider, url: '订阅地址', override: {additional-prefix: '[自] '}}
+  AirPort6-Oracle: {<<: *BaseProvider, url: '订阅地址', override: {additional-prefix: '[自] '}}
 
 # ==================== 代理策略组 ====================
 proxy-groups:
