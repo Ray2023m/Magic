@@ -16,7 +16,7 @@ dns:
 # 订阅源基础配置
 BaseProvider: &BaseProvider {type: http, interval: 86400, proxy: DIRECT, health-check: {enable: true, url: 'https://cp.cloudflare.com/generate_204', interval: 300}, filter: '^(?!.*(剩余|套餐|官网|群组|订阅|到期|永久|基础|国内|过滤|测试))'}
 # 策略组类型模板 - 定义不同的策略组基础配置
-BaseSL: &BaseSL {type: select, interval: 200, lazy: true, url: 'https://cp.cloudflare.com/generate_204', hidden: true}
+BaseSL: &BaseSL {type: select, hidden: true}
 BaseFB: &BaseFB {type: fallback, interval: 200, lazy: true, url: 'https://cp.cloudflare.com/generate_204', hidden: true}
 BaseSmart: &BaseSmart {type: smart, interval: 200, lazy: true, url: 'https://cp.cloudflare.com/generate_204', hidden: true, uselightgbm: true}
 
