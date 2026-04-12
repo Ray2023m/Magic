@@ -1,4 +1,4 @@
-name: Sync Meta Rules to Rules/Meta
+name: Sync Meta Rules
 
 on:
   schedule:
@@ -8,17 +8,24 @@ on:
 jobs:
   sync:
     runs-on: ubuntu-latest
+    # 核心：必须声明写权限，公共仓库才能自动推送更新
+    permissions:
+      contents: write
+
     steps:
-      - name: Checkout Private Repo
+      - name: Checkout Repo
         uses: actions/checkout@v4
         with:
-          token: ${{ secrets.SYNC_RULES_TOKEN }}
+          # 公共仓库建议直接使用默认 TOKEN，无需手动配置 Secret
+          token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Download MRS Files
         run: |
+          # 1. 改回你要求的路径结构
           mkdir -p Rules/Meta/geosite Rules/Meta/geoip
           
-          BASE_URL="https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo"
+          # 2. 基础下载链接
+          BASE_URL="https://githubusercontent.com"
 
           geosite_list=(
             "openai" "perplexity" "github" "telegram" "x" "facebook" 
@@ -29,6 +36,7 @@ jobs:
 
           geoip_list=("telegram" "netflix" "cn" "google" "ad")
 
+          # 3. 执行下载并保存到 Rules/Meta/
           for file in "${geosite_list[@]}"; do
             echo "Downloading geosite/$file.mrs..."
             curl -sSfL "${BASE_URL}/geosite/${file}.mrs" -o "Rules/Meta/geosite/${file}.mrs"
@@ -41,7 +49,8 @@ jobs:
 
       - name: Commit and Push
         run: |
-          git config --global user.name "GitHub Action"
-          git config --global user.email "action@github.com"
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@://github.com"
+          # 4. 提交 Rules/Meta 文件夹下的变动
           git add Rules/Meta/
-          git diff --quiet && git diff --staged --quiet || (git commit -m "Sync Meta rules $(date +'%Y-%m-%d')" && git push)
+          git diff --quiet && git diff --staged --quiet || (git commit -m "Sync: Update Meta rules $(date +'%Y-%m-%d')" && git push)
