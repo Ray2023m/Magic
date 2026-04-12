@@ -1,0 +1,47 @@
+name: Sync Meta Rules to Rules/Meta
+
+on:
+  schedule:
+    - cron: '0 2 * * *'
+  workflow_dispatch:
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Private Repo
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.SYNC_RULES_TOKEN }}
+
+      - name: Download MRS Files
+        run: |
+          mkdir -p Rules/Meta/geosite Rules/Meta/geoip
+          
+          BASE_URL="https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo"
+
+          geosite_list=(
+            "openai" "perplexity" "github" "telegram" "x" "facebook" 
+            "amazon" "apple-cn" "apple" "microsoft" "okx" "bybit" 
+            "binance" "tiktok" "netflix" "disney" "hbo" "spotify" 
+            "steam" "cn" "private" "reddit" "youtube" "google"
+          )
+
+          geoip_list=("telegram" "netflix" "cn" "google" "ad")
+
+          for file in "${geosite_list[@]}"; do
+            echo "Downloading geosite/$file.mrs..."
+            curl -sSfL "${BASE_URL}/geosite/${file}.mrs" -o "Rules/Meta/geosite/${file}.mrs"
+          done
+
+          for file in "${geoip_list[@]}"; do
+            echo "Downloading geoip/$file.mrs..."
+            curl -sSfL "${BASE_URL}/geoip/${file}.mrs" -o "Rules/Meta/geoip/${file}.mrs"
+          done
+
+      - name: Commit and Push
+        run: |
+          git config --global user.name "GitHub Action"
+          git config --global user.email "action@github.com"
+          git add Rules/Meta/
+          git diff --quiet && git diff --staged --quiet || (git commit -m "Sync Meta rules $(date +'%Y-%m-%d')" && git push)
