@@ -49,8 +49,9 @@ jobs:
 
       - name: Commit and Push
         run: |
+          # 注意邮箱里的数字 41898282，这是官方 bot 的唯一标识
           git config --global user.name "github-actions[bot]"
-          git config --global user.email "github-actions[bot]@://github.com"
-          # 4. 提交 Rules/Meta 文件夹下的变动
+          git config --global user.email "41898282+github-actions[bot]@://github.com"
+          
           git add Rules/Meta/
           git diff --quiet && git diff --staged --quiet || (git commit -m "Sync: Update Meta rules $(date +'%Y-%m-%d')" && git push)
