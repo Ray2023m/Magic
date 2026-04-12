@@ -25,7 +25,7 @@ jobs:
           mkdir -p Rules/Meta/geosite Rules/Meta/geoip
           
           # 2. 基础下载链接
-          BASE_URL="https://githubusercontent.com"
+          BASE_URL="https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo"
 
           geosite_list=(
             "openai" "perplexity" "github" "telegram" "x" "facebook" 
