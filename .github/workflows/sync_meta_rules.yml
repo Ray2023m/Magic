@@ -49,9 +49,18 @@ jobs:
 
       - name: Commit and Push
         run: |
-          # 注意邮箱里的数字 41898282，这是官方 bot 的唯一标识
+          # 1. 配置官方机器人身份
           git config --global user.name "github-actions[bot]"
           git config --global user.email "41898282+github-actions[bot]@://github.com"
           
-          git add Rules/Meta/
-          git diff --quiet && git diff --staged --quiet || (git commit -m "Sync: Update Meta rules $(date +'%Y-%m-%d')" && git push)
+          # 2. 暂存所有规则目录下的改动
+          git add Rules/
+          
+          # 3. 只有当检测到文件内容有变化时才执行提交和推送
+          if git diff --cached --exit-code --quiet; then
+            echo "No changes detected in rules, skipping commit."
+          else
+            echo "Changes detected, pushing updates..."
+            git commit -m "Sync: Update rules $(date +'%Y-%m-%d') (Auto-check)"
+            git push
+          fi
