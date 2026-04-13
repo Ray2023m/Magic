@@ -17,9 +17,9 @@ jobs:
       - name: 1. Pull Private Meta to Rules Folder
         uses: actions/checkout@v4
         with:
-          repository: Ray2023m/Rules  # ⬅️ 修改为你的私仓路径
+          repository: Ray2023m/Rules  
           token: ${{ secrets.SYNC_RULES_TOKEN }}
-          path: Rules  # 指定拉取到公共仓库的 Rules 文件夹
+          path: Rules  
           sparse-checkout: |
             Meta
           sparse-checkout-cone-mode: false
@@ -28,11 +28,8 @@ jobs:
         run: |
           git config --global user.name "github-actions[bot]"
           git config --global user.email "41898282+github-actions[bot]@://github.com"
-
-          # 【关键修复】删除 Rules 目录下的 .git 文件夹，取消子模块状态
-          rm -rf Rules/.git
           
-          # 强制清理缓存，防止 Git 记住之前的子模块状态
+          rm -rf Rules/.git
           git rm -r --cached Rules/ || true
           # 仅同步 Rules 文件夹
           git add Rules/
