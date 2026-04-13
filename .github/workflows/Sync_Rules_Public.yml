@@ -38,6 +38,6 @@ jobs:
           if git diff --cached --exit-code --quiet; then
             echo "No changes detected."
           else
-            git commit -m "Sync: Update rules $(TZ='Asia/Shanghai' date +'%Y-%m-%d') (Auto-check)"
+            git commit -m "Sync: Update rules $(TZ='Asia/Shanghai' date +'%Y-%m-%d %H:%M:%S')"
             git push
           fi
