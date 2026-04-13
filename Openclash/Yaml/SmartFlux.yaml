@@ -47,7 +47,6 @@ proxy-providers:
 proxy-groups:
   # 应用策略层 - Select手动选择. 
   - {name: Intelligence,  <<: *SelectUS}
-  - {name: Reddit,  <<: *SelectUS}
   - {name: Telegram,  <<: *SelectUS}
   - {name: WhatsApp,  <<: *SelectUS}
   - {name: Facebook,  <<: *SelectUS}
@@ -155,16 +154,16 @@ BehaviorIP: &BehaviorIP {type: http, behavior: ipcidr, format: mrs, interval: 86
 
 rule-providers:
   # 域名规则
-  TEST:      {<<: *BehaviorDN, url: "https://raw.githubusercontent.com/Ray2023m/Magic/main/Rules/Meta/geosite/Check.mrs"}
+  TEST:      {<<: *BehaviorDN, url: "https://raw.githubusercontent.com/Ray2023m/Magic/main/Rules/Meta/geosite/check.mrs"}
   ChatGPT:   {<<: *BehaviorDN, url: "https://raw.githubusercontent.com/Ray2023m/Magic/main/Rules/Meta/geosite/openai.mrs"}
-  Claude:    {<<: *BehaviorDN, url: "https://raw.githubusercontent.com/Ray2023m/Magic/main/Rules/Meta/geosite/Claude.mrs"}
-  MetaAI:    {<<: *BehaviorDN, url: "https://raw.githubusercontent.com/Ray2023m/Magic/main/Rules/Meta/geosite/MetaAi.mrs"}
-  Copilot:   {<<: *BehaviorDN, url: "https://raw.githubusercontent.com/Ray2023m/Magic/main/Rules/Meta/geosite/Copilot.mrs"}
-  Gemini:    {<<: *BehaviorDN, url: "https://raw.githubusercontent.com/Ray2023m/Magic/main/Rules/Meta/geosite/Gemini.mrs"}
+  Claude:    {<<: *BehaviorDN, url: "https://raw.githubusercontent.com/Ray2023m/Magic/main/Rules/Meta/geosite/claude.mrs"}
+  MetaAI:    {<<: *BehaviorDN, url: "https://raw.githubusercontent.com/Ray2023m/Magic/main/Rules/Meta/geosite/meta-ai.mrs"}
+  Copilot:   {<<: *BehaviorDN, url: "https://raw.githubusercontent.com/Ray2023m/Magic/main/Rules/Meta/geosite/copilot.mrs"}
+  Gemini:    {<<: *BehaviorDN, url: "https://raw.githubusercontent.com/Ray2023m/Magic/main/Rules/Meta/geosite/gemini.mrs"}
   GitHub:    {<<: *BehaviorDN, url: "https://raw.githubusercontent.com/Ray2023m/Magic/main/Rules/Meta/geosite/github.mrs"}
   Telegram:  {<<: *BehaviorDN, url: "https://raw.githubusercontent.com/Ray2023m/Magic/main/Rules/Meta/geosite/telegram.mrs"}  
   Twitter:   {<<: *BehaviorDN, url: "https://raw.githubusercontent.com/Ray2023m/Magic/main/Rules/Meta/geosite/x.mrs"}
-  WhatsApp:  {<<: *BehaviorDN, url: "https://raw.githubusercontent.com/Ray2023m/Magic/main/Rules/Meta/geosite/Whatsapp.mrs"}
+  WhatsApp:  {<<: *BehaviorDN, url: "https://raw.githubusercontent.com/Ray2023m/Magic/main/Rules/Meta/geosite/whatsapp.mrs"}
   Facebook:  {<<: *BehaviorDN, url: "https://raw.githubusercontent.com/Ray2023m/Magic/main/Rules/Meta/geosite/facebook.mrs"}
   AppleCN:   {<<: *BehaviorDN, url: "https://raw.githubusercontent.com/Ray2023m/Magic/main/Rules/Meta/geosite/apple-cn.mrs"}
   Apple:     {<<: *BehaviorDN, url: "https://raw.githubusercontent.com/Ray2023m/Magic/main/Rules/Meta/geosite/apple.mrs"} 
@@ -180,23 +179,23 @@ rule-providers:
   Blizzard:  {<<: *BehaviorDN, url: "https://raw.githubusercontent.com/Ray2023m/Magic/main/Rules/Meta/geosite/blizzard.mrs"}
   UBI:       {<<: *BehaviorDN, url: "https://raw.githubusercontent.com/Ray2023m/Magic/main/Rules/Meta/geosite/ubi.mrs"}
   PlayS  :   {<<: *BehaviorDN, url: "https://raw.githubusercontent.com/Ray2023m/Magic/main/Rules/Meta/geosite/playstation.mrs"}
-  Nintendo:  {<<: *BehaviorDN, url: "https://raw.githubusercontent.com/Ray2023m/Magic/main/Rules/Meta/geosite/Nintendo.mrs"}
+  Nintendo:  {<<: *BehaviorDN, url: "https://raw.githubusercontent.com/Ray2023m/Magic/main/Rules/Meta/geosite/nintendo.mrs"}
   Proxy:     {<<: *BehaviorDN, url: "https://raw.githubusercontent.com/Ray2023m/Magic/main/Rules/Meta/list/Proxy.list"}
-  Globe:     {<<: *BehaviorDN, url: "https://raw.githubusercontent.com/Ray2023m/Magic/main/Rules/Meta/list/Global.mrs"} 
-  Direct:    {<<: *BehaviorDN, url: "https://raw.githubusercontent.com/Ray2023m/Magic/main/Rules/Meta/list/Direct.mrs"}
+  Globe:     {<<: *BehaviorDN, url: "https://raw.githubusercontent.com/Ray2023m/Magic/main/Rules/Meta/list/global.mrs"} 
+  Direct:    {<<: *BehaviorDN, url: "https://raw.githubusercontent.com/Ray2023m/Magic/main/Rules/Meta/list/direct.mrs"}
   China:     {<<: *BehaviorDN, url: "https://raw.githubusercontent.com/Ray2023m/Magic/main/Rules/Meta/geosite/cn.mrs"}
   Private:   {<<: *BehaviorDN, url: "https://raw.githubusercontent.com/Ray2023m/Magic/main/Rules/Meta/geosite/private.mrs"}
-  BLOCK:     {<<: *BehaviorDN, url: "https://raw.githubusercontent.com/Ray2023m/Magic/main/Rules/Meta/list/Block.mrs"}
+  BLOCK:     {<<: *BehaviorDN, url: "https://raw.githubusercontent.com/Ray2023m/Magic/main/Rules/Meta/list/block.mrs"}
   Youtube:   {<<: *BehaviorDN, url: "https://raw.githubusercontent.com/Ray2023m/Magic/main/Rules/Meta/geosite/youtube.mrs"}  
   Google:    {<<: *BehaviorDN, url: "https://raw.githubusercontent.com/Ray2023m/Magic/main/Rules/Meta/geosite/google.mrs"}
-  Personal:  {<<: *BehaviorDN, url: "https://raw.githubusercontent.com/Ray2023m/Magic/main/Rules/Meta/geosite/Manual.mrs"}
+  Personal:  {<<: *BehaviorDN, url: "https://raw.githubusercontent.com/Ray2023m/Magic/main/Rules/Meta/geosite/manual.mrs"}
 
   # IP规则
-  TestIP:     {<<: *BehaviorIP, url: "https://raw.githubusercontent.com/Ray2023m/Magic/main/Rules/Meta/geoip/Check.mrs"}
-  ClaudeIP:   {<<: *BehaviorIP, url: "https://raw.githubusercontent.com/Ray2023m/Magic/main/Rules/Meta/geoip/Claude.mrs"}
-  CopilotIP:  {<<: *BehaviorIP, url: "https://raw.githubusercontent.com/Ray2023m/Magic/main/Rules/Meta/geoip/Copilot.mrs"}
+  TestIP:     {<<: *BehaviorIP, url: "https://raw.githubusercontent.com/Ray2023m/Magic/main/Rules/Meta/geoip/check.mrs"}
+  ClaudeIP:   {<<: *BehaviorIP, url: "https://raw.githubusercontent.com/Ray2023m/Magic/main/Rules/Meta/geoip/claude.mrs"}
+  CopilotIP:  {<<: *BehaviorIP, url: "https://raw.githubusercontent.com/Ray2023m/Magic/main/Rules/Meta/geoip/copilot.mrs"}
   TelegramIP: {<<: *BehaviorIP, url: "https://raw.githubusercontent.com/Ray2023m/Magic/main/Rules/Meta/geoip/telegram.mrs"}
-  WhatsappIP: {<<: *BehaviorIP, url: "https://raw.githubusercontent.com/Ray2023m/Magic/main/Rules/Meta/geoip/Whatsapp.mrs"}  
+  WhatsappIP: {<<: *BehaviorIP, url: "https://raw.githubusercontent.com/Ray2023m/Magic/main/Rules/Meta/geoip/whatsapp.mrs"}  
   GoogleIP:   {<<: *BehaviorIP, url: "https://raw.githubusercontent.com/Ray2023m/Magic/main/Rules/Meta/geoip/google.mrs"}
   GlobalIP:   {<<: *BehaviorIP, url: "https://raw.githubusercontent.com/Ray2023m/Magic/main/Rules/Meta/geoip/global.mrs"}
   ChinaIP:    {<<: *BehaviorIP, url: "https://raw.githubusercontent.com/Ray2023m/Magic/main/Rules/Meta/geoip/cn.mrs"}
