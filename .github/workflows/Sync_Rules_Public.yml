@@ -37,6 +37,6 @@ jobs:
           if git diff --cached --exit-code --quiet; then
             echo "No changes detected."
           else
-            git commit -m "Sync Rules from Private: $(date +'%Y-%m-%d %H:%M')"
+            git commit -m "Sync: Update rules $(date +'%Y-%m-%d') (Auto-check)"
             git push
           fi
