@@ -28,7 +28,12 @@ jobs:
         run: |
           git config --global user.name "github-actions[bot]"
           git config --global user.email "41898282+github-actions[bot]@://github.com"
+
+          # 【关键修复】删除 Rules 目录下的 .git 文件夹，取消子模块状态
+          rm -rf Rules/.git
           
+          # 强制清理缓存，防止 Git 记住之前的子模块状态
+          git rm -r --cached Rules/ || true
           # 仅同步 Rules 文件夹
           git add Rules/
           
