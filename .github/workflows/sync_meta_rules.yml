@@ -1,60 +1,40 @@
-name: Sync Meta Rules
+name: Sync Rules to Public
 
 on:
   schedule:
-    - cron: '30 7 * * *'
+    - cron: '30 23 * * *' # 北京时间 07:30
   workflow_dispatch:
 
 jobs:
-  sync:
+  sync_rules:
     runs-on: ubuntu-latest
-    permissions:
-      contents: write
-
     steps:
-      - name: Checkout Repo
+      - name: Checkout Public Repo
         uses: actions/checkout@v4
         with:
-          token: ${{ secrets.GITHUB_TOKEN }}
+          token: ${{ secrets.SYNC_RULES_TOKEN }}
 
-      - name: Download MRS Files
+      - name: 1. Pull Private Meta to Rules Folder
+        uses: actions/checkout@v4
+        with:
+          repository: https://github.com/Ray2023m/Rules  # ⬅️ 修改为你的私仓路径
+          token: ${{ secrets.SYNC_RULES_TOKEN }}
+          path: Rules  # 指定拉取到公共仓库的 Rules 文件夹
+          sparse-checkout: |
+            Meta
+          sparse-checkout-cone-mode: false
+
+      - name: 2. Commit and Push
         run: |
-          mkdir -p Rules/Meta/geosite Rules/Meta/geoip
-          
-          BASE_URL="https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo"
-
-          geosite_list=(
-            "openai" "perplexity" "github" "telegram" "x" "facebook" "amazon" "apple-cn" "apple" "microsoft" "tiktok" "netflix" "disney" "hbo" "spotify" 
-            "steam" "cn" "private" "reddit" "youtube" "google" "google-gemini" "biliintl" "bilibili" "ehentai" "bahamut" "geolocation-!cn"
-          )
-
-          geoip_list=("telegram" "netflix" "cn" "google" "private" "twitter")
-
-          # 3. 执行下载并保存到 Rules/Meta/
-          for file in "${geosite_list[@]}"; do
-            echo "Downloading geosite/$file.mrs..."
-            curl -sSfL "${BASE_URL}/geosite/${file}.mrs" -o "Rules/Meta/geosite/${file}.mrs"
-          done
-
-          for file in "${geoip_list[@]}"; do
-            echo "Downloading geoip/$file.mrs..."
-            curl -sSfL "${BASE_URL}/geoip/${file}.mrs" -o "Rules/Meta/geoip/${file}.mrs"
-          done
-
-      - name: Commit and Push
-        run: |
-          # 1. 配置官方机器人身份
           git config --global user.name "github-actions[bot]"
           git config --global user.email "41898282+github-actions[bot]@://github.com"
           
-          # 2. 暂存所有规则目录下的改动
+          # 仅同步 Rules 文件夹
           git add Rules/
           
-          # 3. 只有当检测到文件内容有变化时才执行提交和推送
           if git diff --cached --exit-code --quiet; then
-            echo "No changes detected in rules, skipping commit."
+            echo "No changes detected."
           else
-            echo "Changes detected, pushing updates..."
-            git commit -m "Sync: Update rules $(date +'%Y-%m-%d') (Auto-check)"
+            git commit -m "Sync Rules from Private: $(date +'%Y-%m-%d %H:%M')"
             git push
           fi
