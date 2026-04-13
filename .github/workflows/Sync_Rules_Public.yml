@@ -17,7 +17,7 @@ jobs:
       - name: 1. Pull Private Meta to Rules Folder
         uses: actions/checkout@v4
         with:
-          repository: https://github.com/Ray2023m/Rules  # ⬅️ 修改为你的私仓路径
+          repository: Ray2023m/Rules  # ⬅️ 修改为你的私仓路径
           token: ${{ secrets.SYNC_RULES_TOKEN }}
           path: Rules  # 指定拉取到公共仓库的 Rules 文件夹
           sparse-checkout: |
