@@ -8,7 +8,6 @@ on:
 jobs:
   sync:
     runs-on: ubuntu-latest
-    # 核心：必须声明写权限，公共仓库才能自动推送更新
     permissions:
       contents: write
 
@@ -16,15 +15,12 @@ jobs:
       - name: Checkout Repo
         uses: actions/checkout@v4
         with:
-          # 公共仓库建议直接使用默认 TOKEN，无需手动配置 Secret
           token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Download MRS Files
         run: |
-          # 1. 改回你要求的路径结构
           mkdir -p Rules/Meta/geosite Rules/Meta/geoip
           
-          # 2. 基础下载链接
           BASE_URL="https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo"
 
           geosite_list=(
@@ -32,9 +28,11 @@ jobs:
             "amazon" "apple-cn" "apple" "microsoft" "okx" "bybit" 
             "binance" "tiktok" "netflix" "disney" "hbo" "spotify" 
             "steam" "cn" "private" "reddit" "youtube" "google"
+            "google-gemini" "biliintl" "bilibili" "ehentai" "bahamut"
+            "geolocation-!cn"
           )
 
-          geoip_list=("telegram" "netflix" "cn" "google" "ad")
+          geoip_list=("telegram" "netflix" "cn" "google" "private" "twitter")
 
           # 3. 执行下载并保存到 Rules/Meta/
           for file in "${geosite_list[@]}"; do
