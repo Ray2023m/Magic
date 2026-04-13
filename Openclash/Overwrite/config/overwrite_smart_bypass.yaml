@@ -237,6 +237,8 @@ rule-anchor:
   class: &class {type: http, interval: 86400, behavior: classical, format: text}
 
 rule-providers:
+  # 域名规则
+  # 智能助理
   My_Domain: {<<: *class, url: "https://raw.githubusercontent.com/Ray2023m/Magic/refs/heads/main/Rules/Private.list"}
   TEST_Domain: {<<: *class, url: "https://raw.githubusercontent.com/liandu2024/clash/refs/heads/main/list/Check.list"}
   ChatGPT_Domain: {<<: *domain, url: "https://github.com/metacubex/meta-rules-dat/raw/refs/heads/meta/geo/geosite/openai.mrs"}
