@@ -24,12 +24,8 @@ jobs:
           BASE_URL="https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo"
 
           geosite_list=(
-            "openai" "perplexity" "github" "telegram" "x" "facebook" 
-            "amazon" "apple-cn" "apple" "microsoft" "okx" "bybit" 
-            "binance" "tiktok" "netflix" "disney" "hbo" "spotify" 
-            "steam" "cn" "private" "reddit" "youtube" "google"
-            "google-gemini" "biliintl" "bilibili" "ehentai" "bahamut"
-            "geolocation-!cn"
+            "openai" "perplexity" "github" "telegram" "x" "facebook" "amazon" "apple-cn" "apple" "microsoft" "tiktok" "netflix" "disney" "hbo" "spotify" 
+            "steam" "cn" "private" "reddit" "youtube" "google" "google-gemini" "biliintl" "bilibili" "ehentai" "bahamut" "geolocation-!cn"
           )
 
           geoip_list=("telegram" "netflix" "cn" "google" "private" "twitter")
