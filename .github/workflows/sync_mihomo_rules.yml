@@ -96,7 +96,7 @@ jobs:
 
       - name: 提交并推送更新
         shell: bash
-        working-directory: ${{ github.workspace }}/Tools-repo
+        working-directory: ${{ github.workspace }}/Rules-repo
         run: |
           set -euo pipefail
 
