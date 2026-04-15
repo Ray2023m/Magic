@@ -15,7 +15,7 @@ on:
     - cron: "0 18 * * *"   # 北京时间 02:00（UTC 18:00）
   push:
     paths:
-      - ".github/workflows/sync-loyalsoldier-geomrs.yml"
+      - ".github/workflows/sync_meta-rules-dat_geomrs.yaml"
       - "scripts/sync_loy_geo_mrs.sh"
       - "scripts/helpers.py"
       - "trigger"

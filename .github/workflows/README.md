@@ -1,4 +1,4 @@
-# 工作流使用说明：sync-loyalsoldier-geomrs.yml
+# 工作流使用说明：sync_meta-rules-dat_geomrs.yaml
 
 本文说明工作流：
 `Sync Loyalsoldier DAT -> Multi-format Rulesets`
@@ -41,7 +41,7 @@ Tag 匹配是大小写敏感的。
 ## 固定包含 Tag（推荐）
 在工作流文件中修改：
 
-- [sync-loyalsoldier-geomrs.yml](/Users/lazarus/文稿/GitHub/Magic/.github/workflows/sync-loyalsoldier-geomrs.yml:36)
+- [sync_meta-rules-dat_geomrs.yaml](/Users/lazarus/文稿/GitHub/Magic/.github/workflows/sync_meta-rules-dat_geomrs.yaml:36)
 
 把下面这行改成你的常用 tag（逗号分隔）：
 
