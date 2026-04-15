@@ -28,8 +28,8 @@ LEGACY_GEO_ROOT='geo'
 OUT_QX_GEOSITE=''
 OUT_QX_GEOIP=''
 
-CLASH_DIR="${CLASH_DIR:-clash}"
-CLASH_IP_DIR="${CLASH_IP_DIR:-clash-ip}"
+CLASH_DIR="${CLASH_DIR:-Manual_Site}"
+CLASH_IP_DIR="${CLASH_IP_DIR:-Manual_IP}"
 
 MIHOMO_BIN="${MIHOMO_BIN:-./mihomo}"
 

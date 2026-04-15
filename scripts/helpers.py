@@ -4,9 +4,9 @@ helpers.py — sync_loy_geo_mrs.sh 的统一 Python 引擎
 一次调用处理所有 tag，输出全部格式，消除数千次进程启动开销。
 
 用法:
-  python3 helpers.py batch_geosite  <geosite_txt_dir> <clash_dir> <out_geosite> <out_qx_geosite> <mrs_tasks> <srs_tasks> <workdir>
-  python3 helpers.py batch_geoip    <geoip_txt_dir> <clash_dir> <clash_ip_dir_from_geosite> <out_geoip> <out_qx_geoip> <mrs_tasks> <srs_tasks> <workdir>
-  python3 helpers.py batch_clash_ip <clash_ip_dir> <out_geoip> <out_qx_geoip> <mrs_tasks> <srs_tasks> <workdir>
+  python3 helpers.py batch_geosite  <geosite_txt_dir> <manual_site_dir> <out_geosite> <out_qx_geosite> <mrs_tasks> <srs_tasks> <workdir>
+  python3 helpers.py batch_geoip    <geoip_txt_dir> <manual_site_dir> <manual_ip_cache_from_geosite> <out_geoip> <out_qx_geoip> <mrs_tasks> <srs_tasks> <workdir>
+  python3 helpers.py batch_clash_ip <manual_ip_dir> <out_geoip> <out_qx_geoip> <mrs_tasks> <srs_tasks> <workdir>
 
   还保留单条命令供 shell 零星调用:
   python3 helpers.py parse_clash       <yaml> <out_dir> <tag>
@@ -654,13 +654,13 @@ def cmd_batch_geoip(geoip_txt_dir, clash_dir, clash_ip_from_geosite_dir,
 
 
 # ═══════════════════════════════════════════════════════════════════════════════
-# batch_clash_ip：处理 clash-ip/ 目录，合并进 geo/geoip/ 五格式 + QX
+# batch_clash_ip：处理 Manual_IP/ 目录，合并进 mihomo/geoip（QX 仅用于临时产物）
 # ═══════════════════════════════════════════════════════════════════════════════
 
 def cmd_batch_clash_ip(clash_ip_dir, out_geoip, out_qx_geoip,
                        mrs_tasks_file, srs_tasks_file, workdir):
     if not os.path.isdir(clash_ip_dir):
-        print("[INFO] clash-ip: ok=0")
+        print("[INFO] Manual_IP: ok=0")
         return
 
     mrs_tasks = []
@@ -669,14 +669,14 @@ def cmd_batch_clash_ip(clash_ip_dir, out_geoip, out_qx_geoip,
 
     for cyaml in sorted(glob.glob(os.path.join(clash_ip_dir, "*.yaml"))):
         tag = os.path.basename(cyaml).removesuffix(".yaml")
-        print(f"[CLASH-IP] processing {tag} <- {cyaml}")
+        print(f"[MANUAL-IP] processing {tag} <- {cyaml}")
 
         cb = parse_clash_to_buckets(cyaml)
         ci_ipcidr = cb.get("ipcidr", [])
         ci_asn = cb.get("asn", [])
 
         if not ci_ipcidr and not ci_asn:
-            print(f"[CLASH-IP] {tag}: no IP entries, skip")
+            print(f"[MANUAL-IP] {tag}: no IP entries, skip")
             continue
 
         # 现有数据（从已生成的 list 文件读取）
@@ -708,10 +708,10 @@ def cmd_batch_clash_ip(clash_ip_dir, out_geoip, out_qx_geoip,
                 new_asn.append(v)
 
         if not new_cidr and not new_asn:
-            print(f"[CLASH-IP] {tag}: no new entries, skip")
+            print(f"[MANUAL-IP] {tag}: no new entries, skip")
             continue
 
-        print(f"[CLASH-IP] {tag}: +{len(new_cidr)} CIDRs  +{len(new_asn)} ASNs")
+        print(f"[MANUAL-IP] {tag}: +{len(new_cidr)} CIDRs  +{len(new_asn)} ASNs")
 
         dst_yaml = os.path.join(out_geoip, f"{tag}.yaml")
         dst_list = os.path.join(out_geoip, f"{tag}.list")
@@ -785,7 +785,7 @@ def cmd_batch_clash_ip(clash_ip_dir, out_geoip, out_qx_geoip,
 
         ok += 1
 
-    print(f"[INFO] clash-ip: ok={ok}")
+    print(f"[INFO] Manual_IP: ok={ok}")
 
     with open(mrs_tasks_file, "a", encoding="utf-8") as f:
         for line in mrs_tasks:
