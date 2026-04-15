@@ -61,9 +61,7 @@ WORKDIR="$(mktemp -d)"
 trap 'rm -rf "$WORKDIR"' EXIT
 
 MRS_TASKS="${WORKDIR}/mrs_tasks.txt"
-SRS_TASKS="${WORKDIR}/srs_tasks.txt"
 : > "$MRS_TASKS"
-: > "$SRS_TASKS"
 
 # ══════════════════════════════════════════════════════════════════════════════
 # 1. 下载
@@ -106,7 +104,6 @@ python3 "$HELPERS" batch_geosite \
   "$CLASH_DIR" \
   "$OUT_GEOSITE" \
   "$MRS_TASKS" \
-  "$SRS_TASKS" \
   "$WORKDIR"
 
 # ══════════════════════════════════════════════════════════════════════════════
@@ -119,7 +116,6 @@ python3 "$HELPERS" batch_geoip \
   "$WORKDIR/clash_ip" \
   "$OUT_GEOIP" \
   "$MRS_TASKS" \
-  "$SRS_TASKS" \
   "$WORKDIR"
 
 # ── Python 批处理 Manual_IP/ ─────────────────────────────────────────────────
@@ -128,7 +124,6 @@ python3 "$HELPERS" batch_manual_ip \
   "$CLASH_IP_DIR" \
   "$OUT_GEOIP" \
   "$MRS_TASKS" \
-  "$SRS_TASKS" \
   "$WORKDIR"
 
 # ══════════════════════════════════════════════════════════════════════════════

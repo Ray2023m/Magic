@@ -4,9 +4,9 @@ helpers.py — sync_loy_geo_mrs.sh 的统一 Python 引擎
 一次调用处理所有 tag，输出全部格式，消除数千次进程启动开销。
 
 用法:
-  python3 helpers.py batch_geosite  <geosite_txt_dir> <manual_site_dir> <out_geosite> <mrs_tasks> <srs_tasks> <workdir>
-  python3 helpers.py batch_geoip    <geoip_txt_dir> <manual_site_dir> <manual_ip_cache_from_geosite> <out_geoip> <mrs_tasks> <srs_tasks> <workdir>
-  python3 helpers.py batch_manual_ip <manual_ip_dir> <out_geoip> <mrs_tasks> <srs_tasks> <workdir>
+  python3 helpers.py batch_geosite  <geosite_txt_dir> <manual_site_dir> <out_geosite> <mrs_tasks> <workdir>
+  python3 helpers.py batch_geoip    <geoip_txt_dir> <manual_site_dir> <manual_ip_cache_from_geosite> <out_geoip> <mrs_tasks> <workdir>
+  python3 helpers.py batch_manual_ip <manual_ip_dir> <out_geoip> <mrs_tasks> <workdir>
 
   还保留单条命令供 shell 零星调用:
   python3 helpers.py parse_clash       <yaml> <out_dir> <tag>
@@ -175,7 +175,7 @@ def parse_geosite_txt(filepath):
 # ═══════════════════════════════════════════════════════════════════════════════
 
 def emit_geosite_tag(tag, buckets, clash_yaml, out_geosite,
-                     mrs_tasks, srs_tasks, workdir):
+                     mrs_tasks, workdir):
     """
     为一个 geosite tag 输出全部格式。
     buckets: {"suffix":[], "domain":[], "keyword":[], "regexp":[],
@@ -258,7 +258,7 @@ def emit_geosite_tag(tag, buckets, clash_yaml, out_geosite,
     j_domain = list(domain)
     j_keyword = list(keyword)
     j_regexp = list(regexp)
-    # wildcard: json/srs 不支持，跳过
+    # wildcard: json 不支持，跳过
     j_cidrs = []  # IP 条目从 clash_extras 获取（与 yaml/list 一致）
     for t, v in clash_extras:
         if t in JSON_SKIP_TYPES:
@@ -307,9 +307,6 @@ def emit_geosite_tag(tag, buckets, clash_yaml, out_geosite,
         write_lines(mrs_src, mrs_lines)
         mrs_tasks.append(f"domain\t{mrs_src}\t{os.path.join(out_geosite, f'{tag}.mrs')}")
 
-    # srs 任务
-    srs_tasks.append(f"{json_path}\t{os.path.join(out_geosite, f'{tag}.srs')}")
-
     # 返回 clash 带来的 IP 条目供 geoip 使用
     extra_ipcidr = []
     extra_asn = []
@@ -322,7 +319,7 @@ def emit_geosite_tag(tag, buckets, clash_yaml, out_geosite,
 
 
 def emit_geoip_tag(tag, ipcidr_lines, asn_lines, out_geoip,
-                   mrs_tasks, srs_tasks):
+                   mrs_tasks):
     """为一个 geoip tag 输出全部格式（纯 Loyalsoldier 数据）
     geoip 侧不加 no-resolve"""
     # 构建 typed lines 用于排序
@@ -352,8 +349,6 @@ def emit_geoip_tag(tag, ipcidr_lines, asn_lines, out_geoip,
                   f, ensure_ascii=False, separators=(",", ":"))
         f.write("\n")
 
-    # mrs + srs 任务
-    srs_tasks.append(f"{json_path}\t{os.path.join(out_geoip, f'{tag}.srs')}")
     # mrs 先不登记，等 clash merge 后再登记（见 batch_geoip）
 
 
@@ -362,11 +357,10 @@ def emit_geoip_tag(tag, ipcidr_lines, asn_lines, out_geoip,
 # ═══════════════════════════════════════════════════════════════════════════════
 
 def cmd_batch_geosite(geosite_txt_dir, clash_dir, out_geosite,
-                      mrs_tasks_file, srs_tasks_file, workdir):
+                      mrs_tasks_file, workdir):
     os.makedirs(out_geosite, exist_ok=True)
 
     mrs_tasks = []
-    srs_tasks = []
     processed = set()
     clash_ip_cache = {}  # tag -> (ipcidr_list, asn_list)
 
@@ -416,7 +410,7 @@ def cmd_batch_geosite(geosite_txt_dir, clash_dir, out_geosite,
         ci, ca = emit_geosite_tag(
             tag, geo_buckets, clash_yaml,
             out_geosite,
-            mrs_tasks, srs_tasks, workdir)
+            mrs_tasks, workdir)
 
         # 缓存 clash 带来的 IP 条目（extra_ipcidr 已去重，直接使用）
         all_ci = ci
@@ -461,7 +455,7 @@ def cmd_batch_geosite(geosite_txt_dir, clash_dir, out_geosite,
             ci, ca = emit_geosite_tag(
                 tag, buckets, cyaml,
                 out_geosite,
-                mrs_tasks, srs_tasks, workdir)
+                mrs_tasks, workdir)
 
             all_ci = ci
             all_ca = ca
@@ -477,10 +471,6 @@ def cmd_batch_geosite(geosite_txt_dir, clash_dir, out_geosite,
     with open(mrs_tasks_file, "a", encoding="utf-8") as f:
         for line in mrs_tasks:
             f.write(line + "\n")
-    with open(srs_tasks_file, "a", encoding="utf-8") as f:
-        for line in srs_tasks:
-            f.write(line + "\n")
-
     # 保存 clash_ip 缓存供 geoip 阶段使用
     clash_ip_dir = os.path.join(workdir, "clash_ip")
     os.makedirs(clash_ip_dir, exist_ok=True)
@@ -494,11 +484,10 @@ def cmd_batch_geosite(geosite_txt_dir, clash_dir, out_geosite,
 # ═══════════════════════════════════════════════════════════════════════════════
 
 def cmd_batch_geoip(geoip_txt_dir, clash_dir, clash_ip_from_geosite_dir,
-                    out_geoip, mrs_tasks_file, srs_tasks_file, workdir):
+                    out_geoip, mrs_tasks_file, workdir):
     os.makedirs(out_geoip, exist_ok=True)
 
     mrs_tasks = []
-    srs_tasks = []
     processed = set()
 
     ok = 0
@@ -517,7 +506,7 @@ def cmd_batch_geoip(geoip_txt_dir, clash_dir, clash_ip_from_geosite_dir,
 
         # 生成 mihomo 规则格式（纯 Loyalsoldier 数据）
         emit_geoip_tag(tag, ipcidr_lines, [], out_geoip,
-                       mrs_tasks, srs_tasks)
+                       mrs_tasks)
 
         # clash 合并后的 mrs（用合并后数据覆盖纯 geo 数据）
         # 先收集所有需要合并的 IP 条目
@@ -588,23 +577,18 @@ def cmd_batch_geoip(geoip_txt_dir, clash_dir, clash_ip_from_geosite_dir,
     with open(mrs_tasks_file, "a", encoding="utf-8") as f:
         for line in mrs_tasks:
             f.write(line + "\n")
-    with open(srs_tasks_file, "a", encoding="utf-8") as f:
-        for line in srs_tasks:
-            f.write(line + "\n")
-
 
 # ═══════════════════════════════════════════════════════════════════════════════
 # batch_manual_ip：处理 Manual_IP/ 目录，合并进 mihomo/geoip
 # ═══════════════════════════════════════════════════════════════════════════════
 
 def cmd_batch_manual_ip(clash_ip_dir, out_geoip,
-                       mrs_tasks_file, srs_tasks_file, workdir):
+                       mrs_tasks_file, workdir):
     if not os.path.isdir(clash_ip_dir):
         print("[INFO] Manual_IP: ok=0")
         return
 
     mrs_tasks = []
-    srs_tasks = []
     ok = 0
 
     for cyaml in sorted(glob.glob(os.path.join(clash_ip_dir, "*.yaml"))):
@@ -656,7 +640,6 @@ def cmd_batch_manual_ip(clash_ip_dir, out_geoip,
         dst_yaml = os.path.join(out_geoip, f"{tag}.yaml")
         dst_list = os.path.join(out_geoip, f"{tag}.list")
         dst_json = os.path.join(out_geoip, f"{tag}.json")
-        dst_srs  = os.path.join(out_geoip, f"{tag}.srs")
         dst_mrs  = os.path.join(out_geoip, f"{tag}.mrs")
 
         # geoip 侧不加 no-resolve
@@ -697,8 +680,6 @@ def cmd_batch_manual_ip(clash_ip_dir, out_geoip,
                       f, ensure_ascii=False, separators=(",", ":"))
             f.write("\n")
 
-        srs_tasks.append(f"{dst_json}\t{dst_srs}")
-
         # mrs（全量重编译）
         all_cidr_list = []
         for line in read_lines(dst_list):
@@ -719,10 +700,6 @@ def cmd_batch_manual_ip(clash_ip_dir, out_geoip,
     with open(mrs_tasks_file, "a", encoding="utf-8") as f:
         for line in mrs_tasks:
             f.write(line + "\n")
-    with open(srs_tasks_file, "a", encoding="utf-8") as f:
-        for line in srs_tasks:
-            f.write(line + "\n")
-
 
 # ═══════════════════════════════════════════════════════════════════════════════
 # 兼容旧命令（shell 零星调用）
@@ -772,9 +749,9 @@ def cmd_rebuild_json_from_list(list_file, json_dst):
 # ═══════════════════════════════════════════════════════════════════════════════
 
 COMMANDS = {
-    "batch_geosite":    lambda a: cmd_batch_geosite(a[0], a[1], a[2], a[3], a[4], a[5]),
-    "batch_geoip":      lambda a: cmd_batch_geoip(a[0], a[1], a[2], a[3], a[4], a[5], a[6]),
-    "batch_manual_ip":  lambda a: cmd_batch_manual_ip(a[0], a[1], a[2], a[3], a[4]),
+    "batch_geosite":    lambda a: cmd_batch_geosite(a[0], a[1], a[2], a[3], a[4]),
+    "batch_geoip":      lambda a: cmd_batch_geoip(a[0], a[1], a[2], a[3], a[4], a[5]),
+    "batch_manual_ip":  lambda a: cmd_batch_manual_ip(a[0], a[1], a[2], a[3]),
     "parse_clash":      lambda a: cmd_parse_clash(a[0], a[1], a[2]),
     "merge_dedup":      lambda a: cmd_merge_dedup(a[0], a[1], a[2], a[3]),
     "diff_new_entries":     lambda a: cmd_diff_new_entries(a[0], a[1], a[2], a[3]),
