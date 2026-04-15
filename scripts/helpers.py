@@ -50,20 +50,29 @@ def norm_value(rule_type, value):
     return value
 
 
-RE_ITEM = re.compile(r"^\s*-\s+(.+)$")
 RE_COMMENT = re.compile(r"\s+#.*$")
 
 def parse_clash_entries(yaml_path):
-    """解析 clash yaml，返回 [(rule_type, value), ...]"""
+    """解析规则文件，返回 [(rule_type, value), ...]
+
+    兼容两种写法：
+    1) YAML 列表项：- DOMAIN-SUFFIX,example.com
+    2) 纯规则行：DOMAIN-SUFFIX,example.com
+    """
     if not yaml_path or yaml_path == "" or not os.path.isfile(yaml_path):
         return []
     entries = []
     with open(yaml_path, encoding="utf-8") as f:
         for raw in f:
-            m = RE_ITEM.match(raw.rstrip())
-            if not m:
+            line = raw.strip()
+            if not line or line.startswith("#"):
                 continue
-            entry = RE_COMMENT.sub("", m.group(1).strip())
+
+            # 兼容 YAML 列表前缀 "- "
+            if line.startswith("- "):
+                line = line[2:].strip()
+
+            entry = RE_COMMENT.sub("", line).strip()
             if not entry or "," not in entry:
                 continue
             parts = [p.strip() for p in entry.split(",")]
