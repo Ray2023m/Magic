@@ -39,7 +39,7 @@ jobs:
         openai,google,microsoft,github,apple,tiktok,
         netflix,youtube,disney,spotify,bilibili,hbo,
         facebook,instagram,x,telegram,line,nintendo,
-        steam,epicgames,whatsapp
+        steam,epicgames,whatsapp,perplexity
     steps:
       - name: Checkout
         uses: actions/checkout@v6
