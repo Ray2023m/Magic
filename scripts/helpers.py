@@ -579,7 +579,7 @@ def cmd_batch_geoip(geoip_txt_dir, clash_dir, clash_ip_from_geosite_dir,
             f.write(line + "\n")
 
 # ═══════════════════════════════════════════════════════════════════════════════
-# batch_manual_ip：处理 Manual_IP/ 目录，合并进 mihomo/geoip
+# batch_manual_ip：处理 Manual_IP/ 目录，合并进 Rules/mihomo/geoip
 # ═══════════════════════════════════════════════════════════════════════════════
 
 def cmd_batch_manual_ip(clash_ip_dir, out_geoip,

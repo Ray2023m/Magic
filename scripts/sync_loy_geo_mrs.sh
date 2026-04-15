@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
 # sync_loy_geo_mrs.sh
 # 从 Loyalsoldier 下载 geoip/geosite .dat，拆分并输出四种格式：
-#   mihomo/geosite/     ->  .mrs  .yaml  .list  .json
-#   mihomo/geoip/       ->  .mrs  .yaml  .list  .json
+#   Rules/mihomo/geosite/ -> .mrs  .yaml  .list  .json
+#   Rules/mihomo/geoip/   -> .mrs  .yaml  .list  .json
 #
 # 并将 clash/<n>.yaml 中的规则融合进同名输出（宽松去重）：
 #   支持规则类型：DOMAIN-SUFFIX / DOMAIN / DOMAIN-KEYWORD / DOMAIN-REGEX
@@ -22,9 +22,10 @@ set -euo pipefail
 GEOIP_URL='https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/release/geoip.dat'
 GEOSITE_URL='https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/release/geosite.dat'
 
-OUT_GEOSITE='mihomo/geosite'
-OUT_GEOIP='mihomo/geoip'
+OUT_GEOSITE='Rules/mihomo/geosite'
+OUT_GEOIP='Rules/mihomo/geoip'
 LEGACY_GEO_ROOT='geo'
+LEGACY_MIHOMO_ROOT='mihomo'
 
 CLASH_DIR="${CLASH_DIR:-Manual_Site}"
 CLASH_IP_DIR="${CLASH_IP_DIR:-Manual_IP}"
@@ -93,6 +94,7 @@ echo "[3/7] Clean output dirs (full sync)..."
 rm -rf "$OUT_GEOSITE" "$OUT_GEOIP"
 # 迁移：清理旧目录，避免 geo/ 与 mihomo/ 并存
 rm -rf "$LEGACY_GEO_ROOT"
+rm -rf "$LEGACY_MIHOMO_ROOT"
 mkdir -p "$OUT_GEOSITE" "$OUT_GEOIP"
 
 # ══════════════════════════════════════════════════════════════════════════════
@@ -176,14 +178,14 @@ mrs_fail="$(grep -c "^FAIL:" "$mrs_fail_log" 2>/dev/null || echo 0)"
 # 7. 统计
 # ══════════════════════════════════════════════════════════════════════════════
 echo "[7/7] Final counts:"
-echo "  mihomo/geosite mrs  : $(find "$OUT_GEOSITE"    -name '*.mrs'  | wc -l | tr -d ' ')"
-echo "  mihomo/geosite yaml : $(find "$OUT_GEOSITE"    -name '*.yaml' | wc -l | tr -d ' ')"
-echo "  mihomo/geosite list : $(find "$OUT_GEOSITE"    -name '*.list' | wc -l | tr -d ' ')"
-echo "  mihomo/geosite json : $(find "$OUT_GEOSITE"    -name '*.json' | wc -l | tr -d ' ')"
-echo "  mihomo/geoip   mrs  : $(find "$OUT_GEOIP"      -name '*.mrs'  | wc -l | tr -d ' ')"
-echo "  mihomo/geoip   yaml : $(find "$OUT_GEOIP"      -name '*.yaml' | wc -l | tr -d ' ')"
-echo "  mihomo/geoip   list : $(find "$OUT_GEOIP"      -name '*.list' | wc -l | tr -d ' ')"
-echo "  mihomo/geoip   json : $(find "$OUT_GEOIP"      -name '*.json' | wc -l | tr -d ' ')"
+echo "  Rules/mihomo/geosite mrs  : $(find "$OUT_GEOSITE"    -name '*.mrs'  | wc -l | tr -d ' ')"
+echo "  Rules/mihomo/geosite yaml : $(find "$OUT_GEOSITE"    -name '*.yaml' | wc -l | tr -d ' ')"
+echo "  Rules/mihomo/geosite list : $(find "$OUT_GEOSITE"    -name '*.list' | wc -l | tr -d ' ')"
+echo "  Rules/mihomo/geosite json : $(find "$OUT_GEOSITE"    -name '*.json' | wc -l | tr -d ' ')"
+echo "  Rules/mihomo/geoip   mrs  : $(find "$OUT_GEOIP"      -name '*.mrs'  | wc -l | tr -d ' ')"
+echo "  Rules/mihomo/geoip   yaml : $(find "$OUT_GEOIP"      -name '*.yaml' | wc -l | tr -d ' ')"
+echo "  Rules/mihomo/geoip   list : $(find "$OUT_GEOIP"      -name '*.list' | wc -l | tr -d ' ')"
+echo "  Rules/mihomo/geoip   json : $(find "$OUT_GEOIP"      -name '*.json' | wc -l | tr -d ' ')"
 
 if [[ $mrs_fail -gt 0 ]]; then
   echo "[WARN] compilation failures: mrs=$mrs_fail"

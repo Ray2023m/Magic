@@ -95,19 +95,19 @@ jobs:
       - name: Show outputs (debug)
         run: |
           set -eux
-          echo "=== mihomo/geosite/ ===" && ls mihomo/geosite/ | head -10 || true
-          echo "=== mihomo/geoip/ ===" && ls mihomo/geoip/ | head -10 || true
-          echo "geosite mrs  : $(find mihomo/geosite -name '*.mrs'  | wc -l)"
-          echo "geosite yaml : $(find mihomo/geosite -name '*.yaml' | wc -l)"
-          echo "geosite list : $(find mihomo/geosite -name '*.list' | wc -l)"
-          echo "geosite json : $(find mihomo/geosite -name '*.json' | wc -l)"
-          echo "geoip   mrs  : $(find mihomo/geoip   -name '*.mrs'  | wc -l)"
+          echo "=== Rules/mihomo/geosite/ ===" && ls Rules/mihomo/geosite/ | head -10 || true
+          echo "=== Rules/mihomo/geoip/ ===" && ls Rules/mihomo/geoip/ | head -10 || true
+          echo "geosite mrs  : $(find Rules/mihomo/geosite -name '*.mrs'  | wc -l)"
+          echo "geosite yaml : $(find Rules/mihomo/geosite -name '*.yaml' | wc -l)"
+          echo "geosite list : $(find Rules/mihomo/geosite -name '*.list' | wc -l)"
+          echo "geosite json : $(find Rules/mihomo/geosite -name '*.json' | wc -l)"
+          echo "geoip   mrs  : $(find Rules/mihomo/geoip   -name '*.mrs'  | wc -l)"
           git status --porcelain || true
 
           echo "=== douyin IP debug ==="
-          grep -c "IP-CIDR" mihomo/geosite/douyin.yaml || true
-          grep -c "IP-CIDR" mihomo/geosite/douyin.list || true
-          grep -c "IP-ASN"  mihomo/geosite/douyin.yaml || true
+          grep -c "IP-CIDR" Rules/mihomo/geosite/douyin.yaml || true
+          grep -c "IP-CIDR" Rules/mihomo/geosite/douyin.list || true
+          grep -c "IP-ASN"  Rules/mihomo/geosite/douyin.yaml || true
 
       # ── Commit & Push（stash 重试版） ─────────────────────────────────────
       - name: Commit & push (safe)
@@ -120,8 +120,9 @@ jobs:
           git config user.name  "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
 
-          add_paths=(mihomo/geosite mihomo/geoip)
+          add_paths=(Rules/mihomo/geosite Rules/mihomo/geoip)
           [ -e geo ] && add_paths+=(geo)
+          [ -e mihomo ] && add_paths+=(mihomo)
           git add -A "${add_paths[@]}"
 
           if git diff --cached --quiet; then
@@ -129,7 +130,7 @@ jobs:
             exit 0
           fi
 
-          git commit -m "chore: sync Loyalsoldier dat -> multi-format rulesets (mihomo)"
+          git commit -m "chore: sync Loyalsoldier dat -> multi-format rulesets (Rules/mihomo)"
 
           for i in 1 2 3 4 5; do
             if git push origin "HEAD:${BRANCH}"; then
@@ -142,8 +143,9 @@ jobs:
             git rebase "origin/${BRANCH}"
             git stash pop || true
 
-            add_paths=(mihomo/geosite mihomo/geoip)
+            add_paths=(Rules/mihomo/geosite Rules/mihomo/geoip)
             [ -e geo ] && add_paths+=(geo)
+            [ -e mihomo ] && add_paths+=(mihomo)
             git add -A "${add_paths[@]}"
 
             if git diff --name-only --diff-filter=U | grep -q .; then
