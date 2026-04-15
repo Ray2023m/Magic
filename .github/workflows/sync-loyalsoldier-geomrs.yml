@@ -63,13 +63,14 @@ jobs:
           if curl -fL --retry 3 --retry-delay 2 "$URL_TGZ" -o mihomo.tar.gz 2>/dev/null; then
             tar -xzf mihomo.tar.gz
             BIN="$(find . -maxdepth 3 -type f -name mihomo | head -n 1)"
-            [ -f "$BIN" ] && cp -f "$BIN" ./mihomo
+            [ -f "$BIN" ] && mkdir -p .tools && cp -f "$BIN" ./.tools/mihomo
           else
             curl -fL --retry 3 --retry-delay 2 "$URL_GZ" -o mihomo.gz
-            gunzip -c mihomo.gz > ./mihomo
+            mkdir -p .tools
+            gunzip -c mihomo.gz > ./.tools/mihomo
           fi
-          chmod +x ./mihomo
-          ./mihomo -v
+          chmod +x ./.tools/mihomo
+          ./.tools/mihomo -v
 
       # ── 同步分支到最新 ────────────────────────────────────────────────────
       - name: Sync branch (pre-run)
@@ -84,7 +85,7 @@ jobs:
       # ── 执行脚本 ─────────────────────────────────────────────────────────
       - name: Run sync script
         env:
-          MIHOMO_BIN: ./mihomo
+          MIHOMO_BIN: ./.tools/mihomo
         run: |
           set -eux
           chmod +x scripts/sync_loy_geo_mrs.sh

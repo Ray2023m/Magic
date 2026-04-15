@@ -43,6 +43,13 @@ cd "$REPO_ROOT"
 echo "[INFO] repo root: $(pwd)"
 echo "[INFO] parallel jobs: $PARALLEL"
 
+# 输出目录名冲突保护（例如仓库里已有同名文件 mihomo）
+if [ -f "$(dirname "$OUT_GEOSITE")" ]; then
+  echo "ERROR: output root '$(dirname "$OUT_GEOSITE")' exists as a file, cannot create directory."
+  echo "       Please move/rename that file (or change MIHOMO_BIN path in workflow)."
+  exit 1
+fi
+
 # ── 前置检查 ──────────────────────────────────────────────────────────────────
 command -v v2dat       >/dev/null 2>&1 || { echo "ERROR: v2dat not found";      exit 1; }
 [ -x "$MIHOMO_BIN"  ]                  || { echo "ERROR: mihomo not executable"; exit 1; }
