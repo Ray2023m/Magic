@@ -34,7 +34,12 @@ jobs:
     env:
       # 预设白名单：提前把常用 tag 写在这里（逗号分隔）
       # 示例：Claude,OpenAI,Google,Netflix,YouTube
-      PRESET_INCLUDE_TAGS: "cn,openai,google,netflix,youtube,apple,gfw,steam,geolocation-!cn,epicgames,facebook,instagram,x,telegram,github,line,spotify,microsoft,bilibili,disney,private"
+      PRESET_INCLUDE_TAGS: >
+        cn,gfw,geolocation-!cn,private,
+        openai,google,microsoft,github,apple,
+        netflix,youtube,disney,spotify,bilibili,
+        facebook,instagram,x,telegram,line,
+        steam,epicgames
     steps:
       - name: Checkout
         uses: actions/checkout@v6
