@@ -71,31 +71,6 @@ jobs:
           chmod +x ./mihomo
           ./mihomo -v
 
-      # ── sing-box（srs 编译） ──────────────────────────────────────────────
-      - name: Install sing-box
-        run: |
-          set -eux
-          SINGBOX_VERSION="$(curl -fsSL \
-            -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" \
-            https://api.github.com/repos/SagerNet/sing-box/releases/latest \
-            | grep '"tag_name"' | sed 's/.*"v\([^"]*\)".*/\1/')"
-
-          if [ -z "$SINGBOX_VERSION" ]; then
-            echo "::error::Failed to fetch sing-box version"
-            exit 1
-          fi
-
-          echo "sing-box version: $SINGBOX_VERSION"
-          ARCH="amd64"
-          URL="https://github.com/SagerNet/sing-box/releases/download/v${SINGBOX_VERSION}/sing-box-${SINGBOX_VERSION}-linux-${ARCH}.tar.gz"
-
-          curl -fL --retry 3 --retry-delay 2 "$URL" -o singbox.tar.gz
-          tar -xzf singbox.tar.gz
-          BIN="$(find . -maxdepth 3 -type f -name sing-box | head -n 1)"
-          cp -f "$BIN" ./sing-box
-          chmod +x ./sing-box
-          ./sing-box version
-
       # ── 同步分支到最新 ────────────────────────────────────────────────────
       - name: Sync branch (pre-run)
         env:
@@ -110,7 +85,6 @@ jobs:
       - name: Run sync script
         env:
           MIHOMO_BIN: ./mihomo
-          SINGBOX_BIN: ./sing-box
         run: |
           set -eux
           chmod +x scripts/sync_loy_geo_mrs.sh
@@ -122,14 +96,11 @@ jobs:
           set -eux
           echo "=== geo/geosite/ ===" && ls geo/geosite/ | head -10 || true
           echo "=== geo/geoip/ ===" && ls geo/geoip/ | head -10 || true
-          echo "=== QX/geosite/ ===" && ls QX/geosite/ | head -10 || true
           echo "geosite mrs  : $(find geo/geosite -name '*.mrs'  | wc -l)"
           echo "geosite yaml : $(find geo/geosite -name '*.yaml' | wc -l)"
           echo "geosite list : $(find geo/geosite -name '*.list' | wc -l)"
           echo "geosite json : $(find geo/geosite -name '*.json' | wc -l)"
-          echo "geosite srs  : $(find geo/geosite -name '*.srs'  | wc -l)"
           echo "geoip   mrs  : $(find geo/geoip   -name '*.mrs'  | wc -l)"
-          echo "qx geosite   : $(find QX/geosite  -name '*.list' | wc -l)"
           git status --porcelain || true
 
           echo "=== douyin IP debug ==="
@@ -148,14 +119,14 @@ jobs:
           git config user.name  "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
 
-          git add -A geo/geosite geo/geoip QX
+          git add -A geo/geosite geo/geoip
 
           if git diff --cached --quiet; then
             echo "No changes to commit."
             exit 0
           fi
 
-          git commit -m "chore: sync Loyalsoldier dat -> multi-format rulesets (geo + QX)"
+          git commit -m "chore: sync Loyalsoldier dat -> multi-format rulesets (geo)"
 
           for i in 1 2 3 4 5; do
             if git push origin "HEAD:${BRANCH}"; then
@@ -168,7 +139,7 @@ jobs:
             git rebase "origin/${BRANCH}"
             git stash pop || true
 
-            git add -A geo/geosite geo/geoip QX
+            git add -A geo/geosite geo/geoip
 
             if git diff --name-only --diff-filter=U | grep -q .; then
               echo "Conflict after rebase. Aborting."
