@@ -120,7 +120,9 @@ jobs:
           git config user.name  "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
 
-          git add -A mihomo/geosite mihomo/geoip geo
+          add_paths=(mihomo/geosite mihomo/geoip)
+          [ -e geo ] && add_paths+=(geo)
+          git add -A "${add_paths[@]}"
 
           if git diff --cached --quiet; then
             echo "No changes to commit."
@@ -140,7 +142,9 @@ jobs:
             git rebase "origin/${BRANCH}"
             git stash pop || true
 
-            git add -A mihomo/geosite mihomo/geoip geo
+            add_paths=(mihomo/geosite mihomo/geoip)
+            [ -e geo ] && add_paths+=(geo)
+            git add -A "${add_paths[@]}"
 
             if git diff --name-only --diff-filter=U | grep -q .; then
               echo "Conflict after rebase. Aborting."
