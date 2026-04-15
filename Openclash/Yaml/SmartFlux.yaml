@@ -46,7 +46,7 @@ proxy-providers:
 # ==================== 代理策略组 ====================
 proxy-groups:
   # 应用策略层 - Select手动选择. 
-  - {name: Intelligence,  <<: *SelectUS}
+  - {name: AI 助理,  <<: *SelectUS}
   - {name: Telegram,  <<: *SelectUS}
   - {name: WhatsApp,  <<: *SelectUS}
   - {name: Facebook,  <<: *SelectUS}
@@ -196,9 +196,10 @@ rule-providers:
   CopilotIP:  {<<: *BehaviorIP, url: "https://raw.githubusercontent.com/Ray2023m/Magic/main/Rules/Meta/geoip/copilot.mrs"}
   TelegramIP: {<<: *BehaviorIP, url: "https://raw.githubusercontent.com/Ray2023m/Magic/main/Rules/Meta/geoip/telegram.mrs"}
   WhatsappIP: {<<: *BehaviorIP, url: "https://raw.githubusercontent.com/Ray2023m/Magic/main/Rules/Meta/geoip/whatsapp.mrs"}  
+  NetflixIP:  {<<: *BehaviorIP, url: "https://raw.githubusercontent.com/Ray2023m/Magic/main/Rules/Meta/geoip/netflix.mrs"}
   GoogleIP:   {<<: *BehaviorIP, url: "https://raw.githubusercontent.com/Ray2023m/Magic/main/Rules/Meta/geoip/google.mrs"}
   GlobalIP:   {<<: *BehaviorIP, url: "https://raw.githubusercontent.com/Ray2023m/Magic/main/Rules/Meta/geoip/global.mrs"}
   ChinaIP:    {<<: *BehaviorIP, url: "https://raw.githubusercontent.com/Ray2023m/Magic/main/Rules/Meta/geoip/cn.mrs"}
-  NetflixIP:  {<<: *BehaviorIP, url: "https://raw.githubusercontent.com/Ray2023m/Magic/main/Rules/Meta/geoip/netflix.mrs"}
+ 
 
 # ==================== EOF ====================
