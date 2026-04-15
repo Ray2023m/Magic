@@ -26,8 +26,28 @@ OUT_GEOIP='Rules/mihomo/geoip'
 LEGACY_GEO_ROOT='geo'
 LEGACY_MIHOMO_ROOT='mihomo'
 
-CLASH_DIR="${CLASH_DIR:-Manual_Site}"
-CLASH_IP_DIR="${CLASH_IP_DIR:-Manual_IP}"
+CLASH_DIR="${CLASH_DIR:-}"
+CLASH_IP_DIR="${CLASH_IP_DIR:-}"
+
+if [ -z "$CLASH_DIR" ]; then
+  for d in Manual_Rules Manual_Site Manual_site; do
+    if [ -d "$d" ]; then
+      CLASH_DIR="$d"
+      break
+    fi
+  done
+  CLASH_DIR="${CLASH_DIR:-Manual_Rules}"
+fi
+
+if [ -z "$CLASH_IP_DIR" ]; then
+  for d in Manual_Rules Manual_IP Manual_ip; do
+    if [ -d "$d" ]; then
+      CLASH_IP_DIR="$d"
+      break
+    fi
+  done
+  CLASH_IP_DIR="${CLASH_IP_DIR:-Manual_Rules}"
+fi
 
 MIHOMO_BIN="${MIHOMO_BIN:-./mihomo}"
 
@@ -40,6 +60,8 @@ cd "$REPO_ROOT"
 
 echo "[INFO] repo root: $(pwd)"
 echo "[INFO] parallel jobs: $PARALLEL"
+echo "[INFO] manual rules dir (domain): $CLASH_DIR"
+echo "[INFO] manual rules dir (ip): $CLASH_IP_DIR"
 
 # 输出目录名冲突保护（例如仓库里已有同名文件 mihomo）
 if [ -f "$(dirname "$OUT_GEOSITE")" ]; then
@@ -119,8 +141,8 @@ python3 "$HELPERS" batch_geoip \
   "$MRS_TASKS" \
   "$WORKDIR"
 
-# ── Python 批处理 Manual_IP/ ─────────────────────────────────────────────────
-echo "[5b/7] Batch process Manual_IP (Python)..."
+# ── Python 批处理 Manual_Rules/（补全 geoip list + mrs）───────────────────────
+echo "[5b/7] Batch process Manual_Rules IP entries (Python)..."
 python3 "$HELPERS" batch_manual_ip \
   "$CLASH_IP_DIR" \
   "$OUT_GEOIP" \

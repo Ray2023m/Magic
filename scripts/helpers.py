@@ -4,9 +4,9 @@ helpers.py — sync_loy_geo_mrs.sh 的统一 Python 引擎
 一次调用处理所有 tag，输出全部格式，消除数千次进程启动开销。
 
 用法:
-  python3 helpers.py batch_geosite  <geosite_txt_dir> <manual_site_dir> <out_geosite> <mrs_tasks> <workdir>
-  python3 helpers.py batch_geoip    <geoip_txt_dir> <manual_site_dir> <manual_ip_cache_from_geosite> <out_geoip> <mrs_tasks> <workdir>
-  python3 helpers.py batch_manual_ip <manual_ip_dir> <out_geoip> <mrs_tasks> <workdir>
+  python3 helpers.py batch_geosite  <geosite_txt_dir> <manual_rules_dir> <out_geosite> <mrs_tasks> <workdir>
+  python3 helpers.py batch_geoip    <geoip_txt_dir> <manual_rules_dir> <manual_ip_cache_from_geosite> <out_geoip> <mrs_tasks> <workdir>
+  python3 helpers.py batch_manual_ip <manual_rules_dir> <out_geoip> <mrs_tasks> <workdir>
 
   还保留单条命令供 shell 零星调用:
   python3 helpers.py parse_clash       <yaml> <out_dir> <tag>
@@ -507,13 +507,13 @@ def cmd_batch_geoip(geoip_txt_dir, clash_dir, clash_ip_from_geosite_dir,
             f.write(line + "\n")
 
 # ═══════════════════════════════════════════════════════════════════════════════
-# batch_manual_ip：处理 Manual_IP/ 目录，合并进 Rules/mihomo/geoip
+# batch_manual_ip：处理 Manual_Rules/ 中的 IP 规则，合并进 Rules/mihomo/geoip
 # ═══════════════════════════════════════════════════════════════════════════════
 
 def cmd_batch_manual_ip(clash_ip_dir, out_geoip,
                        mrs_tasks_file, workdir):
     if not os.path.isdir(clash_ip_dir):
-        print("[INFO] Manual_IP: ok=0")
+        print("[INFO] Manual_Rules(IP): ok=0")
         return
 
     mrs_tasks = []
@@ -594,7 +594,7 @@ def cmd_batch_manual_ip(clash_ip_dir, out_geoip,
 
         ok += 1
 
-    print(f"[INFO] Manual_IP: ok={ok}")
+    print(f"[INFO] Manual_Rules(IP): ok={ok}")
 
     with open(mrs_tasks_file, "a", encoding="utf-8") as f:
         for line in mrs_tasks:
