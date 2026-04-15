@@ -1,0 +1,88 @@
+name: Sync Meta rules -> geo outputs
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '0 22 * * 2'   # 每周二 22:00 UTC（可按需修改）
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    env:
+      RELEASE_RAW_BASE: https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/release
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Install prerequisites
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y git curl make build-essential
+
+      - name: Download geosite.dat and geoip.dat (release)
+        run: |
+          curl -fL "${{ env.RELEASE_RAW_BASE }}/geoip.dat" -o geoip.dat
+          curl -fL "${{ env.RELEASE_RAW_BASE }}/geosite.dat" -o geosite.dat
+
+      - name: Setup Go
+        uses: actions/setup-go@v4
+        with:
+          go-version: '1.21'
+
+      - name: Build v2dat
+        run: |
+          rm -rf v2dat-src
+          git clone --depth=1 https://github.com/urlesistiana/v2dat.git v2dat-src
+          cd v2dat-src
+          CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -o ../v2dat .
+          cd ..
+          chmod +x ./v2dat
+          ./v2dat version || true
+
+      - name: Unpack geosite & geoip
+        run: |
+          rm -rf geosite_txt geoip_txt
+          mkdir -p geosite_txt geoip_txt
+          ./v2dat unpack geosite -o geosite_txt geosite.dat
+          ./v2dat unpack geoip -o geoip_txt geoip.dat
+
+      - name: Setup Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
+
+      - name: Run helper to generate outputs (merge Manual_* & produce formats)
+        run: |
+          mkdir -p Manual_site Manual_ip
+          python3 scripts/helpers.py \
+            --geosite-dir geosite_txt \
+            --geoip-dir geoip_txt \
+            --manual-site-dir Manual_site \
+            --manual-ip-dir Manual_ip \
+            --tags-file tags.txt \
+            --out-dir geo \
+            --out-qx-dir QX \
+            --compile-mrs false
+
+      - name: Show outputs (debug)
+        run: |
+          echo "=== geo/geosite/ ===" && ls -la geo/geosite || true
+          echo "=== geo/geoip/ ===" && ls -la geo/geoip || true
+          echo "=== QX directories ===" && ls -la QX || true
+
+      - name: Commit & push results (if changed)
+        env:
+          DEFAULT_BRANCH: ${{ github.event.repository.default_branch }}
+        run: |
+          set -eux
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A geo QX
+          if git diff --cached --quiet; then
+            echo "No changes to commit"
+          else
+            git commit -m "chore: sync meta rules (geoip/geosite) [ci skip]" || true
+            git push origin HEAD:${{ env.DEFAULT_BRANCH }}
+          fi
