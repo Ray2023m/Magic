@@ -12,7 +12,7 @@ on:
         required: false
         type: string
   schedule:
-    - cron: "0 18 * * *"   # 北京时间 02:00（UTC 18:00）
+    - cron: "30 23 * * *"   
   push:
     paths:
       - ".github/workflows/sync_meta-rules-dat_geomrs.yaml"
@@ -32,7 +32,6 @@ jobs:
   sync:
     runs-on: ubuntu-latest
     env:
-      FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: "true"
       # 预设白名单：提前把常用 tag 写在这里（逗号分隔）
       # 示例：Claude,OpenAI,Google,Netflix,YouTube
       PRESET_INCLUDE_TAGS: "cn,openai,google,netflix,youtube,apple,gfw,steam,geolocation-!cn,epicgames,facebook,instagram,x,telegram,github,line,spotify,microsoft,bilibili,disney,private"
