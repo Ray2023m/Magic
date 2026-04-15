@@ -6,6 +6,3 @@ Homelab家庭服务使用**OpenClash_Overwriter覆写模块**,可以简便快捷
 
 ---
 
-## Workflow Docs
-
-- [Workflow usage guide](./.github/workflows/README.md)
