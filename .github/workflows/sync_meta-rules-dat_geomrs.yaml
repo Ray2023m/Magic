@@ -211,7 +211,7 @@ jobs:
             exit 0
           fi
 
-          git commit -m "chore: sync Loyalsoldier dat -> multi-format rulesets (Rules/mihomo)"
+          git commit -m "Auto Update Ruleset $(TZ='Asia/Shanghai' date +'%Y-%m-%d %H:%M:%S %Z')"
 
           for i in 1 2 3 4 5; do
             if git push origin "HEAD:${BRANCH}"; then
