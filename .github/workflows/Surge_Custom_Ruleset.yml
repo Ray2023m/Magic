@@ -45,7 +45,7 @@ jobs:
             local target_name=$2
             local display_name=$3
             
-            local target_path="Surge/$target_name"
+            local target_path="Rules/Surge/$target_name"
             local filename_no_ext="${target_name%.*}"
             local manual_file="Rules/Surge/Manual/${filename_no_ext}.txt"
             local exclude_file="Rules/Surge/Manual/${filename_no_ext}.exclude.txt"
