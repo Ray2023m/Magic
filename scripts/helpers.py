@@ -12,13 +12,11 @@ helpers.py — sync_loy_geo_mrs.sh 的统一 Python 引擎
   python3 helpers.py parse_clash       <yaml> <out_dir> <tag>
   python3 helpers.py merge_dedup       <geo_file> <clash_file> <out_file> <bucket_type>
   python3 helpers.py diff_new_entries   <exist_file> <new_file> <out_file> <type>
-  python3 helpers.py rebuild_json_from_list  <list_file> <json_dst>
 """
 
 import sys
 import os
 import re
-import json
 import glob
 
 # ═══════════════════════════════════════════════════════════════════════════════
@@ -88,7 +86,6 @@ TYPE_TO_BUCKET = {
     "IP-ASN":              "asn",
 }
 
-JSON_SKIP_TYPES = {"DOMAIN-WILDCARD", "PROCESS-NAME", "PROCESS-NAME-REGEX", "IP-ASN"}
 MRS_SKIP_TYPES = {"DOMAIN-WILDCARD"}
 
 # ═══════════════════════════════════════════════════════════════════════════════
@@ -181,7 +178,7 @@ def emit_geosite_tag(tag, buckets, clash_yaml, out_geosite,
     buckets: {"suffix":[], "domain":[], "keyword":[], "regexp":[],
               "wildcard":[], "process":[], "process_re":[]}
               注意：不含 ipcidr/asn（由 clash_extras 从 clash_yaml 中提取）
-    clash_yaml: clash yaml 路径（用于提取 extras 追加进 yaml/list/json）
+    clash_yaml: clash yaml 路径（用于提取 extras 追加进 list）
     返回 (extra_ipcidr_list, extra_asn_list) 供 geoip 阶段使用
     """
     suffix   = buckets.get("suffix", [])
@@ -231,17 +228,8 @@ def emit_geosite_tag(tag, buckets, clash_yaml, out_geosite,
         [("PROCESS-NAME", v) for v in process] +
         [("PROCESS-NAME-REGEX", v) for v in process_re]
     )
-    # clash_extras 包含 IP-CIDR/IP-ASN 等，会被追加进 yaml/list
+    # clash_extras 包含 IP-CIDR/IP-ASN 等，会被追加进 list
     all_lines = sort_typed_lines(geo_lines + clash_extras)
-
-    # ── yaml（geosite 侧 IP 条目加 ,no-resolve）─────────────────────────
-    yaml_out = ["payload:"]
-    for t, v in all_lines:
-        if t in ("IP-CIDR", "IP-CIDR6", "IP-ASN"):
-            yaml_out.append(f"  - {t},{v},no-resolve")
-        else:
-            yaml_out.append(f"  - {t},{v}")
-    write_lines(os.path.join(out_geosite, f"{tag}.yaml"), yaml_out)
 
     # ── list（geosite 侧 IP 条目加 ,no-resolve）─────────────────────────
     list_out = []
@@ -251,52 +239,6 @@ def emit_geosite_tag(tag, buckets, clash_yaml, out_geosite,
         else:
             list_out.append(f"{t},{v}")
     write_lines(os.path.join(out_geosite, f"{tag}.list"), list_out)
-
-    # ── json（sing-box v3，不加 no-resolve）──────────────────────────────
-    # suffix 列表混合了带点(geo)和不带点(clash merge)的值，统一加点
-    j_suffix = [v if v.startswith(".") else "." + v for v in suffix]
-    j_domain = list(domain)
-    j_keyword = list(keyword)
-    j_regexp = list(regexp)
-    # wildcard: json 不支持，跳过
-    j_cidrs = []  # IP 条目从 clash_extras 获取（与 yaml/list 一致）
-    for t, v in clash_extras:
-        if t in JSON_SKIP_TYPES:
-            continue
-        if t == "DOMAIN-SUFFIX":
-            j_suffix.append("." + v.lstrip("."))
-        elif t == "DOMAIN":
-            j_domain.append(v)
-        elif t == "DOMAIN-KEYWORD":
-            j_keyword.append(v)
-        elif t == "DOMAIN-REGEX":
-            j_regexp.append(v)
-        elif t in ("IP-CIDR", "IP-CIDR6"):
-            j_cidrs.append(v)
-
-    # 去重（clash_extras 内 IP 条目大小写可能不一致）
-    if j_cidrs:
-        seen_cidr = set()
-        deduped = []
-        for v in j_cidrs:
-            k = v.lower()
-            if k not in seen_cidr:
-                seen_cidr.add(k)
-                deduped.append(v)
-        j_cidrs = deduped
-
-    # json 按 key 顺序排列（domain → domain_suffix → domain_keyword → ip_cidr → domain_regex）
-    rule = {}
-    if j_domain:   rule["domain"]         = j_domain
-    if j_suffix:   rule["domain_suffix"]  = j_suffix
-    if j_keyword:  rule["domain_keyword"] = j_keyword
-    if j_cidrs:    rule["ip_cidr"]        = j_cidrs
-    if j_regexp:   rule["domain_regex"]   = j_regexp
-    json_path = os.path.join(out_geosite, f"{tag}.json")
-    with open(json_path, "w") as f:
-        json.dump({"version": 3, "rules": [rule] if rule else []},
-                  f, ensure_ascii=False, separators=(",", ":"))
-        f.write("\n")
 
     # ── mrs 源文件（suffix + domain，跳过 wildcard）─────────────────────
     # mrs 排序：domain 在前，suffix 在后
@@ -331,23 +273,9 @@ def emit_geoip_tag(tag, ipcidr_lines, asn_lines, out_geoip,
         typed.append(("IP-ASN", v))
     typed = sort_typed_lines(typed)
 
-    # ── yaml（geoip 不加 no-resolve）──
-    yaml_out = ["payload:"]
-    for t, v in typed:
-        yaml_out.append(f"  - {t},{v}")
-    write_lines(os.path.join(out_geoip, f"{tag}.yaml"), yaml_out)
-
     # ── list（geoip 不加 no-resolve）──
     list_out = [f"{t},{v}" for t, v in typed]
     write_lines(os.path.join(out_geoip, f"{tag}.list"), list_out)
-
-    # ── json ──
-    rule = {"ip_cidr": ipcidr_lines} if ipcidr_lines else {}
-    json_path = os.path.join(out_geoip, f"{tag}.json")
-    with open(json_path, "w") as f:
-        json.dump({"version": 3, "rules": [rule] if rule else []},
-                  f, ensure_ascii=False, separators=(",", ":"))
-        f.write("\n")
 
     # mrs 先不登记，等 clash merge 后再登记（见 batch_geoip）
 
@@ -637,24 +565,8 @@ def cmd_batch_manual_ip(clash_ip_dir, out_geoip,
 
         print(f"[MANUAL-IP] {tag}: +{len(new_cidr)} CIDRs  +{len(new_asn)} ASNs")
 
-        dst_yaml = os.path.join(out_geoip, f"{tag}.yaml")
         dst_list = os.path.join(out_geoip, f"{tag}.list")
-        dst_json = os.path.join(out_geoip, f"{tag}.json")
         dst_mrs  = os.path.join(out_geoip, f"{tag}.mrs")
-
-        # geoip 侧不加 no-resolve
-        # yaml 追加
-        yaml_append = []
-        if not os.path.isfile(dst_yaml):
-            yaml_append.append("payload:")
-        for v in new_cidr:
-            t = "IP-CIDR6" if ":" in v else "IP-CIDR"
-            yaml_append.append(f"  - {t},{v}")
-        for v in new_asn:
-            yaml_append.append(f"  - IP-ASN,{v}")
-        with open(dst_yaml, "a", encoding="utf-8") as f:
-            for line in yaml_append:
-                f.write(line + "\n")
 
         # list 追加
         list_append = []
@@ -666,19 +578,6 @@ def cmd_batch_manual_ip(clash_ip_dir, out_geoip,
         with open(dst_list, "a", encoding="utf-8") as f:
             for line in list_append:
                 f.write(line + "\n")
-
-        # json 重建（从 list，排序后输出）
-        all_cidrs = []
-        for line in read_lines(dst_list):
-            if line.startswith("IP-CIDR6,"):
-                all_cidrs.append(line[9:])
-            elif line.startswith("IP-CIDR,"):
-                all_cidrs.append(line[8:])
-        rule = {"ip_cidr": all_cidrs} if all_cidrs else {}
-        with open(dst_json, "w") as f:
-            json.dump({"version": 3, "rules": [rule] if rule else []},
-                      f, ensure_ascii=False, separators=(",", ":"))
-            f.write("\n")
 
         # mrs（全量重编译）
         all_cidr_list = []
@@ -730,20 +629,6 @@ def cmd_diff_new_entries(exist_file, new_file, out_file, entry_type):
             new.append(v)
     write_lines(out_file, new)
 
-def cmd_rebuild_json_from_list(list_file, json_dst):
-    cidrs = []
-    for line in read_lines(list_file):
-        if line.startswith("IP-CIDR6,"):
-            cidrs.append(line[9:])
-        elif line.startswith("IP-CIDR,"):
-            cidrs.append(line[8:])
-    rule = {"ip_cidr": cidrs} if cidrs else {}
-    with open(json_dst, "w") as f:
-        json.dump({"version": 3, "rules": [rule] if rule else []},
-                  f, ensure_ascii=False, separators=(",", ":"))
-        f.write("\n")
-
-
 # ═══════════════════════════════════════════════════════════════════════════════
 # 主入口
 # ═══════════════════════════════════════════════════════════════════════════════
@@ -755,7 +640,6 @@ COMMANDS = {
     "parse_clash":      lambda a: cmd_parse_clash(a[0], a[1], a[2]),
     "merge_dedup":      lambda a: cmd_merge_dedup(a[0], a[1], a[2], a[3]),
     "diff_new_entries":     lambda a: cmd_diff_new_entries(a[0], a[1], a[2], a[3]),
-    "rebuild_json_from_list": lambda a: cmd_rebuild_json_from_list(a[0], a[1]),
 }
 
 def main():

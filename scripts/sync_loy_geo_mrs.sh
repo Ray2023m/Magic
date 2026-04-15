@@ -1,17 +1,16 @@
 #!/usr/bin/env bash
 # sync_loy_geo_mrs.sh
-# 从 Loyalsoldier 下载 geoip/geosite .dat，拆分并输出四种格式：
-#   Rules/mihomo/geosite/ -> .mrs  .yaml  .list  .json
-#   Rules/mihomo/geoip/   -> .mrs  .yaml  .list  .json
+# 从 Loyalsoldier 下载 geoip/geosite .dat，拆分并输出两种格式：
+#   Rules/mihomo/geosite/ -> .mrs  .list
+#   Rules/mihomo/geoip/   -> .mrs  .list
 #
 # 并将 clash/<n>.yaml 中的规则融合进同名输出（宽松去重）：
 #   支持规则类型：DOMAIN-SUFFIX / DOMAIN / DOMAIN-KEYWORD / DOMAIN-REGEX
 #                IP-CIDR / IP-CIDR6
 #                PROCESS-NAME / PROCESS-NAME-REGEX / IP-ASN
 #   融合策略：
-#     yaml / list           -> 保留所有规则类型
+#     list                  -> 保留所有规则类型
 #     mrs                   -> 仅 domain/suffix 和 IP-CIDR/IP-CIDR6，其余跳过
-#     json                  -> 跳过 PROCESS-NAME / PROCESS-NAME-REGEX / IP-ASN
 #   若 clash/<n>.yaml 存在但 geo 无同名文件，则纯从 clash 数据建档。
 #
 # 性能优化：
@@ -98,7 +97,7 @@ rm -rf "$LEGACY_MIHOMO_ROOT"
 mkdir -p "$OUT_GEOSITE" "$OUT_GEOIP"
 
 # ══════════════════════════════════════════════════════════════════════════════
-# 4. Python 批处理 geosite（一次调用处理所有 tag，输出 yaml/list/json）
+# 4. Python 批处理 geosite（一次调用处理所有 tag，输出 list）
 # ══════════════════════════════════════════════════════════════════════════════
 echo "[4/7] Batch process geosite (Python)..."
 python3 "$HELPERS" batch_geosite \
@@ -179,13 +178,9 @@ mrs_fail="$(grep -c "^FAIL:" "$mrs_fail_log" 2>/dev/null || echo 0)"
 # ══════════════════════════════════════════════════════════════════════════════
 echo "[7/7] Final counts:"
 echo "  Rules/mihomo/geosite mrs  : $(find "$OUT_GEOSITE"    -name '*.mrs'  | wc -l | tr -d ' ')"
-echo "  Rules/mihomo/geosite yaml : $(find "$OUT_GEOSITE"    -name '*.yaml' | wc -l | tr -d ' ')"
 echo "  Rules/mihomo/geosite list : $(find "$OUT_GEOSITE"    -name '*.list' | wc -l | tr -d ' ')"
-echo "  Rules/mihomo/geosite json : $(find "$OUT_GEOSITE"    -name '*.json' | wc -l | tr -d ' ')"
 echo "  Rules/mihomo/geoip   mrs  : $(find "$OUT_GEOIP"      -name '*.mrs'  | wc -l | tr -d ' ')"
-echo "  Rules/mihomo/geoip   yaml : $(find "$OUT_GEOIP"      -name '*.yaml' | wc -l | tr -d ' ')"
 echo "  Rules/mihomo/geoip   list : $(find "$OUT_GEOIP"      -name '*.list' | wc -l | tr -d ' ')"
-echo "  Rules/mihomo/geoip   json : $(find "$OUT_GEOIP"      -name '*.json' | wc -l | tr -d ' ')"
 
 if [[ $mrs_fail -gt 0 ]]; then
   echo "[WARN] compilation failures: mrs=$mrs_fail"
