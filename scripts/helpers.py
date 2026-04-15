@@ -4,9 +4,9 @@ helpers.py — sync_loy_geo_mrs.sh 的统一 Python 引擎
 一次调用处理所有 tag，输出全部格式，消除数千次进程启动开销。
 
 用法:
-  python3 helpers.py batch_geosite  <geosite_txt_dir> <manual_site_dir> <out_geosite> <out_qx_geosite> <mrs_tasks> <srs_tasks> <workdir>
-  python3 helpers.py batch_geoip    <geoip_txt_dir> <manual_site_dir> <manual_ip_cache_from_geosite> <out_geoip> <out_qx_geoip> <mrs_tasks> <srs_tasks> <workdir>
-  python3 helpers.py batch_clash_ip <manual_ip_dir> <out_geoip> <out_qx_geoip> <mrs_tasks> <srs_tasks> <workdir>
+  python3 helpers.py batch_geosite  <geosite_txt_dir> <manual_site_dir> <out_geosite> <mrs_tasks> <srs_tasks> <workdir>
+  python3 helpers.py batch_geoip    <geoip_txt_dir> <manual_site_dir> <manual_ip_cache_from_geosite> <out_geoip> <mrs_tasks> <srs_tasks> <workdir>
+  python3 helpers.py batch_manual_ip <manual_ip_dir> <out_geoip> <mrs_tasks> <srs_tasks> <workdir>
 
   还保留单条命令供 shell 零星调用:
   python3 helpers.py parse_clash       <yaml> <out_dir> <tag>
@@ -88,14 +88,6 @@ TYPE_TO_BUCKET = {
     "IP-ASN":              "asn",
 }
 
-QX_SKIP_TYPES = {"DOMAIN-REGEX", "DOMAIN-WILDCARD", "PROCESS-NAME", "PROCESS-NAME-REGEX", "IP-ASN"}
-QX_TYPE_MAP = {
-    "DOMAIN-SUFFIX":  "HOST-SUFFIX",
-    "DOMAIN":         "HOST",
-    "DOMAIN-KEYWORD": "HOST-KEYWORD",
-    "IP-CIDR":        "IP-CIDR",
-    "IP-CIDR6":       "IP-CIDR6",
-}
 JSON_SKIP_TYPES = {"DOMAIN-WILDCARD", "PROCESS-NAME", "PROCESS-NAME-REGEX", "IP-ASN"}
 MRS_SKIP_TYPES = {"DOMAIN-WILDCARD"}
 
@@ -120,27 +112,9 @@ TYPE_ORDER = {
     "DOMAIN-REGEX":        7,
 }
 
-# QX 类型也纳入排序
-QX_TYPE_ORDER = {
-    "HOST":            0,
-    "HOST-SUFFIX":     1,
-    "HOST-KEYWORD":    3,
-    "IP-CIDR":         4,
-    "IP-CIDR6":        4,
-}
-
-
 def sort_typed_lines(lines):
     """对 [(type, value), ...] 按 TYPE_ORDER 排序，相同类型保持原序"""
     return sorted(lines, key=lambda tv: TYPE_ORDER.get(tv[0], 99))
-
-
-def sort_qx_lines(lines):
-    """对 QX 行 "TYPE, value" 按 QX_TYPE_ORDER 排序"""
-    def qx_key(line):
-        t = line.split(",", 1)[0].strip()
-        return QX_TYPE_ORDER.get(t, 99)
-    return sorted(lines, key=qx_key)
 
 
 def parse_clash_to_buckets(yaml_path):
@@ -201,13 +175,13 @@ def parse_geosite_txt(filepath):
 # ═══════════════════════════════════════════════════════════════════════════════
 
 def emit_geosite_tag(tag, buckets, clash_yaml, out_geosite,
-                     out_qx_geosite, mrs_tasks, srs_tasks, workdir):
+                     mrs_tasks, srs_tasks, workdir):
     """
     为一个 geosite tag 输出全部格式。
     buckets: {"suffix":[], "domain":[], "keyword":[], "regexp":[],
               "wildcard":[], "process":[], "process_re":[]}
               注意：不含 ipcidr/asn（由 clash_extras 从 clash_yaml 中提取）
-    clash_yaml: clash yaml 路径（用于提取 extras 追加进 yaml/list/json/QX）
+    clash_yaml: clash yaml 路径（用于提取 extras 追加进 yaml/list/json）
     返回 (extra_ipcidr_list, extra_asn_list) 供 geoip 阶段使用
     """
     suffix   = buckets.get("suffix", [])
@@ -278,30 +252,6 @@ def emit_geosite_tag(tag, buckets, clash_yaml, out_geosite,
             list_out.append(f"{t},{v}")
     write_lines(os.path.join(out_geosite, f"{tag}.list"), list_out)
 
-    # ── QX list（跳过 DOMAIN-REGEX / DOMAIN-WILDCARD / PROCESS-NAME 等）──
-    # geosite 侧 IP 条目加 ,no-resolve
-    qx_out = []
-    for v in domain:
-        qx_out.append(f"HOST, {v}")
-    for v in suffix:
-        qx_out.append(f"HOST-SUFFIX, {v.lstrip('.')}")
-    for v in keyword:
-        qx_out.append(f"HOST-KEYWORD, {v}")
-    # wildcard: QX 不支持，跳过
-    # clash extras for QX（clash_extras 已去重，IP 加 no-resolve）
-    for t, v in clash_extras:
-        if t in QX_SKIP_TYPES:
-            continue
-        if t in ("IP-CIDR", "IP-CIDR6"):
-            qx_out.append(f"{t}, {v}, no-resolve")
-            continue
-        qx_t = QX_TYPE_MAP.get(t)
-        if qx_t:
-            qx_out.append(f"{qx_t}, {v}")
-    # 排序 QX 输出
-    qx_out = sort_qx_lines(qx_out)
-    write_lines(os.path.join(out_qx_geosite, f"{tag}.list"), qx_out)
-
     # ── json（sing-box v3，不加 no-resolve）──────────────────────────────
     # suffix 列表混合了带点(geo)和不带点(clash merge)的值，统一加点
     j_suffix = [v if v.startswith(".") else "." + v for v in suffix]
@@ -371,7 +321,7 @@ def emit_geosite_tag(tag, buckets, clash_yaml, out_geosite,
     return extra_ipcidr, extra_asn
 
 
-def emit_geoip_tag(tag, ipcidr_lines, asn_lines, out_geoip, out_qx_geoip,
+def emit_geoip_tag(tag, ipcidr_lines, asn_lines, out_geoip,
                    mrs_tasks, srs_tasks):
     """为一个 geoip tag 输出全部格式（纯 Loyalsoldier 数据）
     geoip 侧不加 no-resolve"""
@@ -394,14 +344,6 @@ def emit_geoip_tag(tag, ipcidr_lines, asn_lines, out_geoip, out_qx_geoip,
     list_out = [f"{t},{v}" for t, v in typed]
     write_lines(os.path.join(out_geoip, f"{tag}.list"), list_out)
 
-    # ── QX list（跳过 ASN，加 no-resolve）──
-    qx_out = []
-    for t, v in typed:
-        if t == "IP-ASN":
-            continue
-        qx_out.append(f"{t}, {v}, no-resolve")
-    write_lines(os.path.join(out_qx_geoip, f"{tag}.list"), qx_out)
-
     # ── json ──
     rule = {"ip_cidr": ipcidr_lines} if ipcidr_lines else {}
     json_path = os.path.join(out_geoip, f"{tag}.json")
@@ -419,10 +361,9 @@ def emit_geoip_tag(tag, ipcidr_lines, asn_lines, out_geoip, out_qx_geoip,
 # batch_geosite：一次处理所有 geosite tag
 # ═══════════════════════════════════════════════════════════════════════════════
 
-def cmd_batch_geosite(geosite_txt_dir, clash_dir, out_geosite, out_qx_geosite,
+def cmd_batch_geosite(geosite_txt_dir, clash_dir, out_geosite,
                       mrs_tasks_file, srs_tasks_file, workdir):
     os.makedirs(out_geosite, exist_ok=True)
-    os.makedirs(out_qx_geosite, exist_ok=True)
 
     mrs_tasks = []
     srs_tasks = []
@@ -474,7 +415,7 @@ def cmd_batch_geosite(geosite_txt_dir, clash_dir, out_geosite, out_qx_geosite,
 
         ci, ca = emit_geosite_tag(
             tag, geo_buckets, clash_yaml,
-            out_geosite, out_qx_geosite,
+            out_geosite,
             mrs_tasks, srs_tasks, workdir)
 
         # 缓存 clash 带来的 IP 条目（extra_ipcidr 已去重，直接使用）
@@ -519,7 +460,7 @@ def cmd_batch_geosite(geosite_txt_dir, clash_dir, out_geosite, out_qx_geosite,
 
             ci, ca = emit_geosite_tag(
                 tag, buckets, cyaml,
-                out_geosite, out_qx_geosite,
+                out_geosite,
                 mrs_tasks, srs_tasks, workdir)
 
             all_ci = ci
@@ -553,9 +494,8 @@ def cmd_batch_geosite(geosite_txt_dir, clash_dir, out_geosite, out_qx_geosite,
 # ═══════════════════════════════════════════════════════════════════════════════
 
 def cmd_batch_geoip(geoip_txt_dir, clash_dir, clash_ip_from_geosite_dir,
-                    out_geoip, out_qx_geoip, mrs_tasks_file, srs_tasks_file, workdir):
+                    out_geoip, mrs_tasks_file, srs_tasks_file, workdir):
     os.makedirs(out_geoip, exist_ok=True)
-    os.makedirs(out_qx_geoip, exist_ok=True)
 
     mrs_tasks = []
     srs_tasks = []
@@ -575,8 +515,8 @@ def cmd_batch_geoip(geoip_txt_dir, clash_dir, clash_ip_from_geosite_dir,
         if not ipcidr_lines:
             continue
 
-        # 五种格式 + QX（纯 Loyalsoldier 数据）
-        emit_geoip_tag(tag, ipcidr_lines, [], out_geoip, out_qx_geoip,
+        # 生成 mihomo 规则格式（纯 Loyalsoldier 数据）
+        emit_geoip_tag(tag, ipcidr_lines, [], out_geoip,
                        mrs_tasks, srs_tasks)
 
         # clash 合并后的 mrs（用合并后数据覆盖纯 geo 数据）
@@ -654,10 +594,10 @@ def cmd_batch_geoip(geoip_txt_dir, clash_dir, clash_ip_from_geosite_dir,
 
 
 # ═══════════════════════════════════════════════════════════════════════════════
-# batch_clash_ip：处理 Manual_IP/ 目录，合并进 mihomo/geoip（QX 仅用于临时产物）
+# batch_manual_ip：处理 Manual_IP/ 目录，合并进 mihomo/geoip
 # ═══════════════════════════════════════════════════════════════════════════════
 
-def cmd_batch_clash_ip(clash_ip_dir, out_geoip, out_qx_geoip,
+def cmd_batch_manual_ip(clash_ip_dir, out_geoip,
                        mrs_tasks_file, srs_tasks_file, workdir):
     if not os.path.isdir(clash_ip_dir):
         print("[INFO] Manual_IP: ok=0")
@@ -718,7 +658,6 @@ def cmd_batch_clash_ip(clash_ip_dir, out_geoip, out_qx_geoip,
         dst_json = os.path.join(out_geoip, f"{tag}.json")
         dst_srs  = os.path.join(out_geoip, f"{tag}.srs")
         dst_mrs  = os.path.join(out_geoip, f"{tag}.mrs")
-        dst_qx   = os.path.join(out_qx_geoip, f"{tag}.list")
 
         # geoip 侧不加 no-resolve
         # yaml 追加
@@ -772,16 +711,6 @@ def cmd_batch_clash_ip(clash_ip_dir, out_geoip, out_qx_geoip,
             os.makedirs(os.path.dirname(mrs_src), exist_ok=True)
             write_lines(mrs_src, all_cidr_list)
             mrs_tasks.append(f"ipcidr\t{mrs_src}\t{dst_mrs}")
-
-        # QX list 追加（跳过 ASN，加 no-resolve）
-        qx_append = []
-        for v in new_cidr:
-            t = "IP-CIDR6" if ":" in v else "IP-CIDR"
-            qx_append.append(f"{t}, {v}, no-resolve")
-        if qx_append:
-            with open(dst_qx, "a", encoding="utf-8") as f:
-                for line in qx_append:
-                    f.write(line + "\n")
 
         ok += 1
 
@@ -843,9 +772,9 @@ def cmd_rebuild_json_from_list(list_file, json_dst):
 # ═══════════════════════════════════════════════════════════════════════════════
 
 COMMANDS = {
-    "batch_geosite":    lambda a: cmd_batch_geosite(a[0], a[1], a[2], a[3], a[4], a[5], a[6]),
-    "batch_geoip":      lambda a: cmd_batch_geoip(a[0], a[1], a[2], a[3], a[4], a[5], a[6], a[7]),
-    "batch_clash_ip":   lambda a: cmd_batch_clash_ip(a[0], a[1], a[2], a[3], a[4], a[5]),
+    "batch_geosite":    lambda a: cmd_batch_geosite(a[0], a[1], a[2], a[3], a[4], a[5]),
+    "batch_geoip":      lambda a: cmd_batch_geoip(a[0], a[1], a[2], a[3], a[4], a[5], a[6]),
+    "batch_manual_ip":  lambda a: cmd_batch_manual_ip(a[0], a[1], a[2], a[3], a[4]),
     "parse_clash":      lambda a: cmd_parse_clash(a[0], a[1], a[2]),
     "merge_dedup":      lambda a: cmd_merge_dedup(a[0], a[1], a[2], a[3]),
     "diff_new_entries":     lambda a: cmd_diff_new_entries(a[0], a[1], a[2], a[3]),

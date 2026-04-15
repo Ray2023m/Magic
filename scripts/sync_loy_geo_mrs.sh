@@ -25,8 +25,6 @@ GEOSITE_URL='https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/release/
 OUT_GEOSITE='mihomo/geosite'
 OUT_GEOIP='mihomo/geoip'
 LEGACY_GEO_ROOT='geo'
-OUT_QX_GEOSITE=''
-OUT_QX_GEOIP=''
 
 CLASH_DIR="${CLASH_DIR:-Manual_Site}"
 CLASH_IP_DIR="${CLASH_IP_DIR:-Manual_IP}"
@@ -67,10 +65,6 @@ SRS_TASKS="${WORKDIR}/srs_tasks.txt"
 : > "$MRS_TASKS"
 : > "$SRS_TASKS"
 
-# QX 输出不落盘到仓库，改写入临时目录
-OUT_QX_GEOSITE="${WORKDIR}/QX/geosite"
-OUT_QX_GEOIP="${WORKDIR}/QX/geoip"
-
 # ══════════════════════════════════════════════════════════════════════════════
 # 1. 下载
 # ══════════════════════════════════════════════════════════════════════════════
@@ -101,17 +95,16 @@ echo "[3/7] Clean output dirs (full sync)..."
 rm -rf "$OUT_GEOSITE" "$OUT_GEOIP"
 # 迁移：清理旧目录，避免 geo/ 与 mihomo/ 并存
 rm -rf "$LEGACY_GEO_ROOT"
-mkdir -p "$OUT_GEOSITE" "$OUT_GEOIP" "$OUT_QX_GEOSITE" "$OUT_QX_GEOIP"
+mkdir -p "$OUT_GEOSITE" "$OUT_GEOIP"
 
 # ══════════════════════════════════════════════════════════════════════════════
-# 4. Python 批处理 geosite（一次调用处理所有 tag，输出 yaml/list/json/QX）
+# 4. Python 批处理 geosite（一次调用处理所有 tag，输出 yaml/list/json）
 # ══════════════════════════════════════════════════════════════════════════════
 echo "[4/7] Batch process geosite (Python)..."
 python3 "$HELPERS" batch_geosite \
   "$WORKDIR/geosite_txt" \
   "$CLASH_DIR" \
   "$OUT_GEOSITE" \
-  "$OUT_QX_GEOSITE" \
   "$MRS_TASKS" \
   "$SRS_TASKS" \
   "$WORKDIR"
@@ -125,17 +118,15 @@ python3 "$HELPERS" batch_geoip \
   "$CLASH_DIR" \
   "$WORKDIR/clash_ip" \
   "$OUT_GEOIP" \
-  "$OUT_QX_GEOIP" \
   "$MRS_TASKS" \
   "$SRS_TASKS" \
   "$WORKDIR"
 
-# ── Python 批处理 clash-ip/ ──────────────────────────────────────────────────
-echo "[5b/7] Batch process clash-ip (Python)..."
-python3 "$HELPERS" batch_clash_ip \
+# ── Python 批处理 Manual_IP/ ─────────────────────────────────────────────────
+echo "[5b/7] Batch process Manual_IP (Python)..."
+python3 "$HELPERS" batch_manual_ip \
   "$CLASH_IP_DIR" \
   "$OUT_GEOIP" \
-  "$OUT_QX_GEOIP" \
   "$MRS_TASKS" \
   "$SRS_TASKS" \
   "$WORKDIR"
