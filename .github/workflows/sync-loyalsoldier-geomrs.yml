@@ -1,7 +1,16 @@
 name: Sync Loyalsoldier DAT -> Multi-format Rulesets
 
 on:
-  workflow_dispatch: {}
+  workflow_dispatch:
+    inputs:
+      include_tags:
+        description: "Only keep these tags (comma-separated), e.g. Claude,OpenAI,Google"
+        required: false
+        type: string
+      exclude_tags:
+        description: "Remove these tags (comma-separated), e.g. ads,tracker"
+        required: false
+        type: string
   schedule:
     - cron: "0 18 * * *"   # 北京时间 02:00（UTC 18:00）
   push:
@@ -21,6 +30,10 @@ concurrency:
 jobs:
   sync:
     runs-on: ubuntu-latest
+    env:
+      # 预设白名单：提前把常用 tag 写在这里（逗号分隔）
+      # 示例：Claude,OpenAI,Google,Netflix,YouTube
+      PRESET_INCLUDE_TAGS: ""
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -90,6 +103,77 @@ jobs:
           set -eux
           chmod +x scripts/sync_loy_geo_mrs.sh
           scripts/sync_loy_geo_mrs.sh
+
+      - name: Filter output by tags
+        env:
+          PRESET_INCLUDE_TAGS: ${{ env.PRESET_INCLUDE_TAGS }}
+          INCLUDE_TAGS: ${{ github.event.inputs.include_tags || '' }}
+          EXCLUDE_TAGS: ${{ github.event.inputs.exclude_tags || '' }}
+        run: |
+          set -euo pipefail
+
+          COMBINED_INCLUDE="${PRESET_INCLUDE_TAGS}"
+          if [ -n "$INCLUDE_TAGS" ]; then
+            if [ -n "$COMBINED_INCLUDE" ]; then
+              COMBINED_INCLUDE="${COMBINED_INCLUDE},${INCLUDE_TAGS}"
+            else
+              COMBINED_INCLUDE="$INCLUDE_TAGS"
+            fi
+          fi
+
+          echo "preset_include_tags=${PRESET_INCLUDE_TAGS}"
+          echo "input_include_tags=${INCLUDE_TAGS}"
+          echo "combined_include_tags=${COMBINED_INCLUDE}"
+          echo "include_tags=${INCLUDE_TAGS}"
+          echo "exclude_tags=${EXCLUDE_TAGS}"
+
+          declare -A include_set=()
+          declare -A exclude_set=()
+
+          while IFS= read -r tag; do
+            include_set["$tag"]=1
+          done < <(printf '%s' "$COMBINED_INCLUDE" | tr ',;' '\n' | sed 's/^[[:space:]]*//;s/[[:space:]]*$//' | awk 'NF')
+
+          # 自动包含 Manual_* 目录里的 tag（按 *.yaml 文件名识别）
+          while IFS= read -r tag; do
+            include_set["$tag"]=1
+          done < <(
+            for d in Manual_site Manual_Site Manual_ip Manual_IP; do
+              [ -d "$d" ] || continue
+              find "$d" -maxdepth 1 -type f -name '*.yaml' -print
+            done | sed 's#^.*/##;s#\.yaml$##' | awk 'NF' | sort -u
+          )
+
+          while IFS= read -r tag; do
+            exclude_set["$tag"]=1
+          done < <(printf '%s' "$EXCLUDE_TAGS" | tr ',;' '\n' | sed 's/^[[:space:]]*//;s/[[:space:]]*$//' | awk 'NF')
+
+          include_count="${#include_set[@]}"
+          remove_count=0
+          keep_count=0
+
+          while IFS= read -r f; do
+            base="$(basename "$f")"
+            tag="${base%.*}"
+            keep=1
+
+            if [ "$include_count" -gt 0 ] && [ -z "${include_set[$tag]+x}" ]; then
+              keep=0
+            fi
+
+            if [ -n "${exclude_set[$tag]+x}" ]; then
+              keep=0
+            fi
+
+            if [ "$keep" -eq 1 ]; then
+              keep_count=$((keep_count + 1))
+            else
+              rm -f "$f"
+              remove_count=$((remove_count + 1))
+            fi
+          done < <(find Rules/mihomo/geosite Rules/mihomo/geoip -type f \( -name '*.mrs' -o -name '*.list' \) 2>/dev/null | sort)
+
+          echo "filter result: kept=${keep_count} removed=${remove_count}"
 
       # ── 调试输出 ─────────────────────────────────────────────────────────
       - name: Show outputs (debug)
