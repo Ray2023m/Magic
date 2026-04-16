@@ -65,9 +65,7 @@ proxy-groups:
   - {name: HBO,  <<: *SelectUS}
   - {name: Disney,  <<: *SelectUS}
   - {name: Amazon,  <<: *SelectUS}
-  - {name: Crunchyroll,  <<: *SelectUS}
   - {name: Spotify, <<: *SelectHK}
-  - {name: Nvidia, <<: *SelectUS}
   - {name: Steam, <<: *SelectHK}
   - {name: Games, <<: *SelectHK}
   - {name: Apple, <<: *SelectDC}
