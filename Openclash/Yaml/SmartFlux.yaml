@@ -36,14 +36,14 @@ SelectRJ: &SelectRJ {type: select, proxies: [REJECT,香港故转, 台湾故转, 
 # ==================== 机场集合 ====================
 proxy-providers:
   # 优质订阅源
-  优.猫猫: {<<: *BaseProvider, url: '订阅地址', override: {additional-prefix: '[优] '}}
-  优.糖果: {<<: *BaseProvider, url: '订阅地址', override: {additional-prefix: '[优] '}}
+  优-猫猫: {<<: *BaseProvider, url: '订阅地址', override: {additional-prefix: '[优] '}}
+  优-糖果: {<<: *BaseProvider, url: '订阅地址', override: {additional-prefix: '[优] '}}
   # 备用订阅源
-  备.69云: {<<: *BaseProvider, url: '订阅地址', override: {additional-prefix: '[备] '}}
-  备.魔戒: {<<: *BaseProvider, url: '订阅地址', override: {additional-prefix: '[备] '}}
+  备-69云: {<<: *BaseProvider, url: '订阅地址', override: {additional-prefix: '[备] '}}
+  备-魔戒: {<<: *BaseProvider, url: '订阅地址', override: {additional-prefix: '[备] '}}
   # 自建订阅源
-  自.REshare: {<<: *BaseProvider, url: '订阅地址', override: {additional-prefix: '[自] '}}
-  自.Oracle: {<<: *BaseProvider, url: '订阅地址', override: {additional-prefix: '[自] '}}
+  自-REshare: {<<: *BaseProvider, url: '订阅地址', override: {additional-prefix: '[自] '}}
+  自-Oracle: {<<: *BaseProvider, url: '订阅地址', override: {additional-prefix: '[自] '}}
 
 # ==================== 代理策略组 ====================
 proxy-groups:
@@ -65,9 +65,7 @@ proxy-groups:
   - {name: HBO,  <<: *SelectUS}
   - {name: Disney,  <<: *SelectUS}
   - {name: Amazon,  <<: *SelectUS}
-  - {name: Crunchyroll,  <<: *SelectUS}
   - {name: Spotify, <<: *SelectHK}
-  - {name: Nvidia, <<: *SelectUS}
   - {name: Steam, <<: *SelectHK}
   - {name: Games, <<: *SelectHK}
   - {name: Apple, <<: *SelectDC}
@@ -112,10 +110,6 @@ proxy-groups:
   - {name: 全球手选,  <<: *BaseSL, filter: *FilterAL, include-all: true, icon: https://raw.githubusercontent.com/Ray2023m/Magic/refs/heads/main/icon/flag/United_Nations.png}
 # ==================== 规则路由 ====================
 rules: 
-  # 拦截规则
-  - RULE-SET,Tracking,REJECT
-  - RULE-SET,Advertising,REJECT
-  - AND,((DST-PORT,443),(NETWORK,UDP),(NOT,((GEOIP,CN)))),REJECT  # 阻止海外 QUIC
 
   # 域名规则
   - RULE-SET,TEST,Test
@@ -139,7 +133,6 @@ rules:
   - RULE-SET,Netflix,Netflix
   - RULE-SET,Disney,Disney
   - RULE-SET,Amazon,Amazon
-  - RULE-SET,Crunchyroll,Crunchyroll
   - RULE-SET,HBO,HBO
   - RULE-SET,Spotify,Spotify
   - RULE-SET,Steam,Steam
@@ -150,7 +143,6 @@ rules:
   - RULE-SET,PlayStation,Games
   - RULE-SET,Nintendo,Games
   - RULE-SET,Google,Google
-  - RULE-SET,Nvidia,Nvidia
   - RULE-SET,Personal,国内直连 
   - RULE-SET,Proxy,国外流量
   - RULE-SET,Globe,国外流量  
@@ -194,6 +186,7 @@ rule-providers:
   Twitter:   {<<: *BehaviorDN, url: "https://raw.githubusercontent.com/Ray2023m/Magic/main/Rules/mihomo/geosite/x.mrs"}
   WhatsApp:  {<<: *BehaviorDN, url: "https://raw.githubusercontent.com/Ray2023m/Magic/main/Rules/mihomo/geosite/whatsapp.mrs"}
   Facebook:  {<<: *BehaviorDN, url: "https://raw.githubusercontent.com/Ray2023m/Magic/main/Rules/mihomo/geosite/facebook.mrs"}
+  Amazon:    {<<: *BehaviorDN, url: "https://raw.githubusercontent.com/Ray2023m/Magic/main/Rules/mihomo/geosite/amazon.mrs"}
   AppleCN:   {<<: *BehaviorDN, url: "https://raw.githubusercontent.com/Ray2023m/Magic/main/Rules/mihomo/geosite/apple-cn.mrs"}
   Apple:     {<<: *BehaviorDN, url: "https://raw.githubusercontent.com/Ray2023m/Magic/main/Rules/mihomo/geosite/apple.mrs"} 
   Microsoft: {<<: *BehaviorDN, url: "https://raw.githubusercontent.com/Ray2023m/Magic/main/Rules/mihomo/geosite/microsoft.mrs"}

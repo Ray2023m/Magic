@@ -116,7 +116,7 @@ rules:
   - RULE-SET,Block,Block  
   - RULE-SET,ChatGPT,ChatGPT
   - RULE-SET,Claude,Claude
-  - RULE-SET,Meta AI,MetaAI
+  - RULE-SET,MetaAI,MetaAI
   - RULE-SET,Perplexity,Perplexity
   - RULE-SET,Copilot,Copilot
   - RULE-SET,Gemini,Gemini
