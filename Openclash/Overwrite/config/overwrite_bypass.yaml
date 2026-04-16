@@ -112,10 +112,6 @@ proxy-groups:
   - {name: 全球手选,  <<: *BaseSL, filter: *FilterAL, include-all: true, icon: https://raw.githubusercontent.com/Ray2023m/Magic/refs/heads/main/icon/flag/United_Nations.png}
 # ==================== 规则路由 ====================
 rules: 
-  # 拦截规则
-  - RULE-SET,Tracking,REJECT
-  - RULE-SET,Advertising,REJECT
-  - AND,((DST-PORT,443),(NETWORK,UDP),(NOT,((GEOIP,CN)))),REJECT  # 阻止海外 QUIC
 
   # 域名规则
   - RULE-SET,TEST,Test
