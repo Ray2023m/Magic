@@ -135,7 +135,6 @@ rules:
   - RULE-SET,Netflix,Netflix
   - RULE-SET,Disney,Disney
   - RULE-SET,Amazon,Amazon
-  - RULE-SET,Crunchyroll,Crunchyroll
   - RULE-SET,HBO,HBO
   - RULE-SET,Spotify,Spotify
   - RULE-SET,Steam,Steam
