@@ -36,14 +36,14 @@ SelectRJ: &SelectRJ {type: select, proxies: [REJECT,香港故转, 台湾故转, 
 # ==================== 机场集合 ====================
 proxy-providers:
   # 优质订阅源
-  优-猫猫: {<<: *BaseProvider, url: '订阅地址', override: {additional-prefix: '[优] '}}
-  优-糖果: {<<: *BaseProvider, url: '订阅地址', override: {additional-prefix: '[优] '}}
+  CatClould: {<<: *BaseProvider, url: '订阅地址', override: {additional-prefix: '[优] '}}
+  Candytally: {<<: *BaseProvider, url: '订阅地址', override: {additional-prefix: '[优] '}}
   # 备用订阅源
-  备-69云: {<<: *BaseProvider, url: '订阅地址', override: {additional-prefix: '[备] '}}
-  备-魔戒: {<<: *BaseProvider, url: '订阅地址', override: {additional-prefix: '[备] '}}
+  69Clould: {<<: *BaseProvider, url: '订阅地址', override: {additional-prefix: '[备] '}}
+  mojie: {<<: *BaseProvider, url: '订阅地址', override: {additional-prefix: '[备] '}}
   # 自建订阅源
-  自-REshare: {<<: *BaseProvider, url: '订阅地址', override: {additional-prefix: '[自] '}}
-  自-Oracle: {<<: *BaseProvider, url: '订阅地址', override: {additional-prefix: '[自] '}}
+  REshare: {<<: *BaseProvider, url: '订阅地址', override: {additional-prefix: '[自] '}}
+  Oracle: {<<: *BaseProvider, url: '订阅地址', override: {additional-prefix: '[自] '}}
 
 # ==================== 代理策略组 ====================
 proxy-groups:
