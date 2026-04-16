@@ -153,7 +153,6 @@ rules:
   - RULE-SET,TestIP,Test,no-resolve
   - RULE-SET,ClaudeIP,Claude,no-resolve
   - RULE-SET,TelegramIP,Telegram,no-resolve
-  - RULE-SET,WhatsappIP,WhatsApp,no-resolve
   - RULE-SET,FacebookIP,Facebook,no-resolve
   - RULE-SET,BlizzardIP,Games,no-resolve
   - RULE-SET,NetflixIP,Netflix,no-resolve
@@ -216,7 +215,6 @@ rule-providers:
   TestIP:     {<<: *BehaviorIP, url: "https://raw.githubusercontent.com/Ray2023m/Magic/main/Rules/mihomo/geoip/check.mrs"}
   ClaudeIP:   {<<: *BehaviorIP, url: "https://raw.githubusercontent.com/Ray2023m/Magic/main/Rules/mihomo/geoip/claude.mrs"}
   TelegramIP: {<<: *BehaviorIP, url: "https://raw.githubusercontent.com/Ray2023m/Magic/main/Rules/mihomo/geoip/telegram.mrs"}
-  WhatsappIP: {<<: *BehaviorIP, url: "https://raw.githubusercontent.com/Ray2023m/Magic/main/Rules/mihomo/geoip/whatsapp.mrs"}  
   BlizzardIP: {<<: *BehaviorIP, url: "https://raw.githubusercontent.com/Ray2023m/Magic/main/Rules/mihomo/geoip/blizzard.mrs"}
   NetflixIP:  {<<: *BehaviorIP, url: "https://raw.githubusercontent.com/Ray2023m/Magic/main/Rules/mihomo/geoip/netflix.mrs"}
   GoogleIP:   {<<: *BehaviorIP, url: "https://raw.githubusercontent.com/Ray2023m/Magic/main/Rules/mihomo/geoip/google.mrs"}
