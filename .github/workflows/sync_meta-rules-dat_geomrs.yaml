@@ -38,7 +38,7 @@ jobs:
         cn,gfw,geolocation-!cn,private,github-copilot.mrs,
         openai,google,microsoft,github,apple,apple-cn,tiktok,
         netflix,youtube,disney,spotify,bilibili,hbo,amazon,copilot,
-        facebook,instagram,x,telegram,line,nintendo,
+        facebook,instagram,x,telegram,line,nintendo,meta,
         steam,epicgames,whatsapp,perplexity,reddit
     steps:
       - name: Checkout
