@@ -2,11 +2,15 @@
 # 地址: https://github.com/Ray2023m/Magic
 # 版本: v1.0
 # 更新: 2026 年 4 月 8 日
-# 说明: SmartFlux 是一款基于 Clash 的智能流量分流Yaml。
+
+dns:
+  nameserver:
+   - 116.116.116.116
+   - 221.5.88.88
 
 # ====================锚点配置 ====================
 # 订阅源基础配置
-BaseProvider: &BaseProvider {type: http, interval: 86400, proxy: DIRECT, health-check: {enable: true, url: 'https://cp.cloudflare.com/generate_204', interval: 300}, filter: '^(?!.*(剩余|套餐|官网|群组|订阅|到期|永久|基础|国内|过滤|测试))'}
+BaseProvider: &BaseProvider {type: http, interval: 86400, proxy: DIRECT, health-check: {enable: true, url: 'https://cp.cloudflare.com/generate_204', interval: 300}, filter: '^(?!.*(剩余|套餐|官网|群组|订阅|到期|永久|基础|国内|过滤|测试)).*$'}
 # 策略组类型模板 - 定义不同的策略组基础配置
 BaseSL: &BaseSL {type: select, interval: 200, lazy: true, url: 'https://cp.cloudflare.com/generate_204', hidden: true}
 BaseCH: &BaseCH {type: load-balance, interval: 200, lazy: true, url: 'https://cp.cloudflare.com/generate_204', hidden: true}
@@ -34,19 +38,26 @@ SelectRJ: &SelectRJ {type: select, proxies: [REJECT,香港故转, 台湾故转, 
 # ==================== 机场集合 ====================
 proxy-providers:
   # 优质订阅源
-  AirPort1-猫猫云: {<<: *BaseProvider, url: '订阅地址', override: {additional-prefix: '[优] '}}
-  AirPort2-Candytally: {<<: *BaseProvider, url: '订阅地址', override: {additional-prefix: '[优] '}}
+  优.猫猫云: {<<: *BaseProvider, url: '订阅地址', override: {additional-prefix: '[优] '}}
+  优.Candytally: {<<: *BaseProvider, url: '订阅地址', override: {additional-prefix: '[优] '}}
   # 备用订阅源
-  AirPort3-69云: {<<: *BaseProvider, url: '订阅地址', override: {additional-prefix: '[备] '}}
-  AirPort4-魔戒: {<<: *BaseProvider, url: '订阅地址', override: {additional-prefix: '[备] '}}
+  备.69云: {<<: *BaseProvider, url: '订阅地址', override: {additional-prefix: '[备] '}}
+  备.魔戒: {<<: *BaseProvider, url: '订阅地址', override: {additional-prefix: '[备] '}}
   # 自建订阅源
-  AirPort5-REshare: {<<: *BaseProvider, url: '订阅地址', override: {additional-prefix: '[自] '}}
-  AirPort6-Oracle: {<<: *BaseProvider, url: '订阅地址', override: {additional-prefix: '[自] '}}
+  自.REshare: {<<: *BaseProvider, url: '订阅地址', override: {additional-prefix: '[自] '}}
+  自.Oracle: {<<: *BaseProvider, url: '订阅地址', override: {additional-prefix: '[自] '}}
 
 # ==================== 代理策略组 ====================
 proxy-groups:
   # 应用策略层 - Select手动选择. 
-  - {name: AI 助理,  <<: *SelectUS}
+  - {name: ChatGPT,  <<: *SelectUS}
+  - {name: Gemini,  <<: *SelectUS}
+  - {name: Copilot,  <<: *SelectUS}
+  - {name: Perplexity,  <<: *SelectUS}
+  - {name: GitHub,  <<: *SelectUS} 
+  - {name: Claude,  <<: *SelectUS}
+  - {name: Meta AI,  <<: *SelectUS}
+  - {name: Reddit,  <<: *SelectUS}
   - {name: Telegram,  <<: *SelectUS}
   - {name: WhatsApp,  <<: *SelectUS}
   - {name: Facebook,  <<: *SelectUS}
@@ -109,40 +120,54 @@ rules:
   - AND,((DST-PORT,443),(NETWORK,UDP),(NOT,((GEOIP,CN)))),REJECT  # 阻止海外 QUIC
 
   # 域名规则
-  - RULE-SET,Private,直接连接
-  - RULE-SET,Direct,直接连接
-  - RULE-SET,XPTV,直接连接
-  - RULE-SET,AppleCN,直接连接
-  - RULE-SET,AI,人工智能
-  - DOMAIN-KEYWORD,speedtest,网络测试
-  - RULE-SET,Speedtest,网络测试
-  - RULE-SET,Telegram,电报消息
-  - RULE-SET,SocialMedia,社交平台
-  - RULE-SET,NewsMedia,新闻媒体
-  - RULE-SET,Games,游戏平台
-  - RULE-SET,Crypto,货币平台
-  - RULE-SET,Emby,Emby服
-  - RULE-SET,Streaming,国际媒体
-  - RULE-SET,Apple,苹果服务 
-  - RULE-SET,Google,谷歌服务
-  - RULE-SET,Microsoft,微软服务
-  - RULE-SET,Facebook,脸书服务
+  - RULE-SET,Personal,国内直连
+  - RULE-SET,TEST ,Test
+  - RULE-SET,Block,Block  
+  - RULE-SET,ChatGPT,ChatGPT
+  - RULE-SET,Claude,Claude
+  - RULE-SET,Meta AI,Meta AI
+  - RULE-SET,Perplexity,Perplexity
+  - RULE-SET,Copilot,Copilot
+  - RULE-SET,Gemini,Gemini
+  - RULE-SET,Reddit,Reddit 
+  - RULE-SET,GitHub,GitHub
+  - RULE-SET,Telegram,Telegram
+  - RULE-SET,WhatsAppDomain,WhatsApp
+  - RULE-SET,FacebookDomain,Facebook
+  - RULE-SET,Apple,Apple
+  - RULE-SET,Apple-CN,Apple  
+  - RULE-SET,Microsoft,Microsoft
+  - RULE-SET,YoutubeDomain,YouTube
+  - RULE-SET,TikTokDomain,TikTok
+  - RULE-SET,Netflix,Netflix
+  - RULE-SET,Disney,Disney
+  - RULE-SET,Amazon,Amazon
+  - RULE-SET,Crunchyroll,Crunchyroll
+  - RULE-SET,HBO,HBO
+  - RULE-SET,Spotify,Spotify
+  - RULE-SET,Steam,Steam
+  - RULE-SET,Epic,Games
+  - RULE-SET,EA,Games
+  - RULE-SET,Blizzard,Games
+  - RULE-SET,UBI,Games
+  - RULE-SET,PlayStation,Games
+  - RULE-SET,Nintendo,Games
+  - RULE-SET,Google,Google
+  - RULE-SET,Nvidia,Nvidia 
   - RULE-SET,Proxy,国外流量
-  - RULE-SET,China,国内流量
-
-  # IP规则
-  - RULE-SET,AdvertisingIP,REJECT,no-resolve
-  - RULE-SET,PrivateIP,直接连接,no-resolve
-  - RULE-SET,XPTVIP,直接连接,no-resolve
-  - RULE-SET,AIIP,人工智能,no-resolve
-  - RULE-SET,TelegramIP,电报消息,no-resolve
-  - RULE-SET,SocialMediaIP,社交平台,no-resolve
-  - RULE-SET,EmbyIP,Emby服,no-resolve
-  - RULE-SET,StreamingIP,国际媒体,no-resolve
-  - RULE-SET,GoogleIP,谷歌服务,no-resolve
-  - RULE-SET,FacebookIP,脸书服务,no-resolve
-  - RULE-SET,ProxyIP,国外流量,no-resolve
-  - RULE-SET,ChinaIP,国内流量
+  - RULE-SET,Globe,国外流量  
+  - RULE-SET,Direct,国内直连
+  - RULE-SET,China,国内直连
+  - RULE-SET,Private,国内直连
+  #IP规则
+  - RULE-SET,TestIP,Test,no-resolve
+  - RULE-SET,ClaudeIP,Claude,no-resolve
+  - RULE-SET,TelegramIP,Telegram,no-resolve
+  - RULE-SET,WhatsappIP,WhatsApp,no-resolve
+  - RULE-SET,NetflixIP,Netflix,no-resolve
+  - RULE-SET,GoogleIP,Google,no-resolve
+  - RULE-SET,GlobalIP,国外流量,no-resolve
+  - RULE-SET,ChinaIP,国内直连,no-resolve
 
   # 兜底规则
   - MATCH,兜底流量
@@ -159,7 +184,9 @@ rule-providers:
   Claude:    {<<: *BehaviorDN, url: "https://raw.githubusercontent.com/Ray2023m/Magic/main/Rules/mihomo/geosite/claude.mrs"}
   MetaAI:    {<<: *BehaviorDN, url: "https://raw.githubusercontent.com/Ray2023m/Magic/main/Rules/mihomo/geosite/MetaAi.mrs"}
   Copilot:   {<<: *BehaviorDN, url: "https://raw.githubusercontent.com/Ray2023m/Magic/main/Rules/mihomo/geosite/Copilot.mrs"}
+  Perplexity: {<<: *BehaviorDN, url: "https://raw.githubusercontent.com/Ray2023m/Magic/main/Rules/mihomo/geosite/perplexity.mrs"}
   Gemini:    {<<: *BehaviorDN, url: "https://raw.githubusercontent.com/Ray2023m/Magic/main/Rules/mihomo/geosite/Gemini.mrs"}
+  Reddit:    {<<: *BehaviorDN, url: "https://raw.githubusercontent.com/Ray2023m/Magic/main/Rules/mihomo/geosite/reddit.mrs"}
   GitHub:    {<<: *BehaviorDN, url: "https://raw.githubusercontent.com/Ray2023m/Magic/main/Rules/mihomo/geosite/github.mrs"}
   Telegram:  {<<: *BehaviorDN, url: "https://raw.githubusercontent.com/Ray2023m/Magic/main/Rules/mihomo/geosite/telegram.mrs"}  
   Twitter:   {<<: *BehaviorDN, url: "https://raw.githubusercontent.com/Ray2023m/Magic/main/Rules/mihomo/geosite/x.mrs"}
