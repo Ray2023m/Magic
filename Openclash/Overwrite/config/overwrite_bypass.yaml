@@ -190,6 +190,7 @@ rule-providers:
   Twitter:   {<<: *BehaviorDN, url: "https://raw.githubusercontent.com/Ray2023m/Magic/main/Rules/mihomo/geosite/x.mrs"}
   WhatsApp:  {<<: *BehaviorDN, url: "https://raw.githubusercontent.com/Ray2023m/Magic/main/Rules/mihomo/geosite/whatsapp.mrs"}
   Facebook:  {<<: *BehaviorDN, url: "https://raw.githubusercontent.com/Ray2023m/Magic/main/Rules/mihomo/geosite/facebook.mrs"}
+  Amazon:    {<<: *BehaviorDN, url: "https://raw.githubusercontent.com/Ray2023m/Magic/main/Rules/mihomo/geosite/amazon.mrs"}
   AppleCN:   {<<: *BehaviorDN, url: "https://raw.githubusercontent.com/Ray2023m/Magic/main/Rules/mihomo/geosite/apple-cn.mrs"}
   Apple:     {<<: *BehaviorDN, url: "https://raw.githubusercontent.com/Ray2023m/Magic/main/Rules/mihomo/geosite/apple.mrs"} 
   Microsoft: {<<: *BehaviorDN, url: "https://raw.githubusercontent.com/Ray2023m/Magic/main/Rules/mihomo/geosite/microsoft.mrs"}
