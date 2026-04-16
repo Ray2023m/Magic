@@ -37,7 +37,7 @@ jobs:
       PRESET_INCLUDE_TAGS: >
         cn,gfw,geolocation-!cn,private,github-copilot.mrs,
         openai,google,microsoft,github,apple,apple-cn,tiktok,
-        netflix,youtube,disney,spotify,bilibili,hbo,amazon,
+        netflix,youtube,disney,spotify,bilibili,hbo,amazon,copilot,
         facebook,instagram,x,telegram,line,nintendo,
         steam,epicgames,whatsapp,perplexity,reddit
     steps:
