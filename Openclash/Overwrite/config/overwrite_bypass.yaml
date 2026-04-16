@@ -145,7 +145,6 @@ rules:
   - RULE-SET,PlayStation,Games
   - RULE-SET,Nintendo,Games
   - RULE-SET,Google,Google
-  - RULE-SET,Nvidia,Nvidia
   - RULE-SET,Personal,国内直连 
   - RULE-SET,Proxy,国外流量
   - RULE-SET,Globe,国外流量  
