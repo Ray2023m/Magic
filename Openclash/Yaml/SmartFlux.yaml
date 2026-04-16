@@ -54,13 +54,13 @@ proxy-groups:
   - {name: Perplexity,  <<: *SelectUS}
   - {name: GitHub,  <<: *SelectUS} 
   - {name: Claude,  <<: *SelectUS}
-  - {name: Meta AI,  <<: *SelectUS}
+  - {name: MetaAI,  <<: *SelectUS}
   - {name: Reddit,  <<: *SelectUS}
   - {name: Telegram,  <<: *SelectUS}
   - {name: WhatsApp,  <<: *SelectUS}
   - {name: Facebook,  <<: *SelectUS}
   - {name: YouTube,  <<: *SelectHK}
-  - {name: TikTok,  <<: *SelectHK}
+  - {name: TikTok,  <<: *SelectDC}
   - {name: Netflix,  <<: *SelectUS}
   - {name: HBO,  <<: *SelectUS}
   - {name: Disney,  <<: *SelectUS}
@@ -118,25 +118,24 @@ rules:
   - AND,((DST-PORT,443),(NETWORK,UDP),(NOT,((GEOIP,CN)))),REJECT  # 阻止海外 QUIC
 
   # 域名规则
-  - RULE-SET,Personal,国内直连
-  - RULE-SET,TEST ,Test
+  - RULE-SET,TEST,Test
   - RULE-SET,Block,Block  
   - RULE-SET,ChatGPT,ChatGPT
   - RULE-SET,Claude,Claude
-  - RULE-SET,Meta AI,Meta AI
+  - RULE-SET,MetaAI,MetaAI
   - RULE-SET,Perplexity,Perplexity
   - RULE-SET,Copilot,Copilot
   - RULE-SET,Gemini,Gemini
   - RULE-SET,Reddit,Reddit 
   - RULE-SET,GitHub,GitHub
   - RULE-SET,Telegram,Telegram
-  - RULE-SET,WhatsAppDomain,WhatsApp
-  - RULE-SET,FacebookDomain,Facebook
+  - RULE-SET,WhatsApp,WhatsApp
+  - RULE-SET,Facebook,Facebook
   - RULE-SET,Apple,Apple
-  - RULE-SET,Apple-CN,Apple  
+  - RULE-SET,AppleCN,Apple  
   - RULE-SET,Microsoft,Microsoft
-  - RULE-SET,YoutubeDomain,YouTube
-  - RULE-SET,TikTokDomain,TikTok
+  - RULE-SET,Youtube,YouTube
+  - RULE-SET,TikTok,TikTok
   - RULE-SET,Netflix,Netflix
   - RULE-SET,Disney,Disney
   - RULE-SET,Amazon,Amazon
@@ -151,7 +150,8 @@ rules:
   - RULE-SET,PlayStation,Games
   - RULE-SET,Nintendo,Games
   - RULE-SET,Google,Google
-  - RULE-SET,Nvidia,Nvidia 
+  - RULE-SET,Nvidia,Nvidia
+  - RULE-SET,Personal,国内直连 
   - RULE-SET,Proxy,国外流量
   - RULE-SET,Globe,国外流量  
   - RULE-SET,Direct,国内直连
@@ -162,13 +162,17 @@ rules:
   - RULE-SET,ClaudeIP,Claude,no-resolve
   - RULE-SET,TelegramIP,Telegram,no-resolve
   - RULE-SET,WhatsappIP,WhatsApp,no-resolve
+  - RULE-SET,FacebookIP,Facebook,no-resolve
+  - RULE-SET,BlizzardIP,Games,no-resolve
   - RULE-SET,NetflixIP,Netflix,no-resolve
   - RULE-SET,GoogleIP,Google,no-resolve
   - RULE-SET,GlobalIP,国外流量,no-resolve
+  - RULE-SET,PrivateIP,国内直连,no-resolve
+  - RULE-SET,DirectIP,国内直连,no-resolve
   - RULE-SET,ChinaIP,国内直连,no-resolve
 
   # 兜底规则
-  - MATCH,兜底流量
+  - MATCH,漏网之鱼
 
 # ==================== 规则集 ====================
 # 规则集行为模板
@@ -203,27 +207,30 @@ rule-providers:
   EA:        {<<: *BehaviorDN, url: "https://raw.githubusercontent.com/Ray2023m/Magic/main/Rules/mihomo/geosite/EA.mrs"}
   Blizzard:  {<<: *BehaviorDN, url: "https://raw.githubusercontent.com/Ray2023m/Magic/main/Rules/mihomo/geosite/Blizzard.mrs"}
   UBI:       {<<: *BehaviorDN, url: "https://raw.githubusercontent.com/Ray2023m/Magic/main/Rules/mihomo/geosite/UBI.mrs"}
-  PlayS  :   {<<: *BehaviorDN, url: "https://raw.githubusercontent.com/Ray2023m/Magic/main/Rules/mihomo/geosite/PlayStation.mrs"}
   Nintendo:  {<<: *BehaviorDN, url: "https://raw.githubusercontent.com/Ray2023m/Magic/main/Rules/mihomo/geosite/nintendo.mrs"}
   Proxy:     {<<: *BehaviorDN, url: "https://raw.githubusercontent.com/Ray2023m/Magic/main/Rules/mihomo/geosite/geolocation-!cn.mrs"}
   Globe:     {<<: *BehaviorDN, url: "https://raw.githubusercontent.com/Ray2023m/Magic/main/Rules/mihomo/geosite/Global.mrs"} 
   Direct:    {<<: *BehaviorDN, url: "https://raw.githubusercontent.com/Ray2023m/Magic/main/Rules/mihomo/geosite/Direct.mrs"}
   China:     {<<: *BehaviorDN, url: "https://raw.githubusercontent.com/Ray2023m/Magic/main/Rules/mihomo/geosite/cn.mrs"}
   Private:   {<<: *BehaviorDN, url: "https://raw.githubusercontent.com/Ray2023m/Magic/main/Rules/mihomo/geosite/private.mrs"}
-  BLOCK:     {<<: *BehaviorDN, url: "https://raw.githubusercontent.com/Ray2023m/Magic/main/Rules/mihomo/geosite/Block.mrs"}
+  Block:     {<<: *BehaviorDN, url: "https://raw.githubusercontent.com/Ray2023m/Magic/main/Rules/mihomo/geosite/Block.mrs"}
   Youtube:   {<<: *BehaviorDN, url: "https://raw.githubusercontent.com/Ray2023m/Magic/main/Rules/mihomo/geosite/youtube.mrs"}  
   Google:    {<<: *BehaviorDN, url: "https://raw.githubusercontent.com/Ray2023m/Magic/main/Rules/mihomo/geosite/google.mrs"}
   Personal:  {<<: *BehaviorDN, url: "https://raw.githubusercontent.com/Ray2023m/Magic/main/Rules/mihomo/geosite/custom.mrs"}
+  PlayStation:   {<<: *BehaviorDN, url: "https://raw.githubusercontent.com/Ray2023m/Magic/main/Rules/mihomo/geosite/PlayStation.mrs"}
 
   # IP规则
-  TestIP:     {<<: *BehaviorIP, url: "https://raw.githubusercontent.com/Ray2023m/Magic/main/Rules/mihomo/geosite/check.mrs"}
-  ClaudeIP:   {<<: *BehaviorIP, url: "https://raw.githubusercontent.com/Ray2023m/Magic/main/Rules/mihomo/geosite/Claude.mrs"}
-  TelegramIP: {<<: *BehaviorIP, url: "https://raw.githubusercontent.com/Ray2023m/Magic/main/Rules/mihomo/geosite/telegram.mrs"}
-  WhatsappIP: {<<: *BehaviorIP, url: "https://raw.githubusercontent.com/Ray2023m/Magic/main/Rules/mihomo/geosite/whatsapp.mrs"}  
-  NetflixIP:  {<<: *BehaviorIP, url: "https://raw.githubusercontent.com/Ray2023m/Magic/main/Rules/mihomo/geosite/netflix.mrs"}
-  GoogleIP:   {<<: *BehaviorIP, url: "https://raw.githubusercontent.com/Ray2023m/Magic/main/Rules/mihomo/geosite/google.mrs"}
-  GlobalIP:   {<<: *BehaviorIP, url: "https://raw.githubusercontent.com/Ray2023m/Magic/main/Rules/mihomo/geosite/global.mrs"}
-  ChinaIP:    {<<: *BehaviorIP, url: "https://raw.githubusercontent.com/Ray2023m/Magic/main/Rules/mihomo/geosite/cn.mrs"}
+  TestIP:     {<<: *BehaviorIP, url: "https://raw.githubusercontent.com/Ray2023m/Magic/main/Rules/mihomo/geoip/Check.mrs"}
+  ClaudeIP:   {<<: *BehaviorIP, url: "https://raw.githubusercontent.com/Ray2023m/Magic/main/Rules/mihomo/geoip/Claude.mrs"}
+  TelegramIP: {<<: *BehaviorIP, url: "https://raw.githubusercontent.com/Ray2023m/Magic/main/Rules/mihomo/geoip/telegram.mrs"}
+  WhatsappIP: {<<: *BehaviorIP, url: "https://raw.githubusercontent.com/Ray2023m/Magic/main/Rules/mihomo/geoip/whatsapp.mrs"}  
+  BlizzardIP: {<<: *BehaviorIP, url: "https://raw.githubusercontent.com/Ray2023m/Magic/main/Rules/mihomo/geoip/Blizzard.mrs"}
+  NetflixIP:  {<<: *BehaviorIP, url: "https://raw.githubusercontent.com/Ray2023m/Magic/main/Rules/mihomo/geoip/netflix.mrs"}
+  GoogleIP:   {<<: *BehaviorIP, url: "https://raw.githubusercontent.com/Ray2023m/Magic/main/Rules/mihomo/geoip/google.mrs"}
+  GlobalIP:   {<<: *BehaviorIP, url: "https://raw.githubusercontent.com/Ray2023m/Magic/main/Rules/mihomo/geoip/Global.mrs"}
+  ChinaIP:    {<<: *BehaviorIP, url: "https://raw.githubusercontent.com/Ray2023m/Magic/main/Rules/mihomo/geoip/cn.mrs"}
+  DirectIP:   {<<: *BehaviorIP, url: "https://raw.githubusercontent.com/Ray2023m/Magic/main/Rules/mihomo/geoip/Direct.mrs"}
+  FacebookIP: {<<: *BehaviorIP, url: "https://raw.githubusercontent.com/Ray2023m/Magic/main/Rules/mihomo/geoip/facebook.mrs"}
+  PrivateIP:  {<<: *BehaviorIP, url: "https://raw.githubusercontent.com/Ray2023m/Magic/main/Rules/mihomo/geoip/private.mrs"}
  
-
 # ==================== EOF ====================
