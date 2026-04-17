@@ -19,6 +19,7 @@ on:
       - "scripts/sync_loy_geo_mrs.sh"
       - "scripts/helpers.py"
       - "Manual_Rules/**/*.yaml"
+      - "Manual_Rules/**/*.list"
       - "trigger"
 
 permissions:
@@ -141,14 +142,14 @@ jobs:
             include_set["$tag"]=1
           done < <(printf '%s' "$COMBINED_INCLUDE" | tr ',;' '\n' | sed 's/^[[:space:]]*//;s/[[:space:]]*$//' | awk 'NF')
 
-          # 自动包含手动规则目录里的 tag（按 *.yaml 文件名识别）
+          # 自动包含手动规则目录里的 tag（按 *.yaml/*.list 文件名识别）
           while IFS= read -r tag; do
             include_set["$tag"]=1
           done < <(
             for d in Manual_Rules Manual_site Manual_Site Manual_ip Manual_IP; do
               [ -d "$d" ] || continue
-              find "$d" -maxdepth 1 -type f -name '*.yaml' -print
-            done | sed 's#^.*/##;s#\.yaml$##' | awk 'NF' | sort -u
+              find "$d" -maxdepth 1 -type f \( -name '*.yaml' -o -name '*.list' \) -print
+            done | sed 's#^.*/##;s#\.yaml$##;s#\.list$##' | awk 'NF' | sort -u
           )
 
           while IFS= read -r tag; do

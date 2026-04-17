@@ -16,8 +16,54 @@
 - 手动扩展目录：
 - `Manual_Rules`
 
-`Manual_Rules/<tag>.yaml` 支持在同一文件里混合域名规则和 IP 规则，
+`Manual_Rules/<tag>.yaml` 和 `Manual_Rules/<tag>.list` 都支持，
+并且同一个 tag 下两种文件会一起参与合并（读取顺序：`yaml -> list`）。
+
+它们都支持在同一文件里混合域名规则和 IP 规则，
 同时起到旧版 `Manual_Site/<tag>.yaml` + `Manual_IP/<tag>.yaml` 的作用。
+
+## 扩展目录写法（.yaml / .list 通用）
+
+### 1) 基础格式
+- 每行一条规则：`规则类型,值[,附加参数...]`
+- 兼容 YAML 列表前缀：`- DOMAIN,example.com`
+- 以 `#` 开头或行内 `# 注释` 会被忽略
+
+示例：
+
+```yaml
+- DOMAIN-SUFFIX,example.com
+- DOMAIN,api.example.com
+- DOMAIN-KEYWORD,google
+- DOMAIN-REGEX,^.*\.example\.org$
+- PROCESS-NAME,Telegram
+- IP-CIDR,1.2.3.0/24
+- IP-CIDR6,2408::/32
+- IP-ASN,13335
+```
+
+### 2) add / remove 语义
+- 默认是 `add`（新增）
+- 当第 3 段及之后参数中出现以下动作关键字时，判定为 `remove`（删除）：
+  - `remove`
+  - `delete`
+  - `exclude`
+
+示例：
+
+```yaml
+DOMAIN,example.com
+DOMAIN,example.com,remove
+IP-CIDR,1.2.3.0/24,delete
+DOMAIN-SUFFIX,ads.example,exclude
+```
+
+### 3) 其他参数不会触发删除
+非动作关键字（如 `no-resolve`）不会改变操作语义，仍视为新增：
+
+```yaml
+IP-CIDR,8.8.8.0/24,no-resolve   # 仍是 add
+```
 
 ## Tag 筛选规则
 Tag = 文件名去掉后缀。
@@ -29,7 +75,7 @@ Tag = 文件名去掉后缀。
 筛选顺序：
 1. 先读取工作流中的预设白名单 `PRESET_INCLUDE_TAGS`。
 2. 合并手动触发输入的 `include_tags`。
-3. 自动把手动规则目录中的 YAML 文件名加入包含集合（优先 `Manual_Rules`，兼容旧目录）。
+3. 自动把手动规则目录中的 YAML/LIST 文件名加入包含集合（优先 `Manual_Rules`，兼容旧目录）。
 4. 应用 `exclude_tags` 排除集合。
 5. 如果包含集合非空，只保留包含集合中的 tag；再应用排除集合。
 
@@ -74,13 +120,18 @@ PRESET_INCLUDE_TAGS: "Claude,OpenAI,Google,Netflix,YouTube"
 - `exclude_tags=OpenAI`
 
 ## Manual_Rules 自动包含
-以下目录中的 YAML 文件名会自动作为 tag 加入包含集合：
+以下目录中的 YAML / LIST 文件名会自动作为 tag 加入包含集合：
 
 - `Manual_Rules/*.yaml`
+- `Manual_Rules/*.list`
 - `Manual_site/*.yaml`
+- `Manual_site/*.list`
 - `Manual_Site/*.yaml`
+- `Manual_Site/*.list`
 - `Manual_ip/*.yaml`
+- `Manual_ip/*.list`
 - `Manual_IP/*.yaml`
+- `Manual_IP/*.list`
 
 示例：
 - `Manual_Rules/Claude.yaml` 会自动包含 tag `Claude`
@@ -96,6 +147,6 @@ PRESET_INCLUDE_TAGS: "Claude,OpenAI,Google,Netflix,YouTube"
 1. 某个 tag 没有被推送。
 优先检查大小写是否一致（如 `Claude` vs `claude`）。
 2. 手动目录 tag 没生效。
-检查文件是否为 `.yaml`，且目录在 `Manual_Rules`（或兼容的 `Manual_*` 旧目录）内。
+检查文件是否为 `.yaml` 或 `.list`，且目录在 `Manual_Rules`（或兼容的 `Manual_*` 旧目录）内。
 3. 有文件被意外删除。
 检查 `exclude_tags` 是否包含该 tag，或该 tag 不在包含集合中。

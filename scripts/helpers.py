@@ -51,6 +51,7 @@ def norm_value(rule_type, value):
 
 
 RE_COMMENT = re.compile(r"\s+#.*$")
+REMOVE_KEYWORDS = {"remove", "delete", "exclude"}
 
 
 def list_rule_files_by_tag(rules_dir):
@@ -100,8 +101,12 @@ def parse_clash_rule_ops(yaml_path):
             rule_type = parts[0].upper()
             value = parts[1]
 
-            if len(parts) >= 3 and parts[2].strip().lower() == "remove":
-                op = "remove"
+            # 第3段及之后仅识别动作关键字，其他参数（如 no-resolve）忽略
+            if len(parts) >= 3:
+                for token in parts[2:]:
+                    if token.strip().lower() in REMOVE_KEYWORDS:
+                        op = "remove"
+                        break
 
             if not rule_type or not value:
                 continue
