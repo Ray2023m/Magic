@@ -53,7 +53,6 @@ proxy-groups:
   - {name: Copilot,  <<: *SelectUS}
   - {name: Perplexity,  <<: *SelectUS}
   - {name: GitHub,  <<: *SelectUS} 
-  - {name: Claude,  <<: *SelectUS}
   - {name: MetaAI,  <<: *SelectUS}
   - {name: Reddit,  <<: *SelectUS}
   - {name: Telegram,  <<: *SelectUS}
@@ -115,7 +114,6 @@ rules:
   - RULE-SET,TEST,Test
   - RULE-SET,Block,Block  
   - RULE-SET,ChatGPT,ChatGPT
-  - RULE-SET,Claude,Claude
   - RULE-SET,MetaAI,MetaAI
   - RULE-SET,Perplexity,Perplexity
   - RULE-SET,Copilot,Copilot
@@ -173,7 +171,6 @@ rule-providers:
   # 域名规则
   TEST:      {<<: *BehaviorDN, url: "https://raw.githubusercontent.com/Ray2023m/Magic/main/Rules/mihomo/geosite/check.mrs"}
   ChatGPT:   {<<: *BehaviorDN, url: "https://raw.githubusercontent.com/Ray2023m/Magic/main/Rules/mihomo/geosite/openai.mrs"}
-  Claude:    {<<: *BehaviorDN, url: "https://raw.githubusercontent.com/Ray2023m/Magic/main/Rules/mihomo/geosite/claude.mrs"}
   MetaAI:    {<<: *BehaviorDN, url: "https://raw.githubusercontent.com/Ray2023m/Magic/main/Rules/mihomo/geosite/meta.mrs"}
   Copilot:   {<<: *BehaviorDN, url: "https://raw.githubusercontent.com/Ray2023m/Magic/main/Rules/mihomo/geosite/github-copilot.mrs"}
   Perplexity: {<<: *BehaviorDN, url: "https://raw.githubusercontent.com/Ray2023m/Magic/main/Rules/mihomo/geosite/perplexity.mrs"}
