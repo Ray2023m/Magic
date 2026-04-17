@@ -126,6 +126,7 @@ rules:
   - RULE-SET,Google,谷歌服务
   - RULE-SET,GlobalGFW,国外代理
   - RULE-SET,Global,国外代理
+  - RULE-SET,BlockList,自动拦截
   - RULE-SET,Personal,国内直连
   - RULE-SET,China,国内直连
   - RULE-SET,Private,国内直连
@@ -172,6 +173,7 @@ rule-providers:
     DNS_Check:   {<<: *BehaviorDN, url: "https://raw.githubusercontent.com/Ray2023m/Magic/main/Rules/mihomo/geosite/check.mrs"}
     Google:      {<<: *BehaviorDN, url: "https://raw.githubusercontent.com/Ray2023m/Magic/main/Rules/mihomo/geosite/google.mrs"}
     Personal:    {<<: *BehaviorDN, url: "https://raw.githubusercontent.com/Ray2023m/Magic/main/Rules/mihomo/geosite/custom.mrs"}
+    BlockList:   {<<: *BehaviorDN, url: "https://raw.githubusercontent.com/Ray2023m/Magic/main/Rules/mihomo/geosite/block.mrs"}
     China:       {<<: *BehaviorDN, url: "https://raw.githubusercontent.com/Ray2023m/Magic/main/Rules/mihomo/geosite/cn.mrs"}
     Global:      {<<: *BehaviorDN, url: "https://raw.githubusercontent.com/Ray2023m/Magic/main/Rules/mihomo/geosite/geolocation-!cn.mrs"}
     GlobalGFW:   {<<: *BehaviorDN, url: "https://raw.githubusercontent.com/Ray2023m/Magic/main/Rules/mihomo/geosite/gfw.mrs"}
