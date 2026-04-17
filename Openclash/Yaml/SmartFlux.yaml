@@ -107,7 +107,6 @@ rules:
   - RULE-SET,Chatgpt,人工智能
   - RULE-SET,Apple,苹果服务
   - RULE-SET,AppleCN,苹果服务
-  - RULE-SET,Google,谷歌服务
   - RULE-SET,YouTube,油管视频
   - RULE-SET,Telegram,电报信息
   - RULE-SET,Steam,游戏平台
@@ -126,6 +125,7 @@ rules:
   - RULE-SET,Spotify,Spotify
   - RULE-SET,DNS_Check,网络测试
   - RULE-SET,Personal,国内直连
+  - RULE-SET,Google,谷歌服务
   - RULE-SET,China,国内直连
   - RULE-SET,Global,国外代理
   - RULE-SET,GlobalGFW,国外代理
@@ -153,7 +153,6 @@ rule-providers:
     Chatgpt:     {<<: *BehaviorDN, url: "https://raw.githubusercontent.com/Ray2023m/Magic/main/Rules/mihomo/geosite/openai.mrs"}
     Apple:       {<<: *BehaviorDN, url: "https://raw.githubusercontent.com/Ray2023m/Magic/main/Rules/mihomo/geosite/apple.mrs"}
     AppleCN:     {<<: *BehaviorDN, url: "https://raw.githubusercontent.com/Ray2023m/Magic/main/Rules/mihomo/geosite/apple-cn.mrs"}
-    Google:      {<<: *BehaviorDN, url: "https://raw.githubusercontent.com/Ray2023m/Magic/main/Rules/mihomo/geosite/google.mrs"}
     YouTube:     {<<: *BehaviorDN, url: "https://raw.githubusercontent.com/Ray2023m/Magic/main/Rules/mihomo/geosite/youtube.mrs"}
     Steam:       {<<: *BehaviorDN, url: "https://raw.githubusercontent.com/Ray2023m/Magic/main/Rules/mihomo/geosite/steam.mrs"}
     Epic:        {<<: *BehaviorDN, url: "https://raw.githubusercontent.com/Ray2023m/Magic/main/Rules/mihomo/geosite/epicgames.mrs"}
@@ -171,6 +170,7 @@ rule-providers:
     Netflix:     {<<: *BehaviorDN, url: "https://raw.githubusercontent.com/Ray2023m/Magic/main/Rules/mihomo/geosite/netflix.mrs"}
     Spotify:     {<<: *BehaviorDN, url: "https://raw.githubusercontent.com/Ray2023m/Magic/main/Rules/mihomo/geosite/spotify.mrs"}
     DNS_Check:   {<<: *BehaviorDN, url: "https://raw.githubusercontent.com/Ray2023m/Magic/main/Rules/mihomo/geosite/check.mrs"}
+    Google:      {<<: *BehaviorDN, url: "https://raw.githubusercontent.com/Ray2023m/Magic/main/Rules/mihomo/geosite/google.mrs"}
     Personal:    {<<: *BehaviorDN, url: "https://raw.githubusercontent.com/Ray2023m/Magic/main/Rules/mihomo/geosite/custom.mrs"}
     China:       {<<: *BehaviorDN, url: "https://raw.githubusercontent.com/Ray2023m/Magic/main/Rules/mihomo/geosite/cn.mrs"}
     Global:      {<<: *BehaviorDN, url: "https://raw.githubusercontent.com/Ray2023m/Magic/main/Rules/mihomo/geosite/geolocation-!cn.mrs"}
