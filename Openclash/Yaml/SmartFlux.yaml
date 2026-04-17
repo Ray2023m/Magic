@@ -104,7 +104,10 @@ proxy-groups:
 rules: 
   # 域名匹配规则,代理策略组
   - DST-PORT,123,DIRECT
+  - AND,((DST-PORT,443),(NETWORK,UDP),(NOT,((GEOIP,CN)))),REJECT
   - RULE-SET,Private,国内直连
+  - RULE-SET,Personal,国内直连
+  - RULE-SET,China,国内直连
   - RULE-SET,Chatgpt,人工智能
   - RULE-SET,Apple,苹果服务
   - RULE-SET,AppleCN,苹果服务
@@ -125,9 +128,7 @@ rules:
   - RULE-SET,Netflix,奈飞视频
   - RULE-SET,Spotify,Spotify
   - RULE-SET,DNS_Check,网络测试
-  - RULE-SET,Personal,国内直连
   - RULE-SET,Google,谷歌服务
-  - RULE-SET,China,国内直连
   - RULE-SET,Global,国外代理
   - RULE-SET,GlobalGFW,国外代理
   # IP匹配规则,代理策略组
