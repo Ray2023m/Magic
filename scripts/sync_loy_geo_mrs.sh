@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # sync_loy_geo_mrs.sh
-# 从 Loyalsoldier 下载 geoip/geosite .dat，拆分并输出两种格式：
+# 从 MetaCubeX/meta-rules-dat 下载 geoip/geosite .dat，拆分并输出两种格式：
 #   Rules/mihomo/geosite/ -> .mrs  .list
 #   Rules/mihomo/geoip/   -> .mrs  .list
 #
@@ -113,7 +113,6 @@ fi
 # ══════════════════════════════════════════════════════════════════════════════
 echo "[3/7] Clean output dirs (full sync)..."
 rm -rf "$OUT_GEOSITE" "$OUT_GEOIP"
-# 迁移：清理旧目录，避免 geo/ 与 mihomo/ 并存
 rm -rf "$LEGACY_GEO_ROOT"
 rm -rf "$LEGACY_MIHOMO_ROOT"
 mkdir -p "$OUT_GEOSITE" "$OUT_GEOIP"
