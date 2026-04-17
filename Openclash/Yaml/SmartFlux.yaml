@@ -130,14 +130,14 @@ rules:
   - RULE-SET,Global,国外代理
   - RULE-SET,GlobalGFW,国外代理
   # IP匹配规则,代理策略组
-  - RULE-SET,PrivateIP,国内直连
-  - RULE-SET,ChinaIP,国内直连
-  - RULE-SET,DNS_CheckIP,国外代理
-  - RULE-SET,NetflixIP,奈飞视频
-  - RULE-SET,TwitterIP,社交媒体
-  - RULE-SET,TelegramIP,电报信息
-  - RULE-SET,FacebookIP,国外代理
-  - RULE-SET,GoogleIP,国外代理
+  - RULE-SET,PrivateIP,国内直连,no-resolve
+  - RULE-SET,ChinaIP,国内直连,no-resolve
+  - RULE-SET,DNS_CheckIP,国外代理,no-resolve
+  - RULE-SET,NetflixIP,奈飞视频,no-resolve
+  - RULE-SET,TwitterIP,社交媒体,no-resolve
+  - RULE-SET,TelegramIP,电报信息,no-resolve
+  - RULE-SET,FacebookIP,国外代理,no-resolve
+  - RULE-SET,GoogleIP,国外代理,no-resolve
 
 # 兜底规则
   - MATCH,漏网之鱼
