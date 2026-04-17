@@ -171,9 +171,6 @@ jobs:
           echo "geoip   mrs  : $(find Rules/mihomo/geoip   -name '*.mrs'  | wc -l)"
           git status --porcelain || true
 
-          echo "=== douyin IP debug ==="
-          grep -c "IP-CIDR" Rules/mihomo/geosite/douyin.list || true
-          grep -c "IP-ASN"  Rules/mihomo/geosite/douyin.list || true
 
       # ── Commit & Push（stash 重试版） ─────────────────────────────────────
       - name: Commit & push (safe)
