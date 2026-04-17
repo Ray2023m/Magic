@@ -11,7 +11,14 @@ on:
       - "scripts/helpers.py"
       - "Manual_Rules/**/*.yaml"
       - "Manual_Rules/**/*.list"
-      - "trigger"
+      - "Manual_Site/**/*.yaml"
+      - "Manual_Site/**/*.list"
+      - "Manual_site/**/*.yaml"
+      - "Manual_site/**/*.list"
+      - "Manual_IP/**/*.yaml"
+      - "Manual_IP/**/*.list"
+      - "Manual_ip/**/*.yaml"
+      - "Manual_ip/**/*.list"
 
 permissions:
   contents: write

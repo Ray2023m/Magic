@@ -98,12 +98,13 @@ PRESET_INCLUDE_TAGS: "Claude,OpenAI,Google,Netflix,YouTube"
 你可以直接放 10-20 个 tag。
 
 ## 手动运行
-在 GitHub Actions 页面：
+当前工作流支持手动触发（`workflow_dispatch`）。
 
+在 GitHub Actions 页面：
 1. 打开工作流 `Sync MetaCubeX DAT -> Custom Rulesets`
 2. 点击 `Run workflow`
 
-当前不提供手动输入 tag 参数，筛选仅由以下两部分决定：
+筛选仅由以下两部分决定：
 - 工作流内置 `PRESET_INCLUDE_TAGS`
 - 手动规则目录（`Manual_*`）自动识别到的 tag
 
@@ -127,9 +128,22 @@ PRESET_INCLUDE_TAGS: "Claude,OpenAI,Google,Netflix,YouTube"
 ## 触发方式
 该工作流支持：
 
-- 定时触发
 - 手动触发（`workflow_dispatch`）
-- 推送触发（workflow/脚本相关路径变更）
+- 定时触发
+- 推送触发（以下路径变更）：
+  - `.github/workflows/sync_meta-rules-dat_geomrs.yaml`
+  - `scripts/sync_loy_geo_mrs.sh`
+  - `scripts/helpers.py`
+  - `Manual_Rules/**/*.yaml`
+  - `Manual_Rules/**/*.list`
+  - `Manual_Site/**/*.yaml`
+  - `Manual_Site/**/*.list`
+  - `Manual_site/**/*.yaml`
+  - `Manual_site/**/*.list`
+  - `Manual_IP/**/*.yaml`
+  - `Manual_IP/**/*.list`
+  - `Manual_ip/**/*.yaml`
+  - `Manual_ip/**/*.list`
 
 ## 常见排查
 1. 某个 tag 没有被推送。
