@@ -54,7 +54,7 @@ proxy-groups:
   - {name: 油管视频, <<: *SelectHK, icon: https://cdn.jsdelivr.net/gh/homarr-labs/dashboard-icons/svg/youtube.svg}
   - {name: 电报信息, <<: *SelectUS, icon: https://cdn.jsdelivr.net/gh/homarr-labs/dashboard-icons/svg/telegram.svg}
   - {name: 抖音视频, <<: *SelectDC, icon: https://cdn.jsdelivr.net/gh/homarr-labs/dashboard-icons/svg/tiktok.svg}
-  - {name: 哔哩哔哩, <<: *SelectHK, icon: https://cdn.jsdelivr.net/gh/homarr-labs/dashboard-icons/svg/bilibili.svg}
+  - {name: 哔哩哔哩, <<: *SelectDC, icon: https://cdn.jsdelivr.net/gh/homarr-labs/dashboard-icons/svg/bilibili.svg}
   - {name: 奈飞视频, <<: *SelectUS, icon: https://cdn.jsdelivr.net/gh/homarr-labs/dashboard-icons/svg/netflix.svg}
   - {name: 流媒体组, <<: *SelectUS, icon: https://cdn.jsdelivr.net/gh/homarr-labs/dashboard-icons/svg/youtube-tv.svg}
   - {name: GitHub,  <<: *SelectUS, icon: https://cdn.jsdelivr.net/gh/homarr-labs/dashboard-icons/svg/github.svg} 
