@@ -1,5 +1,6 @@
 DOMAIN,github-api.arkoselabs.com
 DOMAIN,github-cloud.s3.amazonaws.com
+DOMAIN,github.com
 DOMAIN,api.github.com
 DOMAIN,uploads.github.com
 DOMAIN,graphql.github.com
