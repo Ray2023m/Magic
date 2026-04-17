@@ -151,7 +151,6 @@ rules:
   - RULE-SET,Private,国内直连
   #IP规则
   - RULE-SET,TestIP,Test,no-resolve
-  - RULE-SET,ClaudeIP,Claude,no-resolve
   - RULE-SET,TelegramIP,Telegram,no-resolve
   - RULE-SET,FacebookIP,Facebook,no-resolve
   - RULE-SET,BlizzardIP,Games,no-resolve
