@@ -28,7 +28,7 @@ jobs:
     steps:
       # 步骤 1：检出代码
       - name: Checkout Repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
 
       # 步骤 2：下载、清洗、统计并归档
       - name: Download, Merge and Filter Rules
@@ -75,8 +75,8 @@ jobs:
             
             # D. 构造最终文件：Header + 正文
             echo "# NAME: $display_name" > "$target_path"
-            echo "# AUTHOR: Rabbit-Spec" >> "$target_path"
-            echo "# REPO: https://github.com/Rabbit-Spec/Surge" >> "$target_path"
+            echo "# AUTHOR: Ray2023m" >> "$target_path"
+            echo "# REPO: https://github.com/Ray2023m/Magic" >> "$target_path"
             echo "# UPDATED: $UPDATE_TIME" >> "$target_path"
             echo "# TOTAL: $rule_count" >> "$target_path"
             echo "" >> "$target_path"
@@ -88,28 +88,28 @@ jobs:
           # --- 第一部分：常规规则同步 ---
           # Loyalsoldier 仓库
           URL_PROXY="https://raw.githubusercontent.com/Loyalsoldier/surge-rules/release/ruleset/cncidr.txt"
-          process_rule "$URL_PROXY" "ChinaCIDR.list" "深巷有喵的「ChinaCIDR」规则"
+          process_rule "$URL_PROXY" "ChinaCIDR.list" "Ray2023m的「ChinaCIDR」规则"
           
           # EAlyce 仓库
           URL_PROXY="https://raw.githubusercontent.com/EAlyce/conf/refs/heads/main/Rule/OpenAI.list"
-          process_rule "$URL_PROXY" "AIGC_All_No_Resolve.list" "深巷有喵的「AIGC」规则"
+          process_rule "$URL_PROXY" "AIGC_All_No_Resolve.list" "Ray2023m的「AIGC」规则"
 
           # Virgil Clyne 仓库
           URL_PROXY="https://raw.githubusercontent.com/VirgilClyne/GetSomeFries/main/ruleset/ASN.China.list"
-          process_rule "$URL_PROXY" "ChinaASN.list" "深巷有喵的「ChinaASN」规则"
+          process_rule "$URL_PROXY" "ChinaASN.list" "Ray2023m的「ChinaASN」规则"
 
           URL_PROXY="https://raw.githubusercontent.com/VirgilClyne/GetSomeFries/refs/heads/main/ruleset/ASN.Telegram.list"
-          process_rule "$URL_PROXY" "Telegram_All_No_Resolve.list" "深巷有喵的「TelegramASN」规则"
+          process_rule "$URL_PROXY" "Telegram_All_No_Resolve.list" "Ray2023m的「TelegramASN」规则"
 
           # blackmatrix7 仓库
           URL_PROXY="https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Surge/China/China_All_No_Resolve.list"
-          process_rule "$URL_PROXY" "China_All_No_Resolve.list" "深巷有喵的「China」规则"
+          process_rule "$URL_PROXY" "China_All_No_Resolve.list" "Ray2023m的「China」规则"
 
           URL_PROXY="https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Surge/GlobalMedia/GlobalMedia_All_No_Resolve.list"
-          process_rule "$URL_PROXY" "GlobalMedia_All_No_Resolve.list" "深巷有喵的「GlobalMedia」规则"
+          process_rule "$URL_PROXY" "GlobalMedia_All_No_Resolve.list" "Ray2023m的「GlobalMedia」规则"
 
           URL_PROXY="https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Surge/Apple/Apple_All_No_Resolve.list"
-          process_rule "$URL_PROXY" "Apple_All_No_Resolve.list" "深巷有喵的「Apple」规则"
+          process_rule "$URL_PROXY" "Apple_All_No_Resolve.list" "Ray2023m的「Apple」规则"
 
           # --- 第二部分：Proxy_All_No_Resolve.list 聚合处理 ---
           PROXY_TARGET="Rules/Surge/Proxy_All_No_Resolve.list"
@@ -149,9 +149,9 @@ jobs:
           proxy_count=$(grep -v '^#' "$proxy_temp" | grep -v '^[[:space:]]*$' | wc -l)
           
           # E. 写入 Proxy_All_No_Resolve.list 最终文件
-          echo "# NAME: 深巷有喵的「Proxy」规则" > "$PROXY_TARGET"
-          echo "# AUTHOR: Rabbit-Spec" >> "$PROXY_TARGET"
-          echo "# REPO: https://github.com/Rabbit-Spec/Surge" >> "$PROXY_TARGET"
+          echo "# NAME: Ray2023m的「Proxy」规则" > "$PROXY_TARGET"
+          echo "# AUTHOR: Ray2023m" >> "$PROXY_TARGET"
+          echo "# REPO: https://github.com/Ray2023m/Magic" >> "$PROXY_TARGET"
           echo "# UPDATED: $UPDATE_TIME" >> "$PROXY_TARGET"
           echo "# TOTAL: $proxy_count" >> "$PROXY_TARGET"
           echo "" >> "$PROXY_TARGET"
@@ -195,9 +195,9 @@ jobs:
           game_count=$(grep -v '^#' "$game_temp" | grep -v '^[[:space:]]*$' | wc -l)
           
           # D. 写入 Game.list 最终文件
-          echo "# NAME: 深巷有喵的「Game」规则" > "$GAME_TARGET"
-          echo "# AUTHOR: Rabbit-Spec" >> "$GAME_TARGET"
-          echo "# REPO: https://github.com/Rabbit-Spec/Surge" >> "$GAME_TARGET"
+          echo "# NAME: Ray2023m的「Game」规则" > "$GAME_TARGET"
+          echo "# AUTHOR: Ray2023m" >> "$GAME_TARGET"
+          echo "# REPO: https://github.com/Ray2023m/Magic" >> "$GAME_TARGET"
           echo "# UPDATED: $UPDATE_TIME" >> "$GAME_TARGET"
           echo "# TOTAL: $game_count" >> "$GAME_TARGET"
           echo "" >> "$GAME_TARGET"
