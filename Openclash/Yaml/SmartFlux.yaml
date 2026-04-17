@@ -124,8 +124,8 @@ rules:
   - RULE-SET,Spotify,Spotify
   - RULE-SET,DNS_Check,网络测试
   - RULE-SET,Google,谷歌服务
-  - RULE-SET,Global,国外代理
   - RULE-SET,GlobalGFW,国外代理
+  - RULE-SET,Global,国外代理
   - RULE-SET,Personal,国内直连
   - RULE-SET,China,国内直连
   - RULE-SET,Private,国内直连
