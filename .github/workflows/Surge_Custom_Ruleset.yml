@@ -149,9 +149,6 @@ jobs:
           proxy_count=$(grep -v '^#' "$proxy_temp" | grep -v '^[[:space:]]*$' | wc -l)
           
           # E. 写入 Proxy_All_No_Resolve.list 最终文件
-          echo "# NAME: Ray2023m的「Proxy」规则" > "$PROXY_TARGET"
-          echo "# AUTHOR: Ray2023m" >> "$PROXY_TARGET"
-          echo "# REPO: https://github.com/Ray2023m/Magic" >> "$PROXY_TARGET"
           echo "# UPDATED: $UPDATE_TIME" >> "$PROXY_TARGET"
           echo "# TOTAL: $proxy_count" >> "$PROXY_TARGET"
           echo "" >> "$PROXY_TARGET"
@@ -195,9 +192,6 @@ jobs:
           game_count=$(grep -v '^#' "$game_temp" | grep -v '^[[:space:]]*$' | wc -l)
           
           # D. 写入 Game.list 最终文件
-          echo "# NAME: Ray2023m的「Game」规则" > "$GAME_TARGET"
-          echo "# AUTHOR: Ray2023m" >> "$GAME_TARGET"
-          echo "# REPO: https://github.com/Ray2023m/Magic" >> "$GAME_TARGET"
           echo "# UPDATED: $UPDATE_TIME" >> "$GAME_TARGET"
           echo "# TOTAL: $game_count" >> "$GAME_TARGET"
           echo "" >> "$GAME_TARGET"
