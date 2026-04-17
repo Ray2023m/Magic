@@ -103,6 +103,9 @@ proxy-groups:
 # ==================== 规则路由 ====================
 rules: 
   # 域名匹配规则,代理策略组
+  - RULE-SET,Personal,国内直连
+  - RULE-SET,China,国内直连
+  - RULE-SET,Private,国内直连
   - RULE-SET,Chatgpt,人工智能
   - RULE-SET,Apple,苹果服务
   - RULE-SET,AppleCN,苹果服务
@@ -127,19 +130,16 @@ rules:
   - RULE-SET,GlobalGFW,国外代理
   - RULE-SET,Global,国外代理
   - RULE-SET,BlockList,自动拦截
-  - RULE-SET,Personal,国内直连
-  - RULE-SET,China,国内直连
-  - RULE-SET,Private,国内直连
   # IP匹配规则,代理策略组
-
+  - RULE-SET,PrivateIP,国内直连,no-resolve
+  - RULE-SET,ChinaIP,国内直连,no-resolve
   - RULE-SET,DNS_CheckIP,国外代理,no-resolve
   - RULE-SET,NetflixIP,奈飞视频,no-resolve
   - RULE-SET,TwitterIP,社交媒体,no-resolve
   - RULE-SET,TelegramIP,电报信息,no-resolve
   - RULE-SET,FacebookIP,国外代理,no-resolve
   - RULE-SET,GoogleIP,国外代理,no-resolve
-  - RULE-SET,PrivateIP,国内直连,no-resolve
-  - RULE-SET,ChinaIP,国内直连,no-resolve
+
 # 兜底规则
   - MATCH,漏网之鱼
 
