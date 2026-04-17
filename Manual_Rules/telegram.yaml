@@ -64,6 +64,9 @@ payload:
   - IP-CIDR,185.76.151.0/24,no-resolve
   - IP-CIDR,109.239.140.0/24,no-resolve
   - IP-CIDR,194.221.61.2/32,no-resolve
+  - IP-CIDR,194.221.61.2/32,no-resolve
+ 
+
   # ==== 🌍 IPv6 段（融合补充）====
   - IP-CIDR6,2001:67c:4e8::/48,no-resolve
   - IP-CIDR6,2001:b28:f23c::/47,no-resolve
