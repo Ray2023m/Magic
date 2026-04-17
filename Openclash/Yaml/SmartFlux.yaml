@@ -105,6 +105,8 @@ rules:
   # 域名匹配规则,代理策略组
   - DST-PORT,123,DIRECT
   - AND,((DST-PORT,443),(NETWORK,UDP),(NOT,((GEOIP,CN)))),REJECT
+  - DST-PORT,53,国外代理
+  - DST-PORT,853,国外代理
   - RULE-SET,Private,国内直连
   - RULE-SET,Personal,国内直连
   - RULE-SET,China,国内直连
@@ -132,6 +134,7 @@ rules:
   - RULE-SET,Global,国外代理
   - RULE-SET,GlobalGFW,国外代理
   # IP匹配规则,代理策略组
+  - IP-CIDR6,::/0,国外代理,no-resolve
   - RULE-SET,PrivateIP,国内直连,no-resolve
   - RULE-SET,ChinaIP,国内直连,no-resolve
   - RULE-SET,DNS_CheckIP,国外代理,no-resolve
