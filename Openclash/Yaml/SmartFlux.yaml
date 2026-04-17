@@ -213,7 +213,6 @@ rule-providers:
 
   # IP规则
   TestIP:     {<<: *BehaviorIP, url: "https://raw.githubusercontent.com/Ray2023m/Magic/main/Rules/mihomo/geoip/check.mrs"}
-  ClaudeIP:   {<<: *BehaviorIP, url: "https://raw.githubusercontent.com/Ray2023m/Magic/main/Rules/mihomo/geoip/claude.mrs"}
   TelegramIP: {<<: *BehaviorIP, url: "https://raw.githubusercontent.com/Ray2023m/Magic/main/Rules/mihomo/geoip/telegram.mrs"}
   BlizzardIP: {<<: *BehaviorIP, url: "https://raw.githubusercontent.com/Ray2023m/Magic/main/Rules/mihomo/geoip/blizzard.mrs"}
   NetflixIP:  {<<: *BehaviorIP, url: "https://raw.githubusercontent.com/Ray2023m/Magic/main/Rules/mihomo/geoip/netflix.mrs"}
