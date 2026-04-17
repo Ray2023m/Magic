@@ -17,6 +17,7 @@ payload:
   - DOMAIN-SUFFIX,opensource.guide
   - DOMAIN-SUFFIX,repo.new
   # API/上传/GraphQL/Packages
+  - DOMAIN,github.com
   - DOMAIN,api.github.com
   - DOMAIN,uploads.github.com
   - DOMAIN,graphql.github.com
