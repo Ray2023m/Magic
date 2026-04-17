@@ -2,15 +2,6 @@ name: Sync MetaCubeX DAT -> Custom Rulesets
 
 on:
   workflow_dispatch:
-    inputs:
-      include_tags:
-        description: "Only keep these tags (comma-separated), e.g. Claude,OpenAI,Google"
-        required: false
-        type: string
-      exclude_tags:
-        description: "Remove these tags (comma-separated), e.g. ads,tracker"
-        required: false
-        type: string
   schedule:
     - cron: "30 23 * * *"   
   push:
@@ -115,28 +106,15 @@ jobs:
       - name: Filter output by tags
         env:
           PRESET_INCLUDE_TAGS: ${{ env.PRESET_INCLUDE_TAGS }}
-          INCLUDE_TAGS: ${{ github.event.inputs.include_tags || '' }}
-          EXCLUDE_TAGS: ${{ github.event.inputs.exclude_tags || '' }}
         run: |
           set -euo pipefail
 
           COMBINED_INCLUDE="${PRESET_INCLUDE_TAGS}"
-          if [ -n "$INCLUDE_TAGS" ]; then
-            if [ -n "$COMBINED_INCLUDE" ]; then
-              COMBINED_INCLUDE="${COMBINED_INCLUDE},${INCLUDE_TAGS}"
-            else
-              COMBINED_INCLUDE="$INCLUDE_TAGS"
-            fi
-          fi
 
           echo "preset_include_tags=${PRESET_INCLUDE_TAGS}"
-          echo "input_include_tags=${INCLUDE_TAGS}"
           echo "combined_include_tags=${COMBINED_INCLUDE}"
-          echo "include_tags=${INCLUDE_TAGS}"
-          echo "exclude_tags=${EXCLUDE_TAGS}"
 
           declare -A include_set=()
-          declare -A exclude_set=()
 
           while IFS= read -r tag; do
             include_set["$tag"]=1
@@ -152,10 +130,6 @@ jobs:
             done | sed 's#^.*/##;s#\.yaml$##;s#\.list$##' | awk 'NF' | sort -u
           )
 
-          while IFS= read -r tag; do
-            exclude_set["$tag"]=1
-          done < <(printf '%s' "$EXCLUDE_TAGS" | tr ',;' '\n' | sed 's/^[[:space:]]*//;s/[[:space:]]*$//' | awk 'NF')
-
           include_count="${#include_set[@]}"
           remove_count=0
           keep_count=0
@@ -166,10 +140,6 @@ jobs:
             keep=1
 
             if [ "$include_count" -gt 0 ] && [ -z "${include_set[$tag]+x}" ]; then
-              keep=0
-            fi
-
-            if [ -n "${exclude_set[$tag]+x}" ]; then
               keep=0
             fi
 

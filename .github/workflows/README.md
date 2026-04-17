@@ -74,10 +74,8 @@ Tag = 文件名去掉后缀。
 
 筛选顺序：
 1. 先读取工作流中的预设白名单 `PRESET_INCLUDE_TAGS`。
-2. 合并手动触发输入的 `include_tags`。
-3. 自动把手动规则目录中的 YAML/LIST 文件名加入包含集合（优先 `Manual_Rules`，兼容旧目录）。
-4. 应用 `exclude_tags` 排除集合。
-5. 如果包含集合非空，只保留包含集合中的 tag；再应用排除集合。
+2. 自动把手动规则目录中的 YAML/LIST 文件名加入包含集合（优先 `Manual_Rules`，兼容旧目录）。
+3. 如果包含集合非空，只保留包含集合中的 tag。
 
 ## 大小写敏感
 Tag 匹配是大小写敏感的。
@@ -99,25 +97,15 @@ PRESET_INCLUDE_TAGS: "Claude,OpenAI,Google,Netflix,YouTube"
 
 你可以直接放 10-20 个 tag。
 
-## 手动运行时临时筛选
+## 手动运行
 在 GitHub Actions 页面：
 
 1. 打开工作流 `Sync MetaCubeX DAT -> Custom Rulesets`
 2. 点击 `Run workflow`
-3. 可选填写：
 
-- `include_tags`：本次临时追加包含（逗号分隔）
-- `exclude_tags`：本次临时排除（逗号分隔）
-
-示例：
-
-- 仅保留两个 tag：
-- `include_tags=Claude,OpenAI`
-- `exclude_tags=`
-
-- 保留预设/自动包含，但排除一个：
-- `include_tags=`
-- `exclude_tags=OpenAI`
+当前不提供手动输入 tag 参数，筛选仅由以下两部分决定：
+- 工作流内置 `PRESET_INCLUDE_TAGS`
+- 手动规则目录（`Manual_*`）自动识别到的 tag
 
 ## Manual_Rules 自动包含
 以下目录中的 YAML / LIST 文件名会自动作为 tag 加入包含集合：
@@ -149,4 +137,4 @@ PRESET_INCLUDE_TAGS: "Claude,OpenAI,Google,Netflix,YouTube"
 2. 手动目录 tag 没生效。
 检查文件是否为 `.yaml` 或 `.list`，且目录在 `Manual_Rules`（或兼容的 `Manual_*` 旧目录）内。
 3. 有文件被意外删除。
-检查 `exclude_tags` 是否包含该 tag，或该 tag 不在包含集合中。
+检查该 tag 是否存在于 `PRESET_INCLUDE_TAGS`，或是否有对应的手动规则文件名（`Manual_*` 目录）。
