@@ -103,6 +103,7 @@ proxy-groups:
 # ==================== 规则路由 ====================
 rules: 
   # 域名匹配规则,代理策略组
+  - DST-PORT,123,DIRECT
   - RULE-SET,Private,国内直连
   - RULE-SET,Chatgpt,人工智能
   - RULE-SET,Apple,苹果服务
