@@ -74,9 +74,6 @@ jobs:
             local rule_count=$(grep -v '^#' "$temp_body" | grep -v '^[[:space:]]*$' | wc -l)
             
             # D. 构造最终文件：Header + 正文
-            echo "# NAME: $display_name" > "$target_path"
-            echo "# AUTHOR: Ray2023m" >> "$target_path"
-            echo "# REPO: https://github.com/Ray2023m/Magic" >> "$target_path"
             echo "# UPDATED: $UPDATE_TIME" >> "$target_path"
             echo "# TOTAL: $rule_count" >> "$target_path"
             echo "" >> "$target_path"
