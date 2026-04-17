@@ -37,8 +37,8 @@ jobs:
         cn,gfw,geolocation-!cn,private,github-copilot,
         openai,google,microsoft,github,apple,apple-cn,tiktok,
         netflix,youtube,disney,spotify,bilibili,hbo,amazon,copilot,
-        facebook,instagram,x,telegram,line,nintendo,meta,
-        steam,epicgames,whatsapp,perplexity,reddit
+        facebook,instagram,twitter,telegram,line,nintendo,meta,
+        steam,epicgames,whatsapp,perplexity,reddit,onedrive
     steps:
       - name: Checkout
         uses: actions/checkout@v6
