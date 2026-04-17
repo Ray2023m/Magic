@@ -49,25 +49,25 @@ proxy-providers:
 # ==================== 代理策略组 ====================
 proxy-groups:
   # 应用策略层 - Select手动选择. 
-  - {name: 人工智能, <<: *SelectUS}
-  - {name: 社交媒体, <<: *SelectUS}
+  - {name: 人工智能, <<: *SelectUS, icon: https://cdn.jsdelivr.net/gh/homarr-labs/dashboard-icons/svg/openai.svg}
+  - {name: 社交媒体, <<: *SelectUS, icon: https://cdn.jsdelivr.net/gh/homarr-labs/dashboard-icons/svg/facebook.svg}
   - {name: 油管视频, <<: *SelectHK, icon: https://cdn.jsdelivr.net/gh/homarr-labs/dashboard-icons/svg/youtube.svg}
-  - {name: 电报信息, <<: *SelectUS}
-  - {name: 抖音视频, <<: *SelectDC}
-  - {name: 哔哩哔哩, <<: *SelectHK}
+  - {name: 电报信息, <<: *SelectUS, icon: https://cdn.jsdelivr.net/gh/homarr-labs/dashboard-icons/svg/telegram.svg}
+  - {name: 抖音视频, <<: *SelectDC, icon: https://cdn.jsdelivr.net/gh/homarr-labs/dashboard-icons/svg/tiktok.svg}
+  - {name: 哔哩哔哩, <<: *SelectHK, icon: https://cdn.jsdelivr.net/gh/homarr-labs/dashboard-icons/svg/bilibili.svg}
   - {name: 奈飞视频, <<: *SelectUS, icon: https://cdn.jsdelivr.net/gh/homarr-labs/dashboard-icons/svg/netflix.svg}
-  - {name: 流媒体组, <<: *SelectUS}
-  - {name: GitHub,  <<: *SelectUS} 
-  - {name: Spotify, <<: *SelectHK}
-  - {name: 游戏平台, <<: *SelectHK}
+  - {name: 流媒体组, <<: *SelectUS, icon: https://cdn.jsdelivr.net/gh/homarr-labs/dashboard-icons/svg/youtube-tv.svg}
+  - {name: GitHub,  <<: *SelectUS, icon: https://cdn.jsdelivr.net/gh/homarr-labs/dashboard-icons/svg/github.svg} 
+  - {name: Spotify, <<: *SelectHK, icon: https://cdn.jsdelivr.net/gh/homarr-labs/dashboard-icons/svg/spotify.svg}
+  - {name: 游戏平台, <<: *SelectHK, icon: https://cdn.jsdelivr.net/gh/homarr-labs/dashboard-icons/svg/epic-games.svg}
   - {name: 苹果服务, <<: *SelectDC, icon: https://cdn.jsdelivr.net/gh/homarr-labs/dashboard-icons/svg/apple.svg}
-  - {name: 谷歌服务, <<: *SelectUS}
-  - {name: 微软服务, <<: *SelectDC}
-  - {name: 网络测试, <<: *SelectHK}
-  - {name: 自动拦截, <<: *SelectRJ}
-  - {name: 国内直连, <<: *SelectDC}
-  - {name: 国外代理, <<: *SelectHK}
-  - {name: 漏网之鱼, <<: *SelectUS}
+  - {name: 谷歌服务, <<: *SelectUS, icon: https://cdn.jsdelivr.net/gh/homarr-labs/dashboard-icons/svg/google.svg}
+  - {name: 微软服务, <<: *SelectDC, icon: https://cdn.jsdelivr.net/gh/homarr-labs/dashboard-icons/svg/microsoft.svg }
+  - {name: 网络测试, <<: *SelectHK, icon: https://cdn.jsdelivr.net/gh/homarr-labs/dashboard-icons/svg/azure-monitor.svg}
+  - {name: 自动拦截, <<: *SelectRJ, icon: https://cdn.jsdelivr.net/gh/homarr-labs/dashboard-icons/svg/adguard-home.svg}
+  - {name: 国内直连, <<: *SelectDC, icon: https://cdn.jsdelivr.net/gh/homarr-labs/dashboard-icons/svg/focalboard.svg}
+  - {name: 国外代理, <<: *SelectHK, icon: https://cdn.jsdelivr.net/gh/homarr-labs/dashboard-icons/svg/uptimerobot.svg}
+  - {name: 漏网之鱼, <<: *SelectUS, icon: https://cdn.jsdelivr.net/gh/homarr-labs/dashboard-icons/svg/plane-finder.svg}
 
   # 线路特性层 - Fallback故障转移.
   - {name: 香港故转,  <<: *BaseFB, proxies: [香港手选, 香港智能], icon: https://raw.githubusercontent.com/Ray2023m/Magic/refs/heads/main/icon/flag/Hong_Kong.png}
