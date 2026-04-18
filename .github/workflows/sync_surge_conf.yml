@@ -2,40 +2,50 @@ name: Periodic Sync Folder
 
 on:
   schedule:
-    - cron: '0 0 * * *' # 每天北京时间 08:00 运行
-  workflow_dispatch: 
+    - cron: '0 0 * * *' # 每天北京时间 08:00 执行
+  workflow_dispatch:      # 允许手动触发测试
 
 jobs:
   sync:
     runs-on: ubuntu-latest
     steps:
+      # 1. 检出你自己的仓库 (Magic/Surge 所在的仓库)
       - name: Checkout target repo
-        uses: actions/checkout@v4 # 建议使用 v4，v6 目前尚未发布
+        uses: actions/checkout@v4
 
+      # 2. 检出公共仓库的指定文件夹
       - name: Checkout public repo folder
         uses: actions/checkout@v4
         with:
           repository: 'Rabbit-Spec/Surge'
-          ref: 'Master'         # 这里指定分支名
+          ref: 'Master'
           path: 'temp-sync'
-          sparse-checkout: |    # 路径从仓库根目录开始，不要带 Master/
+          sparse-checkout: |
             Conf/Spec
           sparse-checkout-cone-mode: false
 
+      # 3. 同步内容到 Magic/Surge 目录
       - name: Sync and cleanup
         run: |
+          # 确保 Magic/Surge 目录存在
           mkdir -p Magic/Surge/
-          # 修正拷贝路径：从 temp-sync/Conf/Spec/ 拷贝
-          cp -R temp-sync/Conf/Spec/. ./Magic/Surge/
+          
+          # 将远程 Conf/Spec 下的内容拷贝到你仓库的 Magic/Surge 文件夹中
+          # 使用 -a 保持文件属性，. 表示拷贝目录下所有内容
+          cp -a temp-sync/Conf/Spec/. ./Magic/Surge/
+          
+          # 删除临时下载的文件
           rm -rf temp-sync
 
+      # 4. 提交更改
       - name: Commit and Push
         run: |
           git config --global user.name "github-actions[bot]"
-          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          git config --global user.email "github-actions[bot]@://github.com"
           git add .
+          # 检查是否有变动，避免空提交
           if ! git diff-index --quiet HEAD; then
-            git commit -m "Auto-sync: updated folder from Rabbit-Spec/Surge"
+            git commit -m "Auto-sync: updated Conf/Spec to Magic/Surge"
             git push
           else
             echo "No changes detected, skipping commit."
