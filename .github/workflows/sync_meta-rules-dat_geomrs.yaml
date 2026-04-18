@@ -34,8 +34,8 @@ jobs:
       # 预设白名单：提前把常用 tag 写在这里（逗号分隔）
       # 示例：Claude,OpenAI,Google,Netflix,YouTube
       PRESET_INCLUDE_TAGS: >
-        cn,gfw,geolocation-!cn,private,github-copilot,
-        openai,google,microsoft,github,apple,apple-cn,tiktok,
+        cn,gfw,geolocation-!cn,private,github-copilot,bybit,binance,
+        openai,google,microsoft,github,apple,apple-cn,tiktok,okx,
         netflix,youtube,disney,spotify,bilibili,hbo,amazon,copilot,
         facebook,instagram,twitter,telegram,line,nintendo,meta,
         steam,epicgames,whatsapp,perplexity,reddit,onedrive
