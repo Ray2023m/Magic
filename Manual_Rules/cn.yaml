@@ -34,7 +34,8 @@ DOMAIN,hdhome.org
 DOMAIN,totheglory.im
 DOMAIN,www.hxpt.org
 DOMAIN,pt.luckpt.de
-
+DOMAIN,ubits.club
+DOMAIN-SUFFIX,ubits.club
 DOMAIN-SUFFIX,discfan.net
 DOMAIN-SUFFIX,hhanclub.net
 DOMAIN-SUFFIX,audiences.me
@@ -44,7 +45,14 @@ DOMAIN-SUFFIX,pandapt.net
 DOMAIN-SUFFIX,audiences.me
 DOMAIN-SUFFIX,ourbits.club
 DOMAIN-SUFFIX,hdhome.org
-
+DOMAIN-SUFFIX,totheglory.im
+DOMAIN-SUFFIX,hxpt.org
+DOMAIN-SUFFIX,pt.luckpt.de
+DOMAIN-SUFFIX,zmpt.cc
+DOMAIN-SUFFIX,crabpt.vip
+DOMAIN-SUFFIX,hdkyl.in
+DOMAIN-SUFFIX,qingwapt.com
+DOMAIN-SUFFIX,springsunday.net
 
 DOMAIN-SUFFIX,time.windows.com
 DOMAIN-SUFFIX,lanzov.com
