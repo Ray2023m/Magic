@@ -75,8 +75,8 @@ proxy-groups:
   - {name: Apple,       <<: *SelectDC, icon: https://gcore.jsdelivr.net/gh/Ray2023m/Magic/icon/group/apple.svg}
   - {name: Google,      <<: *SelectUS, icon: https://gcore.jsdelivr.net/gh/Ray2023m/Magic/icon/group/google.svg}
   - {name: Microsoft,   <<: *SelectDC, icon: https://gcore.jsdelivr.net/gh/Ray2023m/Magic/icon/group/win11.svg}
-  - {name: 网络测试,     <<: *SelectHK, icon: https://gcore.jsdelivr.net/gh/Ray2023m/Magic/icon/group/azure-monitor.svg}
   - {name: Block,       <<: *SelectRJ, icon: https://gcore.jsdelivr.net/gh/Ray2023m/Magic/icon/group/block.svg}
+  - {name: 网络测试,     <<: *SelectHK, icon: https://gcore.jsdelivr.net/gh/Ray2023m/Magic/icon/group/azure-monitor.svg}
   - {name: 国外代理,     <<: *SelectHK, icon: https://gcore.jsdelivr.net/gh/Ray2023m/Magic/icon/group/proxy.svg}
   - {name: 国内直连,     <<: *SelectDC, icon: https://gcore.jsdelivr.net/gh/Ray2023m/Magic/icon/group/focalboard.svg}
   - {name: 漏网之鱼,     <<: *SelectUS, icon: https://gcore.jsdelivr.net/gh/Ray2023m/Magic/icon/group/fish.svg}
