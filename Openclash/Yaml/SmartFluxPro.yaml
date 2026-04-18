@@ -49,9 +49,9 @@ proxy-providers:
 # ==================== 代理策略组 ====================
 proxy-groups:
   # 应用策略层 - Select手动选择，支持多场景应用优化，使用时默认，也可修改
-  - {name: Chatgpt,     <<: *SelectUS, icon: https://cdn.jsdelivr.net/gh/homarr-labs/dashboard-icons/svg/openai.svg }
-  - {name: Gemini,      <<: *SelectUS, icon: https://raw.githubusercontent.com/Ray2023m/Magic/main/icon/ai/gemini.png}
-  - {name: Copilot,     <<: *SelectUS}
+  - {name: Chatgpt,     <<: *SelectUS, icon: https://cdn.jsdelivr.net/gh/Ray2023m/Magic/icon/group/openai.svg}  
+  - {name: Gemini,      <<: *SelectUS, icon: https://cdn.jsdelivr.net/gh/Ray2023m/Magic/icon/group/gemini.svg}
+  - {name: Copilot,     <<: *SelectUS, icon: https://cdn.jsdelivr.net/gh/Ray2023m/Magic/icon/group/copilot.svg}
   - {name: Perplexity,  <<: *SelectUS}
   - {name: Github,      <<: *SelectUS} 
   - {name: Claude,      <<: *SelectUS}
