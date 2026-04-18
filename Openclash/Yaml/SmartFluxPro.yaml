@@ -29,8 +29,8 @@ FilterOT: &FilterOT '(?i)^(?!.*(DIRECT|直接连接|美|港|坡|台|新|日|韩|
 FilterAL: &FilterAL '(?i)^(?!.*(DIRECT|直接连接|群|邀请|返利|循环|官网|客服|网站|网址|获取|订阅|流量|到期|机场|下次|版本|官址|备用|过期|已用|联系|邮箱|工单|贩卖|通知|倒卖|防止|国内|地址|频道|无法|说明|使用|提示|特别|访问|支持|教程|关注|更新|作者|加入|USE|USED|TOTAL|EXPIRE|EMAIL|RESET|REMAIN|Panel|Channel|Author|GB|TB)).*$'
 
 # 策略组代理列表模板 - 预定义的代理节点优先级排序
-SelectHK: &SelectHK {type: select, proxies: [香港故转, 台湾故转, 日本故转, 狮城故转, 美国故转, 韩国故转,欧洲故转, 其他故转, 全球智能, 全球手选,]}
-SelectUS: &SelectUS {type: select, proxies: [美国故转, 香港故转, 台湾故转, 日本故转, 狮城故转, 韩国故转,欧洲故转, 其他故转, 全球智能, 全球手选,]}
+SelectHK: &SelectHK {type: select, proxies: [香港故转, 台湾故转, 日本故转, 狮城故转, 美国故转, 韩国故转,欧洲故转, 其他故转, 全球智能, 全球手选]}
+SelectUS: &SelectUS {type: select, proxies: [美国故转, 香港故转, 台湾故转, 日本故转, 狮城故转, 韩国故转,欧洲故转, 其他故转, 全球智能, 全球手选]}
 SelectDC: &SelectDC {type: select, proxies: [DIRECT,香港故转, 台湾故转, 日本故转, 狮城故转]}
 SelectRJ: &SelectRJ {type: select, proxies: [REJECT,香港故转, 台湾故转, 日本故转, 狮城故转]}
 
@@ -49,17 +49,18 @@ proxy-providers:
 # ==================== 代理策略组 ====================
 proxy-groups:
   # 应用策略层 - Select手动选择，支持多场景应用优化，使用时默认，也可修改
+  - {name: Github,      <<: *SelectUS, icon: https://gcore.jsdelivr.net/gh/Ray2023m/Magic/icon/group/github.svg}
   - {name: Chatgpt,     <<: *SelectUS, icon: https://gcore.jsdelivr.net/gh/Ray2023m/Magic/icon/group/openai.svg}  
   - {name: Gemini,      <<: *SelectUS, icon: https://gcore.jsdelivr.net/gh/Ray2023m/Magic/icon/group/gemini.svg}
   - {name: Copilot,     <<: *SelectUS, icon: https://gcore.jsdelivr.net/gh/Ray2023m/Magic/icon/group/copilot.svg}
   - {name: Perplexity,  <<: *SelectUS, icon: https://gcore.jsdelivr.net/gh/Ray2023m/Magic/icon/group/perplexity.svg}
-  - {name: Github,      <<: *SelectUS, icon: https://gcore.jsdelivr.net/gh/Ray2023m/Magic/icon/group/github.svg}
   - {name: Claude,      <<: *SelectUS, icon: https://gcore.jsdelivr.net/gh/Ray2023m/Magic/icon/group/claude-ai.svg}
   - {name: Meta Ai,     <<: *SelectUS, icon: https://gcore.jsdelivr.net/gh/Ray2023m/Magic/icon/group/meta.svg}
   - {name: Reddit,      <<: *SelectUS, icon: https://gcore.jsdelivr.net/gh/Ray2023m/Magic/icon/group/reddit.svg}
   - {name: Telegram,    <<: *SelectUS, icon: https://gcore.jsdelivr.net/gh/Ray2023m/Magic/icon/group/telegram.svg}
   - {name: Whatsapp,    <<: *SelectUS, icon: https://gcore.jsdelivr.net/gh/Ray2023m/Magic/icon/group/whatsapp.svg}
   - {name: Facebook,    <<: *SelectUS, icon: https://gcore.jsdelivr.net/gh/Ray2023m/Magic/icon/group/facebook.svg}
+  - {name: Twitter,     <<: *SelectUS, icon: https://gcore.jsdelivr.net/gh/Ray2023m/Magic/icon/group/twitter.svg}
   - {name: YouTube,     <<: *SelectHK, icon: https://gcore.jsdelivr.net/gh/Ray2023m/Magic/icon/group/youtube.svg}
   - {name: TikTok,      <<: *SelectHK, icon: https://gcore.jsdelivr.net/gh/Ray2023m/Magic/icon/group/tiktok.svg}
   - {name: Netflix,     <<: *SelectUS, icon: https://gcore.jsdelivr.net/gh/Ray2023m/Magic/icon/group/netflix.svg}
@@ -74,10 +75,10 @@ proxy-groups:
   - {name: Apple,       <<: *SelectDC, icon: https://gcore.jsdelivr.net/gh/Ray2023m/Magic/icon/group/apple.svg}
   - {name: Google,      <<: *SelectUS, icon: https://gcore.jsdelivr.net/gh/Ray2023m/Magic/icon/group/google.svg}
   - {name: Microsoft,   <<: *SelectDC, icon: https://gcore.jsdelivr.net/gh/Ray2023m/Magic/icon/group/win11.svg}
-  - {name: Nettest,     <<: *SelectHK, icon: https://gcore.jsdelivr.net/gh/Ray2023m/Magic/icon/group/azure-monitor.svg}
+  - {name: 网络测试,     <<: *SelectHK, icon: https://gcore.jsdelivr.net/gh/Ray2023m/Magic/icon/group/azure-monitor.svg}
   - {name: Block,       <<: *SelectRJ, icon: https://gcore.jsdelivr.net/gh/Ray2023m/Magic/icon/group/block.svg}
-  - {name: Proxy,       <<: *SelectHK, icon: https://gcore.jsdelivr.net/gh/Ray2023m/Magic/icon/group/proxy.svg}
-  - {name: Direct,      <<: *SelectDC, icon: https://gcore.jsdelivr.net/gh/Ray2023m/Magic/icon/group/focalboard.svg}
+  - {name: 国外代理,     <<: *SelectHK, icon: https://gcore.jsdelivr.net/gh/Ray2023m/Magic/icon/group/proxy.svg}
+  - {name: 国内直连,     <<: *SelectDC, icon: https://gcore.jsdelivr.net/gh/Ray2023m/Magic/icon/group/focalboard.svg}
   - {name: 漏网之鱼,     <<: *SelectUS, icon: https://gcore.jsdelivr.net/gh/Ray2023m/Magic/icon/group/fish.svg}
 
   # 线路特性层 - Fallback故障转移，按特性优化线路选择，建议修改位置顺序发挥线路优势
@@ -111,49 +112,54 @@ proxy-groups:
   - {name: 全球手选,  <<: *BaseSL, filter: *FilterAL, include-all: true, icon: https://gcore.jsdelivr.net/gh/Ray2023m/Magic/icon/flag/United_Nations.png}
 # ==================== 规则路由 ====================
 rules:
-  - RULE-SET,My / Domain,国内直连
-  - RULE-SET,TEST / Domain,Test
-  - RULE-SET,Block / Domain,Block  
-  - RULE-SET,ChatGPT / Domain,ChatGPT
-  - RULE-SET,Claude / Domain,Claude
-  - RULE-SET,Meta AI / Domain,Meta AI
-  - RULE-SET,Perplexity / Domain,Perplexity
-  - RULE-SET,Copilot / Domain,Copilot
-  - RULE-SET,Gemini / Domain,Gemini
-  - RULE-SET,Reddit / Domain,Reddit 
-  - RULE-SET,GitHub / Domain,GitHub
-  - RULE-SET,Telegram / Domain,Telegram
-  - RULE-SET,Telegram / IP,Telegram,no-resolve
-  - RULE-SET,WhatsApp / Domain,WhatsApp
-  - RULE-SET,Facebook / Domain,Facebook
-  - RULE-SET,Apple / Domain,Apple
-  - RULE-SET,Apple-CN / Domain,Apple  
-  - RULE-SET,Microsoft / Domain,Microsoft
-  - RULE-SET,Youtube / Domain,YouTube
-  - RULE-SET,TikTok / Domain,TikTok
-  - RULE-SET,Netflix / Domain,Netflix
-  - RULE-SET,Netflix / IP,Netflix,no-resolve
-  - RULE-SET,Disney / Domain,Disney
-  - RULE-SET,Amazon / Domain,Amazon
-  - RULE-SET,Crunchyroll / Domain,Crunchyroll
-  - RULE-SET,HBO / Domain,HBO
-  - RULE-SET,Spotify / Domain,Spotify
-  - RULE-SET,Steam / Domain,Steam
-  - RULE-SET,Epic / Domain,Games
-  - RULE-SET,EA / Domain,Games
-  - RULE-SET,Blizzard / Domain,Games
-  - RULE-SET,UBI / Domain,Games
-  - RULE-SET,PlayStation / Domain,Games
-  - RULE-SET,Nintendo / Domain,Games
-  - RULE-SET,Google / Domain,Google
-  - RULE-SET,Google / IP,Google,no-resolve
-  - RULE-SET,Nvidia / Domain,Nvidia 
-  - RULE-SET,Proxy / Domain,国外流量
-  - RULE-SET,Globe / Domain,国外流量  
-  - RULE-SET,Direct / Domain,国内直连
-  - RULE-SET,China / Domain,国内直连
-  - RULE-SET,China / IP,国内直连,no-resolve
-  - RULE-SET,Private / Domain,国内直连
+  # 域名规则集-对应出口
+  - RULE-SET,personal,国内直连
+  - RULE-SET,check,网络测试
+  - RULE-SET,block,网络测试  
+  - RULE-SET,chatgpt,Chatgpt
+  - RULE-SET,claude,Claude
+  - RULE-SET,meta-ai,Meta Ai
+  - RULE-SET,perplexity,Perplexity
+  - RULE-SET,copilot,Copilot
+  - RULE-SET,gemini,Gemini
+  - RULE-SET,reddit,Reddit 
+  - RULE-SET,github,Github
+  - RULE-SET,telegram,Telegram
+  - RULE-SET,whatsapp,Whatsapp
+  - RULE-SET,facebook,Facebook
+  - RULE-SET,apple,Apple
+  - RULE-SET,apple_cn,Apple  
+  - RULE-SET,microsoft,Microsoft
+  - RULE-SET,youtube,YouTube
+  - RULE-SET,tiktok,TikTok
+  - RULE-SET,netflix,Netflix
+  - RULE-SET,disney,Disney
+  - RULE-SET,amazon,Amazon
+  - RULE-SET,crunchyroll,Crunchyroll
+  - RULE-SET,hbo,HBO
+  - RULE-SET,spotify,Spotify
+  - RULE-SET,steam,Steam
+  - RULE-SET,epic,Games
+  - RULE-SET,ea,Games
+  - RULE-SET,blizzard,Games
+  - RULE-SET,ubi,Games
+  - RULE-SET,playstation,Games
+  - RULE-SET,nintendo,Games
+  - RULE-SET,google,Google
+  - RULE-SET,nvidia,Nvidia 
+  - RULE-SET,proxy,国外代理
+  - RULE-SET,globe,国外代理
+  - RULE-SET,direct,国内直连
+  - RULE-SET,china,国内直连
+  # IP规则集-对应出口
+  - RULE-SET,telegram_ip,Telegram,no-resolve
+  - RULE-SET,twitter_ip,Twitter,no-resolve
+  - RULE-SET,netflix_ip,Netflix,no-resolve
+  - RULE-SET,private_ip,国内直连,no-resolve
+  - RULE-SET,check_ip,网络测试,no-resolve
+  - RULE-SET,google_ip,Google,no-resolve
+  - RULE-SET,china_ip,国内直连,no-resolve
+  - RULE-SET,private,国内直连
   - MATCH,漏网之鱼
 
 # ==================== 规则集 ====================
@@ -163,51 +169,57 @@ BehaviorDN: &BehaviorDN {type: http, behavior: domain, format: mrs, interval: 86
 BehaviorIP: &BehaviorIP {type: http, behavior: ipcidr, format: mrs, interval: 86400}
 # 规则提供者
 rule-providers:
-  personal:    {<<: *BehaviorDN, url: "https://raw.githubusercontent.com/Ray2023m/Magic/main/Rules/mihomo/geosite/custom.mrs"}
-  check:       {<<: *BehaviorDN, url: "https://raw.githubusercontent.com/liandu2024/clash/refs/heads/main/list/Check.list"}
-  chatgpt:     {<<: *BehaviorDN, url: "https://github.com/metacubex/meta-rules-dat/raw/refs/heads/meta/geo/geosite/openai.mrs"}
-  claude:      {<<: *BehaviorDN, url: "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/refs/heads/master/rule/Clash/Claude/Claude.list"}
-  meta-ai:     {<<: *BehaviorDN, url: "https://raw.githubusercontent.com/liandu2024/clash/refs/heads/main/list/MetaAi.list"}
-  perplexity:  {<<: *BehaviorDN, url: "https://github.com/metacubex/meta-rules-dat/raw/refs/heads/meta/geo/geosite/perplexity.mrs"}
-  copilot:     {<<: *BehaviorDN, url: "https://raw.githubusercontent.com/liandu2024/clash/refs/heads/main/list/Copilot.list"}
-  gemini:      {<<: *BehaviorDN, url: "https://raw.githubusercontent.com/liandu2024/clash/refs/heads/main/list/Gemini.list"}
-  github:      {<<: *BehaviorDN, url: "https://github.com/metacubex/meta-rules-dat/raw/refs/heads/meta/geo/geosite/github.mrs"}
-  telegram:    {<<: *BehaviorDN, url: "https://github.com/metacubex/meta-rules-dat/raw/refs/heads/meta/geo/geosite/telegram.mrs"}  
-  telegram_ip: {<<: *BehaviorIP, url: "https://github.com/metacubex/meta-rules-dat/raw/refs/heads/meta/geo/geoip/telegram.mrs"}
-  twitter:     {<<: *BehaviorDN, url: "https://github.com/metacubex/meta-rules-dat/raw/refs/heads/meta/geo/geosite/x.mrs"}
-  whatsapp:    {<<: *BehaviorDN, url: "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/refs/heads/master/rule/Clash/Whatsapp/Whatsapp.list"}
-  facebook:    {<<: *BehaviorDN, url: "https://github.com/metacubex/meta-rules-dat/raw/refs/heads/meta/geo/geosite/facebook.mrs"}
-  amazon:      {<<: *BehaviorDN, url: "https://github.com/metacubex/meta-rules-dat/raw/refs/heads/meta/geo/geosite/amazon.mrs"}
-  apple-cn:    {<<: *BehaviorDN, url: "https://github.com/metacubex/meta-rules-dat/raw/refs/heads/meta/geo/geosite/apple-cn.mrs"}
-  apple:       {<<: *BehaviorDN, url: "https://github.com/metacubex/meta-rules-dat/raw/refs/heads/meta/geo/geosite/apple.mrs"} 
-  microsoft:   {<<: *BehaviorDN, url: "https://github.com/metacubex/meta-rules-dat/raw/refs/heads/meta/geo/geosite/microsoft.mrs"}
-  okx:         {<<: *BehaviorDN, url: "https://github.com/metacubex/meta-rules-dat/raw/refs/heads/meta/geo/geosite/okx.mrs"}
-  bybit:       {<<: *BehaviorDN, url: "https://github.com/metacubex/meta-rules-dat/raw/refs/heads/meta/geo/geosite/bybit.mrs"}
-  binance:     {<<: *BehaviorDN, url: "https://github.com/metacubex/meta-rules-dat/raw/refs/heads/meta/geo/geosite/binance.mrs"}
-  tiktok:      {<<: *BehaviorDN, url: "https://github.com/metacubex/meta-rules-dat/raw/refs/heads/meta/geo/geosite/tiktok.mrs"}
-  netflix:     {<<: *BehaviorDN, url: "https://github.com/metacubex/meta-rules-dat/raw/refs/heads/meta/geo/geosite/netflix.mrs"}
-  netflix_ip:  {<<: *BehaviorIP, url: "https://github.com/metacubex/meta-rules-dat/raw/refs/heads/meta/geo/geoip/netflix.mrs"}
-  disney:      {<<: *BehaviorDN, url: "https://github.com/metacubex/meta-rules-dat/raw/refs/heads/meta/geo/geosite/disney.mrs"}
-  hbo:         {<<: *BehaviorDN, url: "https://github.com/metacubex/meta-rules-dat/raw/refs/heads/meta/geo/geosite/hbo.mrs"}
-  spotify:     {<<: *BehaviorDN, url: "https://github.com/metacubex/meta-rules-dat/raw/refs/heads/meta/geo/geosite/spotify.mrs"}
-  steam:       {<<: *BehaviorDN, url: "https://github.com/metacubex/meta-rules-dat/raw/refs/heads/meta/geo/geosite/steam.mrs"}
-  epic:        {<<: *BehaviorDN, url: "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Epic/Epic.list"}
-  ea:          {<<: *BehaviorDN, url: "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/EA/EA.list"}
-  blizzard:    {<<: *BehaviorDN, url: "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Blizzard/Blizzard.list"}
-  ubi:         {<<: *BehaviorDN, url: "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/UBI/UBI.list"}
-  playstation: {<<: *BehaviorDN, url: "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/refs/heads/master/rule/Clash/PlayStation/PlayStation.list"}
-  nintendo:    {<<: *BehaviorDN, url: "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Nintendo/Nintendo.list"}
-  proxy:       {<<: *BehaviorDN, url: "https://raw.githubusercontent.com/liandu2024/clash/refs/heads/main/list/Proxy.list"}
-  globe:       {<<: *BehaviorDN, url: "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/refs/heads/master/rule/Clash/Global/Global.list"} 
-  direct:      {<<: *BehaviorDN, url: "https://raw.githubusercontent.com/liandu2024/clash/refs/heads/main/list/Direct.list"}
-  china:       {<<: *BehaviorDN, url: "https://github.com/metacubex/meta-rules-dat/raw/refs/heads/meta/geo/geosite/cn.mrs"}
-  china-ip:    {<<: *BehaviorIP, url: "https://github.com/metacubex/meta-rules-dat/raw/refs/heads/meta/geo/geoip/cn.mrs"}
-  private:     {<<: *BehaviorDN, url: "https://github.com/metacubex/meta-rules-dat/raw/refs/heads/meta/geo/geosite/private.mrs"}
-  block:       {<<: *BehaviorDN, url: "https://github.com/liandu2024/clash/refs/heads/main/list/Block.list"}
-  nvidia:      {<<: *BehaviorDN, url: "https://github.com/blackmatrix7/ios_rule_script/refs/heads/master/rule/Clash/Nvidia/Nvidia.list"}
-  crunchyroll: {<<: *BehaviorDN, url: "https://github.com/liandu2024/clash/refs/heads/main/list/Crunchyroll.list"}
-  reddit:      {<<: *BehaviorDN, url: "https://github.com/metacubex/meta-rules-dat/raw/refs/heads/meta/geo/geosite/reddit.mrs"}
-  youtube:     {<<: *BehaviorDN, url: "https://github.com/metacubex/meta-rules-dat/raw/refs/heads/meta/geo/geosite/youtube.mrs"}  
-  google:      {<<: *BehaviorDN, url: "https://github.com/metacubex/meta-rules-dat/raw/refs/heads/meta/geo/geosite/google.mrs"}  
-  google_ip:   {<<: *BehaviorIP, url: "https://github.com/metacubex/meta-rules-dat/raw/refs/heads/meta/geo/geoip/google.mrs"}
+  # 域名匹配规则集 
+  personal:    {<<: *BehaviorDN, url: "https://gcore.jsdelivr.net/gh/Ray2023m/Magic/Rules/mihomo/geosite/custom.mrs"}
+  check:       {<<: *BehaviorDN, url: "https://gcore.jsdelivr.net/gh/Ray2023m/Magic/Rules/mihomo/geosite/check.mrs"}
+  chatgpt:     {<<: *BehaviorDN, url: "https://gcore.jsdelivr.net/gh/Ray2023m/Magic/Rules/mihomo/geosite/openai.mrs"}
+  claude:      {<<: *BehaviorDN, url: "https://gcore.jsdelivr.net/gh/Ray2023m/Magic/Rules/mihomo/geosite/claude.mrs"}
+  meta-ai:     {<<: *BehaviorDN, url: "https://gcore.jsdelivr.net/gh/Ray2023m/Magic/Rules/mihomo/geosite/meta-ai.mrs"}
+  perplexity:  {<<: *BehaviorDN, url: "https://gcore.jsdelivr.net/gh/Ray2023m/Magic/Rules/mihomo/geosite/perplexity.mrs"}
+  copilot:     {<<: *BehaviorDN, url: "https://gcore.jsdelivr.net/gh/Ray2023m/Magic/Rules/mihomo/geosite/copilot.mrs"}
+  gemini:      {<<: *BehaviorDN, url: "https://gcore.jsdelivr.net/gh/Ray2023m/Magic/Rules/mihomo/geosite/gemini.mrs"}
+  github:      {<<: *BehaviorDN, url: "https://gcore.jsdelivr.net/gh/Ray2023m/Magic/Rules/mihomo/geosite/github.mrs"}
+  telegram:    {<<: *BehaviorDN, url: "https://gcore.jsdelivr.net/gh/Ray2023m/Magic/Rules/mihomo/geosite/telegram.mrs"}  
+  twitter:     {<<: *BehaviorDN, url: "https://gcore.jsdelivr.net/gh/Ray2023m/Magic/Rules/mihomo/geosite/twitter.mrs"}
+  whatsapp:    {<<: *BehaviorDN, url: "https://gcore.jsdelivr.net/gh/Ray2023m/Magic/Rules/mihomo/geosite/whatsapp.mrs"}
+  facebook:    {<<: *BehaviorDN, url: "https://gcore.jsdelivr.net/gh/Ray2023m/Magic/Rules/mihomo/geosite/facebook.mrs"}
+  amazon:      {<<: *BehaviorDN, url: "https://gcore.jsdelivr.net/gh/Ray2023m/Magic/Rules/mihomo/geosite/amazon.mrs"}
+  apple_cn:    {<<: *BehaviorDN, url: "https://gcore.jsdelivr.net/gh/Ray2023m/Magic/Rules/mihomo/geosite/apple-cn.mrs"}
+  apple:       {<<: *BehaviorDN, url: "https://gcore.jsdelivr.net/gh/Ray2023m/Magic/Rules/mihomo/geosite/apple.mrs"} 
+  microsoft:   {<<: *BehaviorDN, url: "https://gcore.jsdelivr.net/gh/Ray2023m/Magic/Rules/mihomo/geosite/microsoft.mrs"}
+  okx:         {<<: *BehaviorDN, url: "https://gcore.jsdelivr.net/gh/Ray2023m/Magic/Rules/mihomo/geosite/okx.mrs"}
+  bybit:       {<<: *BehaviorDN, url: "https://gcore.jsdelivr.net/gh/Ray2023m/Magic/Rules/mihomo/geosite/bybit.mrs"}
+  binance:     {<<: *BehaviorDN, url: "https://gcore.jsdelivr.net/gh/Ray2023m/Magic/Rules/mihomo/geosite/binance.mrs"}
+  tiktok:      {<<: *BehaviorDN, url: "https://gcore.jsdelivr.net/gh/Ray2023m/Magic/Rules/mihomo/geosite/tiktok.mrs"}
+  netflix:     {<<: *BehaviorDN, url: "https://gcore.jsdelivr.net/gh/Ray2023m/Magic/Rules/mihomo/geosite/netflix.mrs"}
+  disney:      {<<: *BehaviorDN, url: "https://gcore.jsdelivr.net/gh/Ray2023m/Magic/Rules/mihomo/geosite/disney.mrs"}
+  hbo:         {<<: *BehaviorDN, url: "https://gcore.jsdelivr.net/gh/Ray2023m/Magic/Rules/mihomo/geosite/hbo.mrs"}
+  spotify:     {<<: *BehaviorDN, url: "https://gcore.jsdelivr.net/gh/Ray2023m/Magic/Rules/mihomo/geosite/spotify.mrs"}
+  steam:       {<<: *BehaviorDN, url: "https://gcore.jsdelivr.net/gh/Ray2023m/Magic/Rules/mihomo/geosite/steam.mrs"}
+  epic:        {<<: *BehaviorDN, url: "https://gcore.jsdelivr.net/gh/Ray2023m/Magic/Rules/mihomo/geosite/epicgames.mrs"}
+  ea:          {<<: *BehaviorDN, url: "https://gcore.jsdelivr.net/gh/Ray2023m/Magic/Rules/mihomo/geosite/ea.mrs"}
+  blizzard:    {<<: *BehaviorDN, url: "https://gcore.jsdelivr.net/gh/Ray2023m/Magic/Rules/mihomo/geosite/blizzard.mrs"}
+  ubi:         {<<: *BehaviorDN, url: "https://gcore.jsdelivr.net/gh/Ray2023m/Magic/Rules/mihomo/geosite/ubi.mrs"}
+  playstation: {<<: *BehaviorDN, url: "https://gcore.jsdelivr.net/gh/Ray2023m/Magic/Rules/mihomo/geosite/playstation.mrs"}
+  nintendo:    {<<: *BehaviorDN, url: "https://gcore.jsdelivr.net/gh/Ray2023m/Magic/Rules/mihomo/geosite/nintendo.mrs"}
+  proxy:       {<<: *BehaviorDN, url: "https://gcore.jsdelivr.net/gh/Ray2023m/Magic/Rules/mihomo/geosite/geolocation-!cn.mrs"}
+  globe:       {<<: *BehaviorDN, url: "https://gcore.jsdelivr.net/gh/Ray2023m/Magic/Rules/mihomo/geosite/global.mrs"} 
+  direct:      {<<: *BehaviorDN, url: "https://gcore.jsdelivr.net/gh/Ray2023m/Magic/Rules/mihomo/geosite/direct.mrs"}
+  china:       {<<: *BehaviorDN, url: "https://gcore.jsdelivr.net/gh/Ray2023m/Magic/Rules/mihomo/geosite/cn.mrs"}
+  private:     {<<: *BehaviorDN, url: "https://gcore.jsdelivr.net/gh/Ray2023m/Magic/Rules/mihomo/geosite/private.mrs"}
+  block:       {<<: *BehaviorDN, url: "https://gcore.jsdelivr.net/gh/Ray2023m/Magic/Rules/mihomo/geosite/block.mrs"}
+  nvidia:      {<<: *BehaviorDN, url: "https://gcore.jsdelivr.net/gh/Ray2023m/Magic/Rules/mihomo/geosite/nvidia.mrs"}
+  crunchyroll: {<<: *BehaviorDN, url: "https://gcore.jsdelivr.net/gh/Ray2023m/Magic/Rules/mihomo/geosite/crunchyroll.mrs"}
+  reddit:      {<<: *BehaviorDN, url: "https://gcore.jsdelivr.net/gh/Ray2023m/Magic/Rules/mihomo/geosite/reddit.mrs"}
+  youtube:     {<<: *BehaviorDN, url: "https://gcore.jsdelivr.net/gh/Ray2023m/Magic/Rules/mihomo/geosite/youtube.mrs"}  
+  google:      {<<: *BehaviorDN, url: "https://gcore.jsdelivr.net/gh/Ray2023m/Magic/Rules/mihomo/geosite/google.mrs"}  
+  # IP匹配规则集
+  telegram_ip: {<<: *BehaviorIP, url: "https://gcore.jsdelivr.net/gh/Ray2023m/Magic/Rules/mihomo/geoip/telegram.mrs"}
+  twitter_ip:  {<<: *BehaviorIP, url: "https://gcore.jsdelivr.net/gh/Ray2023m/Magic/Rules/mihomo/geoip/twitter.mrs"}
+  facebook_ip: {<<: *BehaviorIP, url: "https://gcore.jsdelivr.net/gh/Ray2023m/Magic/Rules/mihomo/geoip/facebook.mrs"}
+  netflix_ip:  {<<: *BehaviorIP, url: "https://gcore.jsdelivr.net/gh/Ray2023m/Magic/Rules/mihomo/geoip/netflix.mrs"}
+  private_ip:  {<<: *BehaviorIP, url: "https://gcore.jsdelivr.net/gh/Ray2023m/Magic/Rules/mihomo/geoip/private.mrs"}
+  check_ip:    {<<: *BehaviorIP, url: "https://gcore.jsdelivr.net/gh/Ray2023m/Magic/Rules/mihomo/geoip/check.mrs"}
+  google_ip:   {<<: *BehaviorIP, url: "https://gcore.jsdelivr.net/gh/Ray2023m/Magic/Rules/mihomo/geoip/google.mrs"}
+  china_ip:    {<<: *BehaviorIP, url: "https://gcore.jsdelivr.net/gh/Ray2023m/Magic/Rules/mihomo/geoip/cn.mrs"}
 # ==================== EOF ====================
