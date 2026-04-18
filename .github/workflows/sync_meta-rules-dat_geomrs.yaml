@@ -35,7 +35,7 @@ jobs:
       # 示例：Claude,OpenAI,Google,Netflix,YouTube
       PRESET_INCLUDE_TAGS: >
         cn,gfw,geolocation-!cn,private,github-copilot,bybit,binance,
-        openai,google,microsoft,github,apple,apple-cn,tiktok,okx,
+        openai,google,microsoft,github,apple,apple-cn,tiktok,okx,bybit,
         netflix,youtube,disney,spotify,bilibili,hbo,amazon,copilot,
         facebook,instagram,twitter,telegram,line,nintendo,meta,
         steam,epicgames,whatsapp,perplexity,reddit,onedrive
