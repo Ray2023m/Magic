@@ -6,3 +6,7 @@ Homelab家庭服务使用**OpenClash_Overwriter覆写模块**,可以简便快捷
 
 ---
 
+使用说明:
+```bash
+https://gcore.jsdelivr.net/gh/Ray2023m/Magic/Openclash/Overwrite/overwrite/SmartFluxPro.conf
+```
