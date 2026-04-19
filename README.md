@@ -43,7 +43,7 @@ Magic
 将以下地址填入 OpenClash 覆写模块（或在线覆写地址）：
 
 ```bash
-https://gcore.jsdelivr.net/gh/Ray2023m/Magic/Openclash/Overwrite/overwrite/SmartFluxPro.conf
+https://gcore.jsdelivr.net/gh/Ray2023m/Magic/Openclash/Overwrite/SmartFluxPro.conf
 ```
 
 ### 2) 订阅变量说明
