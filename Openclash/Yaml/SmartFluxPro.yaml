@@ -55,7 +55,7 @@ proxy-groups:
   - {name: Copilot,     <<: *SelectUS, icon: https://gcore.jsdelivr.net/gh/Ray2023m/Magic/icon/group/copilot.svg}
   - {name: Perplexity,  <<: *SelectUS, icon: https://gcore.jsdelivr.net/gh/Ray2023m/Magic/icon/group/perplexity.svg}
   - {name: Claude,      <<: *SelectUS, icon: https://gcore.jsdelivr.net/gh/Ray2023m/Magic/icon/group/claude-ai.svg}
-  - {name: Meta Ai,     <<: *SelectUS, icon: https://gcore.jsdelivr.net/gh/Ray2023m/Magic/icon/group/meta-ai.svg}
+  - {name: Meta Ai,     <<: *SelectUS, icon: https://gcore.jsdelivr.net/gh/Ray2023m/Magic/icon/group/meta.svg}
   - {name: Reddit,      <<: *SelectUS, icon: https://gcore.jsdelivr.net/gh/Ray2023m/Magic/icon/group/reddit.svg}
   - {name: Telegram,    <<: *SelectUS, icon: https://gcore.jsdelivr.net/gh/Ray2023m/Magic/icon/group/telegram.svg}
   - {name: Whatsapp,    <<: *SelectUS, icon: https://gcore.jsdelivr.net/gh/Ray2023m/Magic/icon/group/whatsapp.svg}
