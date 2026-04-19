@@ -5,8 +5,8 @@
 
 dns:
   nameserver:
-   - 116.116.116.116
-   - 221.5.88.88
+    - 116.116.116.116
+    - 221.5.88.88
 
 # ====================锚点配置 ====================
 # 订阅源基础配置
@@ -62,7 +62,7 @@ proxy-groups:
   - {name: 游戏平台, <<: *SelectHK, icon: https://cdn.jsdelivr.net/gh/homarr-labs/dashboard-icons/svg/epic-games.svg}
   - {name: 苹果服务, <<: *SelectDC, icon: https://cdn.jsdelivr.net/gh/homarr-labs/dashboard-icons/svg/apple.svg}
   - {name: 谷歌服务, <<: *SelectUS, icon: https://cdn.jsdelivr.net/gh/homarr-labs/dashboard-icons/svg/google.svg}
-  - {name: 微软服务, <<: *SelectDC, icon: https://cdn.jsdelivr.net/gh/homarr-labs/dashboard-icons/svg/microsoft.svg }
+  - {name: 微软服务, <<: *SelectDC, icon: https://cdn.jsdelivr.net/gh/homarr-labs/dashboard-icons/svg/microsoft.svg}
   - {name: 网络测试, <<: *SelectHK, icon: https://cdn.jsdelivr.net/gh/homarr-labs/dashboard-icons/svg/azure-monitor.svg}
   - {name: 自动拦截, <<: *SelectRJ, icon: https://cdn.jsdelivr.net/gh/homarr-labs/dashboard-icons/svg/adguard-home.svg}
   - {name: 国内直连, <<: *SelectDC, icon: https://cdn.jsdelivr.net/gh/homarr-labs/dashboard-icons/svg/focalboard.svg}
@@ -103,42 +103,42 @@ proxy-groups:
 # ==================== 规则路由 ====================
 rules: 
   # 域名匹配规则,代理策略组
-  - RULE-SET,Personal,国内直连
-  - RULE-SET,China,国内直连
-  - RULE-SET,Private,国内直连
-  - RULE-SET,Chatgpt,人工智能
-  - RULE-SET,Apple,苹果服务
-  - RULE-SET,AppleCN,苹果服务
-  - RULE-SET,YouTube,油管视频
-  - RULE-SET,Telegram,电报信息
-  - RULE-SET,Steam,游戏平台
-  - RULE-SET,Epic,游戏平台
-  - RULE-SET,Facebook,社交媒体
-  - RULE-SET,Instagram,社交媒体
-  - RULE-SET,Twitter,社交媒体
-  - RULE-SET,Line,社交媒体
-  - RULE-SET,Github,GitHub
-  - RULE-SET,Onedrive,微软服务
-  - RULE-SET,Microsoft,微软服务
-  - RULE-SET,Tiktok,抖音视频
-  - RULE-SET,Bilibili,哔哩哔哩
-  - RULE-SET,Disney,流媒体组
-  - RULE-SET,Netflix,奈飞视频
-  - RULE-SET,Spotify,Spotify
-  - RULE-SET,DNS_Check,网络测试
-  - RULE-SET,Google,谷歌服务
-  - RULE-SET,GlobalGFW,国外代理
-  - RULE-SET,Global,国外代理
-  - RULE-SET,BlockList,自动拦截
+  - RULE-SET,personal,国内直连
+  - RULE-SET,china,国内直连
+  - RULE-SET,private,国内直连
+  - RULE-SET,chatgpt,人工智能
+  - RULE-SET,apple,苹果服务
+  - RULE-SET,apple-cn,苹果服务
+  - RULE-SET,youtube,油管视频
+  - RULE-SET,telegram,电报信息
+  - RULE-SET,steam,游戏平台
+  - RULE-SET,epic,游戏平台
+  - RULE-SET,facebook,社交媒体
+  - RULE-SET,instagram,社交媒体
+  - RULE-SET,twitter,社交媒体
+  - RULE-SET,line,社交媒体
+  - RULE-SET,github,GitHub
+  - RULE-SET,onedrive,微软服务
+  - RULE-SET,microsoft,微软服务
+  - RULE-SET,tiktok,抖音视频
+  - RULE-SET,bilibili,哔哩哔哩
+  - RULE-SET,disney,流媒体组
+  - RULE-SET,netflix,奈飞视频
+  - RULE-SET,spotify,Spotify
+  - RULE-SET,dns_check,网络测试
+  - RULE-SET,google,谷歌服务
+  - RULE-SET,gfw,国外代理
+  - RULE-SET,global,国外代理
+  - RULE-SET,blocklist,自动拦截
   # IP匹配规则,代理策略组
-  - RULE-SET,PrivateIP,国内直连,no-resolve
-  - RULE-SET,ChinaIP,国内直连,no-resolve
-  - RULE-SET,DNS_CheckIP,国外代理,no-resolve
-  - RULE-SET,NetflixIP,奈飞视频,no-resolve
-  - RULE-SET,TwitterIP,社交媒体,no-resolve
-  - RULE-SET,TelegramIP,电报信息,no-resolve
-  - RULE-SET,FacebookIP,国外代理,no-resolve
-  - RULE-SET,GoogleIP,国外代理,no-resolve
+  - RULE-SET,private_ip,国内直连,no-resolve
+  - RULE-SET,china_ip,国内直连,no-resolve
+  - RULE-SET,dns_check_ip,国外代理,no-resolve
+  - RULE-SET,netflix_ip,奈飞视频,no-resolve
+  - RULE-SET,twitter_ip,社交媒体,no-resolve
+  - RULE-SET,telegram_ip,电报信息,no-resolve
+  - RULE-SET,facebook_ip,国外代理,no-resolve
+  - RULE-SET,google_ip,国外代理,no-resolve
 
 # 兜底规则
   - MATCH,漏网之鱼
@@ -150,39 +150,39 @@ BehaviorIP: &BehaviorIP {type: http, behavior: ipcidr, format: mrs, interval: 86
 
 rule-providers:
   # 域名匹配规则集    
-    Private:     {<<: *BehaviorDN, url: "https://raw.githubusercontent.com/Ray2023m/Magic/main/Rules/mihomo/geosite/private.mrs"}
-    Chatgpt:     {<<: *BehaviorDN, url: "https://raw.githubusercontent.com/Ray2023m/Magic/main/Rules/mihomo/geosite/openai.mrs"}
-    Apple:       {<<: *BehaviorDN, url: "https://raw.githubusercontent.com/Ray2023m/Magic/main/Rules/mihomo/geosite/apple.mrs"}
-    AppleCN:     {<<: *BehaviorDN, url: "https://raw.githubusercontent.com/Ray2023m/Magic/main/Rules/mihomo/geosite/apple-cn.mrs"}
-    YouTube:     {<<: *BehaviorDN, url: "https://raw.githubusercontent.com/Ray2023m/Magic/main/Rules/mihomo/geosite/youtube.mrs"}
-    Steam:       {<<: *BehaviorDN, url: "https://raw.githubusercontent.com/Ray2023m/Magic/main/Rules/mihomo/geosite/steam.mrs"}
-    Epic:        {<<: *BehaviorDN, url: "https://raw.githubusercontent.com/Ray2023m/Magic/main/Rules/mihomo/geosite/epicgames.mrs"}
-    Facebook:    {<<: *BehaviorDN, url: "https://raw.githubusercontent.com/Ray2023m/Magic/main/Rules/mihomo/geosite/facebook.mrs"}
-    Telegram:    {<<: *BehaviorDN, url: "https://raw.githubusercontent.com/Ray2023m/Magic/main/Rules/mihomo/geosite/telegram.mrs"}  
-    Instagram:   {<<: *BehaviorDN, url: "https://raw.githubusercontent.com/Ray2023m/Magic/main/Rules/mihomo/geosite/instagram.mrs"}
-    Twitter:     {<<: *BehaviorDN, url: "https://raw.githubusercontent.com/Ray2023m/Magic/main/Rules/mihomo/geosite/twitter.mrs"}
-    Line:        {<<: *BehaviorDN, url: "https://raw.githubusercontent.com/Ray2023m/Magic/main/Rules/mihomo/geosite/line.mrs"}
-    Github:      {<<: *BehaviorDN, url: "https://raw.githubusercontent.com/Ray2023m/Magic/main/Rules/mihomo/geosite/github.mrs"}
-    Onedrive:    {<<: *BehaviorDN, url: "https://raw.githubusercontent.com/Ray2023m/Magic/main/Rules/mihomo/geosite/onedrive.mrs"}
-    Microsoft:   {<<: *BehaviorDN, url: "https://raw.githubusercontent.com/Ray2023m/Magic/main/Rules/mihomo/geosite/microsoft.mrs"}
-    Tiktok:      {<<: *BehaviorDN, url: "https://raw.githubusercontent.com/Ray2023m/Magic/main/Rules/mihomo/geosite/tiktok.mrs"}
-    Bilibili:    {<<: *BehaviorDN, url: "https://raw.githubusercontent.com/Ray2023m/Magic/main/Rules/mihomo/geosite/bilibili.mrs"}
-    Disney:      {<<: *BehaviorDN, url: "https://raw.githubusercontent.com/Ray2023m/Magic/main/Rules/mihomo/geosite/disney.mrs"}
-    Netflix:     {<<: *BehaviorDN, url: "https://raw.githubusercontent.com/Ray2023m/Magic/main/Rules/mihomo/geosite/netflix.mrs"}
-    Spotify:     {<<: *BehaviorDN, url: "https://raw.githubusercontent.com/Ray2023m/Magic/main/Rules/mihomo/geosite/spotify.mrs"}
-    DNS_Check:   {<<: *BehaviorDN, url: "https://raw.githubusercontent.com/Ray2023m/Magic/main/Rules/mihomo/geosite/check.mrs"}
-    Google:      {<<: *BehaviorDN, url: "https://raw.githubusercontent.com/Ray2023m/Magic/main/Rules/mihomo/geosite/google.mrs"}
-    Personal:    {<<: *BehaviorDN, url: "https://raw.githubusercontent.com/Ray2023m/Magic/main/Rules/mihomo/geosite/custom.mrs"}
-    BlockList:   {<<: *BehaviorDN, url: "https://raw.githubusercontent.com/Ray2023m/Magic/main/Rules/mihomo/geosite/block.mrs"}
-    China:       {<<: *BehaviorDN, url: "https://raw.githubusercontent.com/Ray2023m/Magic/main/Rules/mihomo/geosite/cn.mrs"}
-    Global:      {<<: *BehaviorDN, url: "https://raw.githubusercontent.com/Ray2023m/Magic/main/Rules/mihomo/geosite/geolocation-!cn.mrs"}
-    GlobalGFW:   {<<: *BehaviorDN, url: "https://raw.githubusercontent.com/Ray2023m/Magic/main/Rules/mihomo/geosite/gfw.mrs"}
+  private:     {<<: *BehaviorDN, url: "https://raw.githubusercontent.com/Ray2023m/Magic/main/Rules/mihomo/geosite/private.mrs"}
+  chatgpt:     {<<: *BehaviorDN, url: "https://raw.githubusercontent.com/Ray2023m/Magic/main/Rules/mihomo/geosite/openai.mrs"}
+  apple:       {<<: *BehaviorDN, url: "https://raw.githubusercontent.com/Ray2023m/Magic/main/Rules/mihomo/geosite/apple.mrs"}
+  apple-cn:     {<<: *BehaviorDN, url: "https://raw.githubusercontent.com/Ray2023m/Magic/main/Rules/mihomo/geosite/apple-cn.mrs"}
+  youtube:     {<<: *BehaviorDN, url: "https://raw.githubusercontent.com/Ray2023m/Magic/main/Rules/mihomo/geosite/youtube.mrs"}
+  steam:       {<<: *BehaviorDN, url: "https://raw.githubusercontent.com/Ray2023m/Magic/main/Rules/mihomo/geosite/steam.mrs"}
+  epic:        {<<: *BehaviorDN, url: "https://raw.githubusercontent.com/Ray2023m/Magic/main/Rules/mihomo/geosite/epicgames.mrs"}
+  facebook:    {<<: *BehaviorDN, url: "https://raw.githubusercontent.com/Ray2023m/Magic/main/Rules/mihomo/geosite/facebook.mrs"}
+  telegram:    {<<: *BehaviorDN, url: "https://raw.githubusercontent.com/Ray2023m/Magic/main/Rules/mihomo/geosite/telegram.mrs"}  
+  instagram:   {<<: *BehaviorDN, url: "https://raw.githubusercontent.com/Ray2023m/Magic/main/Rules/mihomo/geosite/instagram.mrs"}
+  twitter:     {<<: *BehaviorDN, url: "https://raw.githubusercontent.com/Ray2023m/Magic/main/Rules/mihomo/geosite/twitter.mrs"}
+  line:        {<<: *BehaviorDN, url: "https://raw.githubusercontent.com/Ray2023m/Magic/main/Rules/mihomo/geosite/line.mrs"}
+  github:      {<<: *BehaviorDN, url: "https://raw.githubusercontent.com/Ray2023m/Magic/main/Rules/mihomo/geosite/github.mrs"}
+  onedrive:    {<<: *BehaviorDN, url: "https://raw.githubusercontent.com/Ray2023m/Magic/main/Rules/mihomo/geosite/onedrive.mrs"}
+  microsoft:   {<<: *BehaviorDN, url: "https://raw.githubusercontent.com/Ray2023m/Magic/main/Rules/mihomo/geosite/microsoft.mrs"}
+  tiktok:      {<<: *BehaviorDN, url: "https://raw.githubusercontent.com/Ray2023m/Magic/main/Rules/mihomo/geosite/tiktok.mrs"}
+  bilibili:    {<<: *BehaviorDN, url: "https://raw.githubusercontent.com/Ray2023m/Magic/main/Rules/mihomo/geosite/bilibili.mrs"}
+  disney:      {<<: *BehaviorDN, url: "https://raw.githubusercontent.com/Ray2023m/Magic/main/Rules/mihomo/geosite/disney.mrs"}
+  netflix:     {<<: *BehaviorDN, url: "https://raw.githubusercontent.com/Ray2023m/Magic/main/Rules/mihomo/geosite/netflix.mrs"}
+  spotify:     {<<: *BehaviorDN, url: "https://raw.githubusercontent.com/Ray2023m/Magic/main/Rules/mihomo/geosite/spotify.mrs"}
+  dns_check:   {<<: *BehaviorDN, url: "https://raw.githubusercontent.com/Ray2023m/Magic/main/Rules/mihomo/geosite/check.mrs"}
+  google:      {<<: *BehaviorDN, url: "https://raw.githubusercontent.com/Ray2023m/Magic/main/Rules/mihomo/geosite/google.mrs"}
+  personal:    {<<: *BehaviorDN, url: "https://raw.githubusercontent.com/Ray2023m/Magic/main/Rules/mihomo/geosite/custom.mrs"}
+  blocklist:   {<<: *BehaviorDN, url: "https://raw.githubusercontent.com/Ray2023m/Magic/main/Rules/mihomo/geosite/block.mrs"}
+  china:       {<<: *BehaviorDN, url: "https://raw.githubusercontent.com/Ray2023m/Magic/main/Rules/mihomo/geosite/cn.mrs"}
+  global:      {<<: *BehaviorDN, url: "https://raw.githubusercontent.com/Ray2023m/Magic/main/Rules/mihomo/geosite/geolocation-!cn.mrs"}
+  gfw:   {<<: *BehaviorDN, url: "https://raw.githubusercontent.com/Ray2023m/Magic/main/Rules/mihomo/geosite/gfw.mrs"}
   # IP匹配规则集
-    NetflixIP:   {<<: *BehaviorIP, url: "https://raw.githubusercontent.com/Ray2023m/Magic/main/Rules/mihomo/geoip/netflix.mrs"}
-    TwitterIP:   {<<: *BehaviorIP, url: "https://raw.githubusercontent.com/Ray2023m/Magic/main/Rules/mihomo/geoip/twitter.mrs"}
-    TelegramIP:  {<<: *BehaviorIP, url: "https://raw.githubusercontent.com/Ray2023m/Magic/main/Rules/mihomo/geoip/telegram.mrs"}
-    FacebookIP:  {<<: *BehaviorIP, url: "https://raw.githubusercontent.com/Ray2023m/Magic/main/Rules/mihomo/geoip/facebook.mrs"}
-    DNS_CheckIP: {<<: *BehaviorIP, url: "https://raw.githubusercontent.com/Ray2023m/Magic/main/Rules/mihomo/geoip/check.mrs"}
-    GoogleIP:    {<<: *BehaviorIP, url: "https://raw.githubusercontent.com/Ray2023m/Magic/main/Rules/mihomo/geoip/google.mrs"}
-    PrivateIP:   {<<: *BehaviorIP, url: "https://raw.githubusercontent.com/Ray2023m/Magic/main/Rules/mihomo/geoip/private.mrs"}
-    ChinaIP:     {<<: *BehaviorIP, url: "https://raw.githubusercontent.com/Ray2023m/Magic/main/Rules/mihomo/geoip/cn.mrs"}
+  netflix_ip:   {<<: *BehaviorIP, url: "https://raw.githubusercontent.com/Ray2023m/Magic/main/Rules/mihomo/geoip/netflix.mrs"}
+  twitter_ip:   {<<: *BehaviorIP, url: "https://raw.githubusercontent.com/Ray2023m/Magic/main/Rules/mihomo/geoip/twitter.mrs"}
+  telegram_ip:  {<<: *BehaviorIP, url: "https://raw.githubusercontent.com/Ray2023m/Magic/main/Rules/mihomo/geoip/telegram.mrs"}
+  facebook_ip:  {<<: *BehaviorIP, url: "https://raw.githubusercontent.com/Ray2023m/Magic/main/Rules/mihomo/geoip/facebook.mrs"}
+  dns_check_ip: {<<: *BehaviorIP, url: "https://raw.githubusercontent.com/Ray2023m/Magic/main/Rules/mihomo/geoip/check.mrs"}
+  google_ip:    {<<: *BehaviorIP, url: "https://raw.githubusercontent.com/Ray2023m/Magic/main/Rules/mihomo/geoip/google.mrs"}
+  private_ip:   {<<: *BehaviorIP, url: "https://raw.githubusercontent.com/Ray2023m/Magic/main/Rules/mihomo/geoip/private.mrs"}
+  china_ip:     {<<: *BehaviorIP, url: "https://raw.githubusercontent.com/Ray2023m/Magic/main/Rules/mihomo/geoip/cn.mrs"}
