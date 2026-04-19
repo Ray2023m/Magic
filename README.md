@@ -100,16 +100,6 @@ https://gcore.jsdelivr.net/gh/Ray2023m/Magic/Openclash/Overwrite/overwrite/Smart
 bash scripts/sync_loy_geo_mrs.sh
 ```
 
----
-
-## ⚠️ 注意事项
-
-- 本项目默认偏向个人使用习惯，接入前请根据自身网络环境调整。
-- 使用前请检查订阅是否有效、节点命名是否符合筛选规则（HK/US/JP 等）。
-- 若策略未按预期命中，优先检查：
-  1. 规则文件是否更新
-  2. 规则 provider 链接是否可访问
-  3. 策略组节点筛选正则是否匹配节点名称
 
 ---
 
@@ -118,5 +108,4 @@ bash scripts/sync_loy_geo_mrs.sh
 - [MetaCubeX/meta-rules-dat](https://github.com/MetaCubeX/meta-rules-dat)
 - [vernesong/mihomo](https://github.com/vernesong/mihomo)
 - [bgpeer/rules](https://github.com/bgpeer/rules) 获取规则脚本来源,Codex 修改而来!🙏
-- [Rabbit-Spec/Surge](https://github.com/Rabbit-Spec/Surge)
-如果这个项目对你有帮助，欢迎 Star ⭐️
+- [Rabbit-Spec/Surge](https://github.com/Rabbit-Spec/Surge) Surge 规则获取来源!感谢!
