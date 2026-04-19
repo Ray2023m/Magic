@@ -2,7 +2,7 @@
 
 适用于 Homelab / 家庭网络场景的 OpenClash 配置集合，目标是**快速部署、易于维护、可按需扩展**。
 
-> 本项目聚焦作者个人高频使用场景，同时也适合希望自定义分流策略的用户二次修改。
+> 本项目聚焦作者个人高频使用场景。维护自己可控,快速,稳定规则源.项目来源 github 各位大神智慧!
 
 ---
 
@@ -63,13 +63,6 @@ https://gcore.jsdelivr.net/gh/Ray2023m/Magic/Openclash/Overwrite/overwrite/Smart
 
 ## ⚙️ 配置文件说明
 
-### `Openclash/Yaml/SmartFluxPro.yaml`
-
-- 定义代理提供者（`proxy-providers`）
-- 定义策略组（手选 / 智能 / 故障转移）
-- 定义规则路由（RULE-SET）
-- 定义规则提供者（rule-providers）
-
 ### `Openclash/Overwrite/overwrite/SmartFluxPro.conf`
 
 - 控制 OpenClash 运行参数（DNS、IPv6、TUN、规则模式等）
@@ -82,7 +75,6 @@ https://gcore.jsdelivr.net/gh/Ray2023m/Magic/Openclash/Overwrite/overwrite/Smart
 
 你可以在 `Manual_Rules/` 中新增或维护规则文件（如 `custom.yaml`、`github.yaml` 等），用于补充项目默认规则。
 
-建议按服务拆分文件，便于长期维护与排错。
 
 ---
 
@@ -121,9 +113,10 @@ bash scripts/sync_loy_geo_mrs.sh
 
 ---
 
-## 🙌 致谢
+## 🙌 致谢,排名不分先后!
 
 - [MetaCubeX/meta-rules-dat](https://github.com/MetaCubeX/meta-rules-dat)
 - [vernesong/mihomo](https://github.com/vernesong/mihomo)
-
+- [bgpeer/rules](https://github.com/bgpeer/rules) 获取规则脚本来源,Codex 修改而来!🙏
+- [Rabbit-Spec/Surge](https://github.com/Rabbit-Spec/Surge)
 如果这个项目对你有帮助，欢迎 Star ⭐️
