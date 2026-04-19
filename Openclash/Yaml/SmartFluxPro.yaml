@@ -115,7 +115,7 @@ rules:
   # 域名规则集-对应出口
   - RULE-SET,personal,国内直连
   - RULE-SET,check,网络测试
-  - RULE-SET,block,网络测试  
+  - RULE-SET,block,Block  
   - RULE-SET,chatgpt,Chatgpt
   - RULE-SET,claude,Claude
   - RULE-SET,meta-ai,Meta Ai
