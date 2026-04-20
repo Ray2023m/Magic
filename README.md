@@ -41,11 +41,13 @@ Magic
 ### 1) OpenClash 覆写链接（推荐）
 
 将以下地址填入 OpenClash 覆写模块（或在线覆写地址）：
-
 ```bash
 https://gcore.jsdelivr.net/gh/Ray2023m/Magic@main/Openclash/Overwrite/SmartFluxPro.conf
 ```
 
+```bash
+https://gcore.jsdelivr.net/gh/Ray2023m/Magic@main/Openclash/Overwrite/SmartFlux.conf
+```
 ### 2) 订阅变量说明
 
 `SmartFluxPro.conf` 通过环境变量注入订阅地址，默认使用 `KEY1 ~ KEY6`：
