@@ -21,9 +21,8 @@
 ```text
 Magic
 ├── Openclash/
-│   ├── Overwrite/
-│   │   ├── overwrite/                # .conf 覆写模板
-│   │   └── config/                   # 覆写对应配置
+│   ├── Overwrite/                    # .conf 覆写模板
+│   │                                 
 │   └── Yaml/                         # 主配置 YAML（如 SmartFluxPro.yaml）
 ├── Rules/
 │   ├── mihomo/geosite/               # 域名规则（.mrs/.list）
