@@ -4,7 +4,10 @@
 # 作者: Ray2023m
 # 更新: 2026 年 4 月 18 日
 
-
+dns:
+  nameserver:
+    - 116.116.116.116
+    - 221.5.88.88
 # ==================== 锚点配置 ====================
 # 订阅源基础配置
 BaseProvider: &BaseProvider {type: http, interval: 86400, proxy: DIRECT, health-check: {enable: true, url: 'https://cp.cloudflare.com/generate_204', interval: 300}, filter: '^(?!.*(剩余|套餐|官网|群组|订阅|到期|永久|基础|国内|过滤|测试))'}
