@@ -73,6 +73,7 @@ DOMAIN-SUFFIX,npm.community
 DOMAIN-SUFFIX,npmjs.com
 DOMAIN-SUFFIX,npmjs.org
 DOMAIN-SUFFIX,githubcopilot.com
+DOMAIN-SUFFIX,cafe.github.com
 DOMAIN-SUFFIX,collector.github.com
 DOMAIN-SUFFIX,pkg.github.com
 DOMAIN-SUFFIX,codeload.github.com
