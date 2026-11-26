@@ -38,7 +38,7 @@ jobs:
         openai,google,microsoft,github,apple,apple-cn,tiktok,okx,bybit,
         netflix,youtube,disney,spotify,bilibili,hbo,amazon,copilot,
         facebook,instagram,twitter,telegram,line,nintendo,meta,
-        steam,epicgames,whatsapp,perplexity,reddit,onedrive
+        steam,epicgames,whatsapp,perplexity,reddit,onedrive,category-pt
     steps:
       - name: Checkout
         uses: actions/checkout@v6
